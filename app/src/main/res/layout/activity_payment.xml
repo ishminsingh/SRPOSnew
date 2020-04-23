@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/layPay"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="35dp"
+    tools:context=".Payment">
+    <TextView
+        android:id="@+id/paymentTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Payment Details"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        android:textColor="@android:color/black"
+        android:textAllCaps="false"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="50dp"
+        tools:ignore="HardcodedText" />
+    <EditText
+        android:id="@+id/cno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paymentTxt"
+        android:layout_centerInParent="true"
+        android:inputType="number|phone"
+        android:maxLength="10"
+        android:hint="Customer number"
+        android:textColor="@android:color/black"
+        android:background="@drawable/btn_shape4"
+        android:padding="5dp"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:drawableStart="@drawable/ic_phone_black_24dp"
+        android:drawableLeft="@drawable/ic_phone_black_24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:ignore="Autofill,HardcodedText" />
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cno"
+        android:layout_centerInParent="true"
+        android:text="Get total from billing frag"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:ignore="HardcodedText" />
+    <EditText
+        android:id="@+id/discout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number|text"
+        android:hint="Discount"
+        android:maxLength="2"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/total"
+        android:background="@drawable/btn_shape4"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:ignore="Autofill,HardcodedText,LabelFor" />
+    <RadioGroup
+        android:id="@+id/radiostaus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/discout"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <RadioButton
+            android:id="@+id/radiopaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paid"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:checked="true"
+            tools:ignore="HardcodedText" />
+        <RadioButton
+            android:id="@+id/radiounpaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unpaid"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            tools:ignore="HardcodedText"/>
+    </RadioGroup>
+    <Button
+        android:id="@+id/Done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Done"
+        android:textAllCaps="true"
+        android:textColor="@color/gd2"
+        android:background="@drawable/custom_btn_shape"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>
