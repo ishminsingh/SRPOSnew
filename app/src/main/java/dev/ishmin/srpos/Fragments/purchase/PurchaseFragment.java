@@ -163,11 +163,11 @@ BillingFragment.flag1=0;
 
                         {
                             Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Products1 WHERE sku="+Long.parseLong(scannerresult), null);
-
+                            c.moveToFirst();
                             int quantity2 = c.getColumnIndex("stock");
                             int stock=c.getInt(quantity2);
                             int newstock =stock + Integer.parseInt(quantity1);
-                            c.moveToFirst();
+
 
                             MainActivity.SRPOS.execSQL("INSERT INTO PurchasedItems1(name,category,subcategory,brand,sku,buyrate, mrp,supplier,unit,quantity,date)VALUES('" + name1 + "','" + category1 + "','" + subcategory1 + "','" + brand1 + "'," + Long.parseLong(sku1) + "," + Float.parseFloat(buyrate1) + "," +Float.parseFloat(mrp1)+ ",'" + supplier1 + "','" + units1 + "'," + Integer.parseInt(quantity1) + ",'"+date+"')");
                             MainActivity.SRPOS.execSQL("UPDATE Products1 SET stock= "+newstock+" WHERE sku="+Long.parseLong(scannerresult) );

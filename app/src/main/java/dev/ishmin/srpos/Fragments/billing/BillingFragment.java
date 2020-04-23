@@ -120,7 +120,7 @@ public class BillingFragment extends Fragment {
                     productmrp.add(Float.toString(c.getFloat(mrp)));
                     productsku.add(Long.toString(c.getLong(sku)));
                     productsupplier.add(c.getString(supplier));
-                    productunit.add(Integer.toString(c.getInt(unit)));
+                    productunit.add(c.getString(unit));
                     productbuyrate.add(Float.toString(c.getFloat(buyrate)));
 
                     productquantity.add("1");
@@ -172,17 +172,23 @@ public class BillingFragment extends Fragment {
             public void onClick(View v) {
                 //payment activity.
                 try {
-                    MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Sales(billid INTEGER PRIMARY KEY, customerno INT(10) ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR)");
+                    MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Sales(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR)");
                     MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditems(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE)");
                     String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                     for (int i = 0; i < productlist.size(); i++) {
-                        MainActivity.SRPOS.execSQL("INSERT INTO Solditems(name,mrp,quantity,unit,date)VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + "," + productunit.get(i) + ",'" + date + "')");
+                        MainActivity.SRPOS.execSQL("INSERT INTO Solditems(name,mrp,quantity,unit,date) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "')");
+                        Log.i("name",productname.get(i));
+                        Log.i("mrp", (productmrp.get(i)));
+                        Log.i("quantity",productquantity.get(i));
+                        Log.i("unit",productunit.get(i));
+
 
                     }
                     Intent i = new Intent(getActivity(), Payment.class); //open scanner
                     startActivity(i);
                 } catch (Exception e) {
                     e.printStackTrace();
+
                 }
             }
         });
