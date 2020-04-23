@@ -26,11 +26,11 @@ import dev.ishmin.srpos.R;
 import dev.ishmin.srpos.ScannerActivity;
 
 public class PurchaseFragment extends Fragment {
-   static EditText name;
-   static EditText brand;
+    static EditText name;
+    static EditText brand;
     static EditText category;
     static EditText subcategory;
-     static EditText sku;
+    static EditText sku;
     static EditText buyrate;
     static EditText mrp;
    static EditText units;
@@ -68,7 +68,7 @@ public class PurchaseFragment extends Fragment {
             subcategory.setText(c.getString(subcategory2));
             brand.setText(c.getString(brand2));
             mrp.setText(Float.toString(c.getFloat(mrp2)));
-            sku.setText(Long.toString(c.getInt(sku2)));
+            sku.setText(Long.toString(c.getLong(sku2)));
             supplier.setText(c.getString(supplier2));
             units.setText(c.getString(unit2));
             buyrate.setText(Float.toString(c.getFloat(buyrate2)));
@@ -137,6 +137,24 @@ BillingFragment.flag1=0;
 
                         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                         MainActivity.SRPOS.execSQL("INSERT INTO PurchasedItems1(name,category,subcategory,brand,sku,buyrate, mrp,supplier,unit,quantity,date)VALUES('" + name1 + "','" + category1 + "','" + subcategory1 + "','" + brand1 + "'," + Long.parseLong(sku1.trim()) + "," + Float.parseFloat(buyrate1) + "," +Float.parseFloat(mrp1)+ ",'" + supplier1 + "','" + units1 + "'," + Integer.parseInt(quantity1) + ",'"+date+"')");
+
+                        Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT sku FROM Products1 ", null);
+
+                        int check = c1.getColumnIndex("sku");
+                        c1.moveToFirst();
+                        while(!c1.isAfterLast())
+                        {
+                            String x=c1.getString(check);
+                            if(x.equals(scannerresult))
+                            {
+                                flag=1;
+                                break;
+                            }
+                            else
+                                c1.moveToNext();
+
+
+                        }
 
                         if (flag==0)
                             MainActivity.SRPOS.execSQL("INSERT INTO Products1(name,category,subcategory,brand,sku,buyrate, mrp,supplier,unit,stock)VALUES('" + name1 + "','" + category1 + "','" + subcategory1 + "','" + brand1 + "'," +Long.parseLong(sku1) + "," + Float.parseFloat(buyrate1) + "," + Float.parseFloat(mrp1) + ",'" + supplier1 + "','" + units1 + "'," + Integer.parseInt(quantity1)+ ")");

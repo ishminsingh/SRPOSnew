@@ -43,25 +43,27 @@ public class BillingFragment extends Fragment {
     public static int flag1;
 
     static int index;
-    static List<String> productname = new ArrayList<String>();
-    static List<String> productcategory = new ArrayList<String>();
-    static List<String> productsubcategory = new ArrayList<String>();
-    static List<String> productbrand = new ArrayList<String>();
-    static List<String> productbuyrate = new ArrayList<String>();
-    static List<String> productmrp = new ArrayList<String>();
-    static List<String> productsku = new ArrayList<String>();
-    static List<String> productquantity = new ArrayList<String>();
-    static List<String> productsupplier = new ArrayList<String>();
-    static List<String> productunit = new ArrayList<String>();
+    static List<String> productname ;
+    static List<String> productcategory;
+    static List<String> productsubcategory ;
+    static List<String> productbrand ;
+    static List<String> productbuyrate ;
+    static List<String> productmrp ;
+    static List<String> productsku;
+    static List<String> productquantity;
+    static List<String> productsupplier ;
+    static List<String> productunit;
 
-    public static float total = 0;
+    public static float total;
     Button totalbutton;
     TextView totalview;
     ImageButton qscanner;
 
-    public static void entry() {
+    public static void entry()
+    {
 
-        if (productsku.contains(sku)) {
+        if (productsku.contains(sku))
+        {
             index = productsku.indexOf(sku);
 
             String tempmrp = productmrp.get(index);
@@ -86,7 +88,9 @@ public class BillingFragment extends Fragment {
 
             productlist.set(index, update);
             arrayAdapter.notifyDataSetChanged();
-        } else {
+        }
+        else
+            {
                        /* String myUrl = "http://smartretailpos.pe.hu/api/products.php?sku=" + sku;
                         String returned;
                         Connection connection = new Connection();
@@ -140,9 +144,20 @@ public class BillingFragment extends Fragment {
 
         String sku = "";
         flag1 = 1;
+        total=0;
         //textView = v.findViewById(R.id.txtView);
 
         productlist = new ArrayList<String>();
+         productname = new ArrayList<String>();
+         productcategory = new ArrayList<String>();
+         productsubcategory = new ArrayList<String>();
+        productbrand = new ArrayList<String>();
+       productbuyrate = new ArrayList<String>();
+         productmrp = new ArrayList<String>();
+         productsku = new ArrayList<String>();
+         productquantity = new ArrayList<String>();
+       productsupplier = new ArrayList<String>();
+         productunit = new ArrayList<String>();
         billing = v.findViewById(R.id.billinglist);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
         billing.setAdapter(arrayAdapter);
