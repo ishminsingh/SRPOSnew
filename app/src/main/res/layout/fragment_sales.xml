@@ -2,28 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ScrollView
-        android:id="@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="731dp"
-        android:layout_marginTop="5dip"
-        android:fillViewport="true"
-        android:scrollbarStyle="outsideInset"
-        android:scrollbars="horizontal|vertical">
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/background_white">
 
         <HorizontalScrollView
-            android:id="@+id/horizontalView"
+            android:id="@+id/hscrll1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:scrollbars="horizontal|vertical">
+            android:layout_height="wrap_content">
 
-            <TableLayout
-                android:id="@+id/tlGridTable"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></TableLayout>
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TableLayout
+                    android:id="@+id/table_main"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
+
+                </TableLayout>
+            </RelativeLayout>
         </HorizontalScrollView>
+
     </ScrollView>
 </LinearLayout>

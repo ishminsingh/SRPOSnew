@@ -3,10 +3,12 @@ package dev.ishmin.srpos.Fragments.sales;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,8 +21,10 @@ import dev.ishmin.srpos.R;
 
 public class SalesFragment extends Fragment {
     TableLayout stk ;
+
     public void init()
     {
+       try{
         TableRow tbrow = new TableRow(getActivity());
         TextView tv0 = new TextView(getActivity());
         tv0.setText(" Name ");
@@ -41,7 +45,11 @@ public class SalesFragment extends Fragment {
         tv4.setText(" Date ");
         tv4.setTextColor(Color.WHITE);
         tbrow.addView(tv4);
-        stk.addView(tbrow);
+        stk.addView(tbrow);}
+       catch (Exception e)
+       {
+           e.printStackTrace();
+       }
 
         try
 
@@ -60,6 +68,11 @@ public class SalesFragment extends Fragment {
                 //Log.i("name", c.getString(name));
                 //Log.i("sku", c.getString(sku));
                 //String newitem=c.getString(name)+"     "+c.getString(brand)+"     "+c.getInt(stock);
+                Log.i("name",c.getString(name));
+                Log.i("mrp", (Float.toString(c.getFloat(mrp))));
+                Log.i("quantity",Integer.toString(c.getInt(quantity)));
+                Log.i("unit",c.getString(unit));
+
                 TableRow tbrow0 = new TableRow(getActivity());
                 TextView tv01 = new TextView(getActivity());
                 tv01.setText(c.getString(name));
@@ -100,7 +113,8 @@ public class SalesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sales, container, false);
         //return inflater.inflate(R.layout.fragment_sales, container, false);
-        stk  = (TableLayout) v.findViewById(R.id.tlGridTable);
+      // v.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        stk  = (TableLayout) v.findViewById(R.id.table_main);
         String datefrom="";
         String dateto="";
         init();
