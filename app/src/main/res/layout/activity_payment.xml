@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="Done"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/gd2"
         android:background="@drawable/custom_btn_shape"
         android:layout_alignParentBottom="true"

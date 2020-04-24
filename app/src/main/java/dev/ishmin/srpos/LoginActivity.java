@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText mobileNum;
     protected static String sessionCode="";
-    String mobile;
+    public static String mobile;
 
     public static class session extends AsyncTask<String,Void,String>
     {

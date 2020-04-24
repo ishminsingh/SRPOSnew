@@ -198,7 +198,9 @@ public class BillingFragment extends Fragment {
                 if (productlist.isEmpty()) {
                     Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
                 } else
+                    totalview.setVisibility(View.VISIBLE);
                     totalview.setText(Float.toString(total));
+                    payment.setVisibility(View.VISIBLE);
             }
         });
 

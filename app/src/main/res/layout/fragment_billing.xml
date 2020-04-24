@@ -23,35 +23,59 @@
 <!--            android:textStyle="normal"-->
 <!--            android:textAllCaps="false"-->
 <!--            tools:ignore="HardcodedText"/>-->
-        <Button
+<!--        <Button-->
+<!--            android:id="@+id/totalbutton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/custom_btn_shape"-->
+<!--            android:text="T"-->
+<!--            android:textSize="12sp"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@color/gd2"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            tools:ignore="RelativeOverlap" />-->
+        <ImageButton
             android:id="@+id/totalbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_btn_shape"
-            android:text="@string/totalTxt"
-            android:textSize="12sp"
-            android:textStyle="normal"
-            android:textAllCaps="false"
-            android:textColor="@color/gd2"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:clickable="true"
-            android:focusable="true"
-            tools:ignore="RelativeOverlap" />
-        <ImageButton
-            android:clickable="true"
-            android:focusable="true"
-            android:id="@+id/scanner"
-            android:src="@drawable/ic_barcode"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/custom_btn_shape"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5dp"
+            android:src="@drawable/ic_letter_t_24dp"
+            tools:ignore="ContentDescription" />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:text="@string/totalTxt"
+            android:textSize="12sp"
+            android:layout_below="@id/totalbutton"
+            />
+        <ImageButton
+            android:id="@+id/scanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/custom_btn_shape"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
+            android:src="@drawable/ic_barcode"
             tools:ignore="ContentDescription" />
-<!--        <Button-->
+        <!--        <Button-->
 <!--            android:id="@+id/scanner"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
@@ -74,17 +98,19 @@
        android:layout_alignParentBottom="true"
        android:padding="10dp">
        <TextView
+           android:visibility="invisible"
            android:id="@+id/totaldisplay"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_centerInParent="true"
-           android:text="The total is = "
+           android:text="..."
            android:textSize="16sp"
            android:textStyle="normal"
            android:textAllCaps="false"
            android:textColor="@android:color/black"
            tools:ignore="HardcodedText"/>
        <Button
+           android:visibility="invisible"
            android:id="@+id/payment"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
