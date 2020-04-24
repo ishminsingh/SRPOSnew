@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:padding="20dp">
 
     <ScrollView
         android:id="@+id/scrollView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/background_white">
+        android:layout_width="357dp"
+        android:layout_height="701dp"
+        >
 
         <HorizontalScrollView
             android:id="@+id/hscrll1"
@@ -34,4 +33,5 @@
         </HorizontalScrollView>
 
     </ScrollView>
+
 </LinearLayout>

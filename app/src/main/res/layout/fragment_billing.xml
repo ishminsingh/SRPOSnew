@@ -11,18 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
-<!--        <TextView-->
-<!--            android:id="@+id/text0"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Use scanner for efficient billing"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="@android:color/black"-->
-<!--            android:textStyle="normal"-->
-<!--            android:textAllCaps="false"-->
-<!--            tools:ignore="HardcodedText"/>-->
+
         <Button
             android:id="@+id/totalbutton"
             android:layout_width="wrap_content"
@@ -38,6 +27,18 @@
             android:clickable="true"
             android:focusable="true"
             tools:ignore="RelativeOverlap" />
+<!--        <TextView-->
+<!--            android:id="@+id/text0"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Use scanner for efficient billing"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textAllCaps="false"-->
+<!--            tools:ignore="HardcodedText"/>-->
         <ImageButton
             android:clickable="true"
             android:focusable="true"
@@ -73,6 +74,7 @@
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:padding="10dp">
+
        <TextView
            android:id="@+id/totaldisplay"
            android:layout_width="wrap_content"

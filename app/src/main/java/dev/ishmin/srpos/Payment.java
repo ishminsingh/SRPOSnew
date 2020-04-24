@@ -55,8 +55,9 @@ public class Payment extends AppCompatActivity {
                 {
                     try
                     {
-                        MainActivity.SRPOS.execSQL("INSERT INTO Sales(customerno,date,billamount,discount,status)VALUES('" + Long.parseLong(cno.getText().toString()) + "','" + date + "','" + total + "'," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "')");
+                        MainActivity.SRPOS.execSQL("INSERT INTO Sales(customerno,date,billamount,discount,status)VALUES(" + Long.parseLong(cno.getText().toString()) + ",'" + date + "'," + BillingFragment.total + "," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "')");
                         Toast.makeText(Payment.this, "Payment Made", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     } catch (Exception e)
                     {
                         e.printStackTrace();

@@ -142,7 +142,7 @@ public class BillingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_billing, container, false);
 
-        String sku = "";
+        final String sku = "";
         flag1 = 1;
         total=0;
         //textView = v.findViewById(R.id.txtView);
@@ -171,27 +171,52 @@ public class BillingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //payment activity.
-                try {
-                    MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Sales(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR)");
-                    MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditems(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE)");
-                    String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                    for (int i = 0; i < productlist.size(); i++) {
-                        MainActivity.SRPOS.execSQL("INSERT INTO Solditems(name,mrp,quantity,unit,date) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "')");
-                        Log.i("name",productname.get(i));
-                        Log.i("mrp", (productmrp.get(i)));
-                        Log.i("quantity",productquantity.get(i));
-                        Log.i("unit",productunit.get(i));
+               if(!productlist.isEmpty())
+               {
+                   try {
+                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Sales(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR)");
+                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditems(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE)");
+                       String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                       for (int i = 0; i < productlist.size(); i++)
+                       {
+
+                           MainActivity.SRPOS.execSQL("INSERT INTO Solditems(name,mrp,quantity,unit,date) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "')");
+                           Log.i("name", productname.get(i));
+                           Log.i("mrp", (productmrp.get(i)));
+                           Log.i("quantity", productquantity.get(i));
+                           Log.i("unit", productunit.get(i));
+
+                           Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Products1 WHERE sku=" + Long.parseLong(productsku.get(i)), null);
+                           c.moveToFirst();
+
+                           int quantity2 = c.getColumnIndex("stock");
+                           int stock = c.getInt(quantity2);
+                           int newstock = stock - Integer.parseInt(productquantity.get(i));
+                           Log.i("newstock", Integer.toString(newstock));
+                           Log.i("sku", productsku.get(i));
+
+                           MainActivity.SRPOS.execSQL("UPDATE Products1 SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)));
 
 
-                    }
-                    Intent i = new Intent(getActivity(), Payment.class); //open scanner
-                    startActivity(i);
-                } catch (Exception e) {
-                    e.printStackTrace();
 
-                }
+                       }
+                       Intent i = new Intent(getActivity(), Payment.class); //open scanner
+                       startActivity(i);
+                   }
+                   catch (Exception e)
+                   {
+                       e.printStackTrace();
+
+                   }
+               }
+               else
+                   {
+                       Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
+                   }
             }
         });
+
         totalbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
