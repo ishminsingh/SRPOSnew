@@ -6,6 +6,8 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="gray">#D7DBDD</color>
+    <color name="light_gray">#ECECEC</color>
+
     <color name="gray_bg">#F4F6F7</color>
     <color name="green0">#11998e</color>
     

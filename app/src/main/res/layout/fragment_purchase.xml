@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="12dp">
 <LinearLayout
     android:id="@+id/layTop"
     android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:layout_marginTop="10dp"
         android:padding="5dp">
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:padding="5dp"
             android:id="@+id/category"
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
             android:textStyle="normal"
             tools:ignore="Autofill,HardcodedText,RtlCompat" />
         <EditText
-        android:background="@drawable/btn_shape4"
+        android:background="@drawable/new_custom"
         android:id="@+id/Subcategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         android:layout_below="@id/category"
         tools:ignore="Autofill,HardcodedText,RtlCompat" />
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/supplier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:layout_below="@id/Subcategory"
             tools:ignore="Autofill,HardcodedText,RtlCompat" />
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:layout_below="@id/supplier"
             tools:ignore="Autofill,HardcodedText,RtlCompat" />
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
             android:layout_below="@id/name"
             tools:ignore="Autofill,HardcodedText,RtlCompat" />
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
             android:layout_below="@id/brand"
             tools:ignore="Autofill,HardcodedText,RtlCompat" />
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/units"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +133,6 @@
             android:gravity="center_horizontal"
             android:hint="Units"
             android:inputType="text"
-            android:maxLength="2"
             android:padding="5dp"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
@@ -143,7 +142,7 @@
             android:layout_alignParentRight="true"
             tools:ignore="Autofill,HardcodedText,RtlCompat" />
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/buyrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,7 +157,7 @@
             android:layout_below="@id/quantity"
             tools:ignore="Autofill,HardcodedText,RtlCompat"/>
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/mrp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,7 +174,7 @@
             android:layout_alignParentRight="true"
             tools:ignore="Autofill,HardcodedText,RtlCompat"/>
         <EditText
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/new_custom"
             android:id="@+id/sku"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -220,7 +219,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:padding="10dp"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"/>
 <!--        <Button-->
 <!--            android:id="@+id/scanner"-->
 <!--            android:layout_width="wrap_content"-->

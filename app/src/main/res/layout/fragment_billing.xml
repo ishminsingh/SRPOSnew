@@ -11,33 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
-<!--        <TextView-->
-<!--            android:id="@+id/text0"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Use scanner for efficient billing"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="@android:color/black"-->
-<!--            android:textStyle="normal"-->
-<!--            android:textAllCaps="false"-->
-<!--            tools:ignore="HardcodedText"/>-->
-<!--        <Button-->
-<!--            android:id="@+id/totalbutton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/custom_btn_shape"-->
-<!--            android:text="T"-->
-<!--            android:textSize="12sp"-->
-<!--            android:textStyle="normal"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:textColor="@color/gd2"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:clickable="true"-->
-<!--            android:focusable="true"-->
-<!--            tools:ignore="RelativeOverlap" />-->
         <ImageButton
             android:id="@+id/totalbutton"
             android:layout_width="wrap_content"
@@ -56,10 +29,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/totalTxt"
-            android:textSize="12sp"
             android:layout_below="@id/totalbutton"
-            />
+            android:text="Total"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="1dp"
+            tools:ignore="HardcodedText" />
+       <ImageButton
+           android:id="@+id/refresh"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:layout_centerHorizontal="true"
+           android:layout_centerInParent="true"
+           android:src="@drawable/ic_refresh_24dp"
+           android:background="@drawable/custom_btn_shape"
+           android:padding="5dp"
+           android:clickable="true"
+           android:focusable="true"
+           tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/refresh"
+            android:text="New bill"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textStyle="normal"/>
         <ImageButton
             android:id="@+id/scanner"
             android:layout_width="wrap_content"
@@ -75,21 +75,19 @@
             android:padding="5dp"
             android:src="@drawable/ic_barcode"
             tools:ignore="ContentDescription" />
-        <!--        <Button-->
-<!--            android:id="@+id/scanner"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/btn_shape3"-->
-<!--            android:text="@string/scanTxt"-->
-<!--            android:textSize="12sp"-->
-<!--            android:textStyle="normal"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:textColor="@android:color/white"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:clickable="true"-->
-<!--            android:focusable="true"-->
-<!--            tools:ignore="RelativeOverlap" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scanner"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="Scan"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:layout_marginRight="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="1dp"/>
     </RelativeLayout>
    <RelativeLayout
        android:id="@+id/layEnd"

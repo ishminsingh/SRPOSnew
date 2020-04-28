@@ -34,7 +34,7 @@ public class SalesFragment extends Fragment {
         tbrow.addView(tv0);
 
         TextView tv1 = new TextView(getActivity());
-        tv1.setText(" Bill Amount ");
+        tv1.setText(" Bill ");
         tv1.setTextColor(Color.BLACK);
         tv1.setPadding(2, 8, 5, 0);
            tv1.setGravity(Gravity.CENTER);

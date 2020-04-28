@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -55,10 +56,39 @@ public class BillingFragment extends Fragment {
     static List<String> productunit;
 
     public static float total;
-    Button totalbutton;
+    ImageButton totalbutton;
     TextView totalview;
     ImageButton qscanner;
+    ImageButton refreshBtn;
 
+    private void refresh(){
+        productlist.clear();
+        productcategory.clear();
+        productsubcategory.clear();
+        productbrand.clear();
+        productbuyrate.clear();
+        productmrp.clear();
+        productsku.clear();
+        productquantity.clear();
+        productsupplier.clear();
+        productunit.clear();
+        total = 0;
+        totalview.setText("");
+        arrayAdapter.notifyDataSetChanged();
+    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.frag_menu, menu);
+//        super.onCreateOptionsMenu(menu,inflater);
+//    }
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        super.onOptionsItemSelected(item);
+//        if (item.getItemId() == R.id.newBilling) {
+//           refresh();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
     public static void entry()
     {
 
@@ -141,7 +171,7 @@ public class BillingFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_billing, container, false);
-
+//        setHasOptionsMenu(true);
         final String sku = "";
         flag1 = 1;
         total=0;
@@ -164,6 +194,14 @@ public class BillingFragment extends Fragment {
         totalbutton = v.findViewById(R.id.totalbutton);
         totalview = v.findViewById(R.id.totaldisplay);
         qscanner = v.findViewById(R.id.scanner);
+
+        refreshBtn = v.findViewById(R.id.refresh);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh();
+            }
+        });
 
         final Button payment = v.findViewById(R.id.payment);
 
@@ -225,7 +263,9 @@ public class BillingFragment extends Fragment {
                 } else
                     totalview.setVisibility(View.VISIBLE);
                     totalview.setText(Float.toString(total));
-                    payment.setVisibility(View.VISIBLE);
+                    if(!productlist.isEmpty()){
+                        payment.setVisibility(View.VISIBLE);
+                    }
             }
         });
 
