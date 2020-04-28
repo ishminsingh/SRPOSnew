@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -41,6 +42,7 @@ public class BillingFragment extends Fragment {
     static ArrayAdapter<String> arrayAdapter;
     public static String sku;
     public static int flag1;
+    int change=0;
 
     static int index;
     static List<String> productname ;
@@ -166,6 +168,76 @@ public class BillingFragment extends Fragment {
         qscanner = v.findViewById(R.id.scanner);
 
         final Button payment = v.findViewById(R.id.payment);
+
+      //add nutton to choose remove or add
+        billing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (change==0)
+                {
+                    index =position;
+
+                    String tempmrp = productmrp.get(index);
+                    float tempMRP = Float.parseFloat(tempmrp.trim());
+                    total += tempMRP;
+                    String tempname = productname.get(index);
+
+                    String tempquantity = productquantity.get(index);
+                    int quantity = Integer.parseInt(tempquantity.trim());
+                    quantity++;
+                    productquantity.set(index, Integer.toString(quantity));
+
+                    tempMRP *= quantity;
+
+                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
+
+                   /* String tempproduct=productlist.get(index);
+                    String[] split= tempproduct.split("\\s");
+                    Log.i("splitting",split[1]);
+                    tempMRP+=Integer.parseInt(split[1]);
+                    String update=split[0]+(Float.toString(tempMRP));*/
+
+                    productlist.set(index, update);
+                    arrayAdapter.notifyDataSetChanged();
+
+                }
+                else
+                {
+                    index =position;
+
+                    String tempmrp = productmrp.get(index);
+                    float tempMRP = Float.parseFloat(tempmrp.trim());
+                    total -= tempMRP;
+
+
+                    String tempquantity = productquantity.get(index);
+                    int quantity = Integer.parseInt(tempquantity.trim());
+                    quantity--;
+
+                    if(quantity!=0)
+                    { String tempname = productname.get(index);
+                        productquantity.set(index, Integer.toString(quantity));
+
+                    tempMRP *= quantity;
+
+                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
+
+                   /* String tempproduct=productlist.get(index);
+                    String[] split= tempproduct.split("\\s");
+                    Log.i("splitting",split[1]);
+                    tempMRP+=Integer.parseInt(split[1]);
+                    String update=split[0]+(Float.toString(tempMRP));*/
+
+                    productlist.set(index, update);
+                    arrayAdapter.notifyDataSetChanged(); }
+                    else
+                    {
+                        //remove from all lists and listview;
+                    }
+
+                }
+            }
+        });
 
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
