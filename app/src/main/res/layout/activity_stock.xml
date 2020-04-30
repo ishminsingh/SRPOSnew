@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
     android:id="@+id/layMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="35dp">
-    <EditText
-        android:id="@+id/search"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/layTop"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search your products here"
-        android:inputType="text|textAutoComplete"
-        android:background="@drawable/btn_shape4"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:textColor="@android:color/black"
-        android:textStyle="normal"
-        android:textAllCaps="false"
-        android:layout_marginBottom="10dp"
-        tools:ignore="Autofill,HardcodedText" />
-    <ListView
-        android:background="@drawable/btn_shape4"
-        android:id="@+id/productlist"
+        xmlns:tools="http://schemas.android.com/tools">
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search your products here"
+            android:inputType="text|textAutoComplete"
+            android:background="@drawable/edit_text_shape"
+            android:gravity="center_horizontal"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"
+            android:drawableRight="@drawable/ic_search"
+            android:drawableEnd="@drawable/ic_search"
+            android:drawablePadding="5dp"
+            tools:ignore="Autofill,HardcodedText" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layMid"
+        android:layout_below="@id/layTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:padding="8dp"/>
+        android:layout_height="match_parent"
+        android:padding="8dp">
+        <ListView
+            android:background="@drawable/btn_shape4"
+            android:id="@+id/productlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"/>
+    </RelativeLayout>
 </RelativeLayout>

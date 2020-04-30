@@ -8,10 +8,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.BufferedReader;
@@ -21,9 +25,10 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private RelativeLayout relativeLayout;
     private EditText mobileNum;
     protected static String sessionCode="";
-    String mobile;
+    public static String mobile;
 
     public static class session extends AsyncTask<String,Void,String>
     {
@@ -82,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+        relativeLayout = findViewById(R.id.layMainLogin);
         mobileNum = findViewById(R.id.mobileNum);
         findViewById(R.id.contBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,11 +117,25 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else {
-                        Toast.makeText(LoginActivity.this, "USER NOT REGISTERED", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "USER NOT REGISTERED", Toast.LENGTH_SHORT).show();
+                        showSnackbar();
                     }
                 }
             }
         });
+    }
+    public void showSnackbar(){
+        Snackbar snackbar = Snackbar.make(relativeLayout,"Phone number not registered", Snackbar.LENGTH_LONG);
+        snackbar.show();
+        View snackView = snackbar.getView();
+        TextView textView = snackView.findViewById(com.google.android.material.R.id.snackbar_text);
+        snackView.setBackgroundColor(ContextCompat.getColor(LoginActivity.this,R.color.white));
+        textView.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.red));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        else
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+        snackbar.show();
     }
     @Override
     protected void onStart() {
