@@ -42,7 +42,7 @@ public class BillingFragment extends Fragment {
     static ArrayAdapter<String> arrayAdapter;
     public static String sku;
     public static int flag1;
-    int change=0;
+    int change;
 
     static int index;
     static List<String> productname ;
@@ -60,6 +60,7 @@ public class BillingFragment extends Fragment {
     Button totalbutton;
     TextView totalview;
     ImageButton qscanner;
+    Button reverse;
 
     public static void entry()
     {
@@ -147,8 +148,9 @@ public class BillingFragment extends Fragment {
         final String sku = "";
         flag1 = 1;
         total=0;
+        change=0;
         //textView = v.findViewById(R.id.txtView);
-
+       reverse=v.findViewById(R.id.change);
         productlist = new ArrayList<String>();
          productname = new ArrayList<String>();
          productcategory = new ArrayList<String>();
@@ -169,7 +171,22 @@ public class BillingFragment extends Fragment {
 
         final Button payment = v.findViewById(R.id.payment);
 
-      //add nutton to choose remove or add
+        reverse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (change==0)
+                {
+                    change=1;
+                    reverse.setText("add item by click");
+                }
+                else
+                {
+                    change=0;
+                reverse.setText("remove item by click");
+                }
+            }
+        });
+      //add button to choose remove or add
         billing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -215,6 +232,7 @@ public class BillingFragment extends Fragment {
                     quantity--;
 
                     if(quantity!=0)
+
                     { String tempname = productname.get(index);
                         productquantity.set(index, Integer.toString(quantity));
 
@@ -232,6 +250,21 @@ public class BillingFragment extends Fragment {
                     arrayAdapter.notifyDataSetChanged(); }
                     else
                     {
+                        productname.remove(index);
+                        productcategory.remove(index);
+                        productsubcategory.remove(index);
+                        productbrand.remove(index);
+                        productmrp.remove(index);
+                        productsku.remove(index);
+                        productsupplier.remove(index);
+                        productunit.remove(index);
+                        productbuyrate.remove(index);
+
+                        productquantity.remove(index);
+
+
+                        productlist.remove(index);
+                        arrayAdapter.notifyDataSetChanged();
                         //remove from all lists and listview;
                     }
 

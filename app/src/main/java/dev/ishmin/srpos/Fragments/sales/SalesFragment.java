@@ -153,9 +153,15 @@ Button change;
             @Override
             public void onClick(View v) {
                 if(flag==0)
-                Solditems(datefrom,dateto);
+                {
+                    Solditems(datefrom,dateto);
+                    change.setText("View Sales");
+                }
                else
-                   Sales(datefrom,dateto);
+                {
+                    Sales(datefrom,dateto);
+                    change.setText("View Sold items");
+                }
 
             }
         });
