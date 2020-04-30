@@ -15,13 +15,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import dev.ishmin.srpos.Fragments.billing.BillingFragment;
 import dev.ishmin.srpos.MainActivity;
-import dev.ishmin.srpos.PurchaseNewItem;
 import dev.ishmin.srpos.R;
 import dev.ishmin.srpos.ScannerActivity;
 
@@ -36,7 +37,8 @@ public class PurchaseFragment extends Fragment {
    static EditText units;
     static EditText quantity;
    static EditText supplier;
-    Button purchase;
+
+    ImageButton purchase;
     ImageButton qscanner;
     public static String scannerresult;
    static int flag;
@@ -173,13 +175,14 @@ BillingFragment.flag1=0;
                             MainActivity.SRPOS.execSQL("UPDATE Products1 SET stock= "+newstock+" WHERE sku="+Long.parseLong(scannerresult) );
                             flag=0;
                         }
-                         Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT).show();
-
+                         //Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(getActivity(),"Product added", R.style.toastDesign).show();
                     }
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                        Toast.makeText(getActivity(),"Invalid entry",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"Invalid entry",Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(getActivity(),"Invalid entry", R.style.toastDesign).show();
                     }
 
                 }

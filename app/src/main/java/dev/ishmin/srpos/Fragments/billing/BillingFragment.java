@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,10 +59,27 @@ public class BillingFragment extends Fragment {
     static List<String> productunit;
 
     public static float total;
-    Button totalbutton;
+    ImageButton totalbutton;
     TextView totalview;
     ImageButton qscanner;
+    ImageButton refreshBtn;
     Button reverse;
+
+    private void refresh(){
+        productlist.clear();
+        productcategory.clear();
+        productsubcategory.clear();
+        productbrand.clear();
+        productbuyrate.clear();
+        productmrp.clear();
+        productsku.clear();
+        productquantity.clear();
+        productsupplier.clear();
+        productunit.clear();
+        total = 0;
+        totalview.setText("");
+        arrayAdapter.notifyDataSetChanged();
+    }
 
     public static void entry()
     {
@@ -168,6 +187,14 @@ public class BillingFragment extends Fragment {
         totalbutton = v.findViewById(R.id.totalbutton);
         totalview = v.findViewById(R.id.totaldisplay);
         qscanner = v.findViewById(R.id.scanner);
+
+        refreshBtn = v.findViewById(R.id.refresh);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh();
+            }
+        });
 
         final Button payment = v.findViewById(R.id.payment);
 
@@ -317,7 +344,8 @@ public class BillingFragment extends Fragment {
                }
                else
                    {
-                       Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
+                       //Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
+                       StyleableToast.makeText(getActivity(),"List Empty", R.style.toastDesign).show();
                    }
             }
         });
@@ -326,9 +354,14 @@ public class BillingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (productlist.isEmpty()) {
-                    Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(getActivity(),"Please scan", R.style.toastDesign).show();
                 } else
-                    totalview.setText(Float.toString(total));
+                    totalview.setVisibility(View.VISIBLE);
+                totalview.setText(Float.toString(total));
+                if(!productlist.isEmpty()){
+                    payment.setVisibility(View.VISIBLE);
+                }
             }
         });
 

@@ -20,7 +20,5 @@ public class PaymentsPieChart extends AppCompatActivity {
         setContentView(R.layout.tryout);
         pieChart = findViewById(R.id.PieChart);
 
-        pieChart.setDescription("Payments (In Rupees ₹)");
-
     }
 }
