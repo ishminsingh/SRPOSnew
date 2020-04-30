@@ -194,20 +194,30 @@
         android:id="@+id/layEnd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="5dp"
         android:layout_alignParentBottom="true">
-        <Button
+        <ImageButton
             android:id="@+id/purchase"
+            android:src="@drawable/ic_rupee_icon"
+            android:background="@drawable/custom_btn_shape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_btn_shape"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:padding="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            tools:ignore="ContentDescription"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Purchase"
+            android:textSize="12sp"
             android:textAllCaps="false"
             android:textStyle="normal"
-            android:textColor="@color/gd2"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            tools:ignore="HardcodedText"/>
+            android:layout_below="@id/purchase"
+            android:layout_marginTop="1dp"
+            tools:ignore="HardcodedText" />
         <ImageButton
             android:clickable="true"
             android:focusable="true"
@@ -220,17 +230,19 @@
             android:layout_alignParentEnd="true"
             android:padding="10dp"
             tools:ignore="ContentDescription"/>
-<!--        <Button-->
-<!--            android:id="@+id/scanner"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/custom_btn_shape"-->
-<!--            android:text="Scan"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:textStyle="normal"-->
-<!--            android:textColor="@color/gd2"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            tools:ignore="HardcodedText"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:layout_below="@id/scanner"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="1dp"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 </RelativeLayout>

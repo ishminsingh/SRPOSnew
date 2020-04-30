@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -322,7 +324,8 @@ public class BillingFragment extends Fragment {
                }
                else
                    {
-                       Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
+                       //Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
+                       StyleableToast.makeText(getActivity(),"List Empty", R.style.toastDesign).show();
                    }
             }
         });
@@ -331,7 +334,8 @@ public class BillingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (productlist.isEmpty()) {
-                    Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(getActivity(),"Please scan", R.style.toastDesign).show();
                 } else
                     totalview.setVisibility(View.VISIBLE);
                     totalview.setText(Float.toString(total));

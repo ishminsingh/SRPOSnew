@@ -1,5 +1,6 @@
 package dev.ishmin.srpos.Fragments.sales;
 
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,12 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import dev.ishmin.srpos.MainActivity;
 import dev.ishmin.srpos.R;
@@ -136,12 +143,55 @@ public class SalesFragment extends Fragment {
         }
 flag=0;
     }
-Button change;
+
+    Button change;
     int flag;
+    final Calendar myCalendar = Calendar.getInstance();
+    EditText editText1;
+    EditText editText2;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sales, container, false);
         //return inflater.inflate(R.layout.fragment_sales, container, false);
       // v.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        editText1 = v.findViewById(R.id.from);
+        editText2 = v.findViewById(R.id.to);
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+        };
+        final DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel2();
+            }
+        };
+        editText1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        editText2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getActivity(), date2, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         stk  = (TableLayout) v.findViewById(R.id.table_main);
 
         final String datefrom="";
@@ -152,14 +202,26 @@ Button change;
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag==0)
-                Solditems(datefrom,dateto);
-               else
-                   Sales(datefrom,dateto);
-
+                if(flag==0) {
+                    Solditems(datefrom, dateto);
+                    change.setText("Show sales");
+                } else {
+                    Sales(datefrom, dateto);
+                    change.setText("Show sold items");
+                }
             }
         });
         return v;
+    }
+    private void updateLabel() {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+        editText1.setText(sdf.format(myCalendar.getTime()));
+    }
+    private void updateLabel2() {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+        editText2.setText(sdf.format(myCalendar.getTime()));
     }
 
     public void Solditems(String from,String to)

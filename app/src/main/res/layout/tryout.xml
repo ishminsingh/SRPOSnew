@@ -1,20 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:padding="25dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_lay"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:background="@drawable/btn_shape4"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="8dp">
+        <RelativeLayout
+            android:padding="10dp"
+            android:background="@drawable/cardview_grad1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="email"
-            android:inputType="textEmailAddress"/>
-    </com.google.android.material.textfield.TextInputLayout>
-</RelativeLayout>
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img012"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/background_white"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_alert" />
+            <TextView
+                android:id="@+id/txt012"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Stock alert!"
+                android:textSize="24dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="//Display stock information here"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textStyle="italic"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="8dp">
+        <RelativeLayout
+            android:padding="10dp"
+            android:background="@drawable/cardview_grad2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/txt010"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:text="Sales Report"
+                    android:textSize="24dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/white"/>
+                <ImageView
+                    android:id="@+id/img010"
+                    android:layout_above="@id/txt010"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_white"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_trending_sales_black_24dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_white"
+                    android:layout_alignParentBottom="true"
+                    android:text="Click here to open sales graph!"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textStyle="italic"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardCornerRadius="8dp">
+        <RelativeLayout
+            android:padding="10dp"
+            android:background="@drawable/cardview_grad3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txt011"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:text="Payments"
+                android:textSize="24dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@android:color/white"/>
+            <ImageView
+                android:id="@+id/img011"
+                android:layout_above="@id/txt011"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_white"
+                android:padding="5dp"
+                android:src="@drawable/ic_receipt_black_24dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_white"
+                android:layout_alignParentBottom="true"
+                android:text="Click here to open payments chart!"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textStyle="italic"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
