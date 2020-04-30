@@ -11,83 +11,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
-        <ImageButton
+
+        <Button
             android:id="@+id/totalbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:background="@drawable/custom_btn_shape"
+            android:text="@string/totalTxt"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:textColor="@color/gd2"
             android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/custom_btn_shape"
+            android:layout_alignParentStart="true"
             android:clickable="true"
             android:focusable="true"
-            android:padding="5dp"
-            android:src="@drawable/ic_letter_t_24dp"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/totalbutton"
-            android:text="Total"
-            android:textSize="12sp"
-            android:textAllCaps="false"
-            android:textStyle="normal"
-            android:layout_marginLeft="14dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="1dp"
-            tools:ignore="HardcodedText" />
-       <ImageButton
-           android:id="@+id/refresh"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentTop="true"
-           android:layout_centerHorizontal="true"
-           android:layout_centerInParent="true"
-           android:src="@drawable/ic_refresh_24dp"
-           android:background="@drawable/custom_btn_shape"
-           android:padding="5dp"
-           android:clickable="true"
-           android:focusable="true"
-           tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/refresh"
-            android:text="New bill"
-            android:textSize="12sp"
-            android:textAllCaps="false"
-            android:textStyle="normal"/>
+            tools:ignore="RelativeOverlap" />
+<!--        <TextView-->
+<!--            android:id="@+id/text0"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Use scanner for efficient billing"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textAllCaps="false"-->
+<!--            tools:ignore="HardcodedText"/>-->
         <ImageButton
-            android:id="@+id/scanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/custom_btn_shape"
             android:clickable="true"
             android:focusable="true"
-            android:padding="5dp"
+            android:id="@+id/scanner"
             android:src="@drawable/ic_barcode"
-            tools:ignore="ContentDescription" />
-        <TextView
+            android:background="@drawable/custom_btn_shape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/scanner"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:text="Scan"
-            android:textSize="12sp"
-            android:textAllCaps="false"
-            android:textStyle="normal"
-            android:layout_marginRight="14dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginTop="1dp"/>
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            tools:ignore="ContentDescription" />
+<!--        <Button-->
+<!--            android:id="@+id/scanner"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/btn_shape3"-->
+<!--            android:text="@string/scanTxt"-->
+<!--            android:textSize="12sp"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            tools:ignore="RelativeOverlap" />-->
     </RelativeLayout>
    <RelativeLayout
        android:id="@+id/layEnd"
@@ -95,13 +74,13 @@
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:padding="10dp">
+
        <TextView
-           android:visibility="invisible"
            android:id="@+id/totaldisplay"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_centerInParent="true"
-           android:text="..."
+           android:text="The total is = "
            android:textSize="16sp"
            android:textStyle="normal"
            android:textAllCaps="false"
@@ -109,7 +88,6 @@
            tools:ignore="HardcodedText"/>
 
        <Button
-           android:visibility="invisible"
            android:id="@+id/payment"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"

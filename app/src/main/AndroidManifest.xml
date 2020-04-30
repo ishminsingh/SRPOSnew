@@ -15,9 +15,9 @@
         tools:targetApi="m">
         <activity android:name=".Stock"></activity>
         <activity android:name=".ScannerActivity" />
-        <activity android:name=".Payment"/>
-        <activity android:name=".Billing"/>
-        <activity android:name=".Products"/>
+        <activity android:name=".Payment" />
+        <activity android:name=".Billing" />
+        <activity android:name=".Products" />
         <activity
             android:name=".VerifyOtpActivity"
             android:theme="@style/splashScreen" />

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,8 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-
-import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class BillingFragment extends Fragment {
     static ArrayAdapter<String> arrayAdapter;
     public static String sku;
     public static int flag1;
-    int change=0;
+    int change;
 
     static int index;
     static List<String> productname ;
@@ -60,39 +57,11 @@ public class BillingFragment extends Fragment {
     static List<String> productunit;
 
     public static float total;
-    ImageButton totalbutton;
+    Button totalbutton;
     TextView totalview;
     ImageButton qscanner;
-    ImageButton refreshBtn;
+    Button reverse;
 
-    private void refresh(){
-        productlist.clear();
-        productcategory.clear();
-        productsubcategory.clear();
-        productbrand.clear();
-        productbuyrate.clear();
-        productmrp.clear();
-        productsku.clear();
-        productquantity.clear();
-        productsupplier.clear();
-        productunit.clear();
-        total = 0;
-        totalview.setText("");
-        arrayAdapter.notifyDataSetChanged();
-    }
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.frag_menu, menu);
-//        super.onCreateOptionsMenu(menu,inflater);
-//    }
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        super.onOptionsItemSelected(item);
-//        if (item.getItemId() == R.id.newBilling) {
-//           refresh();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
     public static void entry()
     {
 
@@ -175,12 +144,13 @@ public class BillingFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_billing, container, false);
-//        setHasOptionsMenu(true);
+
         final String sku = "";
         flag1 = 1;
         total=0;
+        change=0;
         //textView = v.findViewById(R.id.txtView);
-
+       reverse=v.findViewById(R.id.change);
         productlist = new ArrayList<String>();
          productname = new ArrayList<String>();
          productcategory = new ArrayList<String>();
@@ -199,17 +169,24 @@ public class BillingFragment extends Fragment {
         totalview = v.findViewById(R.id.totaldisplay);
         qscanner = v.findViewById(R.id.scanner);
 
-        refreshBtn = v.findViewById(R.id.refresh);
-        refreshBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refresh();
-            }
-        });
-
         final Button payment = v.findViewById(R.id.payment);
 
-      //add nutton to choose remove or add
+        reverse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (change==0)
+                {
+                    change=1;
+                    reverse.setText("add item by click");
+                }
+                else
+                {
+                    change=0;
+                reverse.setText("remove item by click");
+                }
+            }
+        });
+      //add button to choose remove or add
         billing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -255,6 +232,7 @@ public class BillingFragment extends Fragment {
                     quantity--;
 
                     if(quantity!=0)
+
                     { String tempname = productname.get(index);
                         productquantity.set(index, Integer.toString(quantity));
 
@@ -272,6 +250,21 @@ public class BillingFragment extends Fragment {
                     arrayAdapter.notifyDataSetChanged(); }
                     else
                     {
+                        productname.remove(index);
+                        productcategory.remove(index);
+                        productsubcategory.remove(index);
+                        productbrand.remove(index);
+                        productmrp.remove(index);
+                        productsku.remove(index);
+                        productsupplier.remove(index);
+                        productunit.remove(index);
+                        productbuyrate.remove(index);
+
+                        productquantity.remove(index);
+
+
+                        productlist.remove(index);
+                        arrayAdapter.notifyDataSetChanged();
                         //remove from all lists and listview;
                     }
 
@@ -324,8 +317,7 @@ public class BillingFragment extends Fragment {
                }
                else
                    {
-                       //Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
-                       StyleableToast.makeText(getActivity(),"List Empty", R.style.toastDesign).show();
+                       Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
                    }
             }
         });
@@ -334,14 +326,9 @@ public class BillingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (productlist.isEmpty()) {
-                    //Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
-                    StyleableToast.makeText(getActivity(),"Please scan", R.style.toastDesign).show();
+                    Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
                 } else
-                    totalview.setVisibility(View.VISIBLE);
                     totalview.setText(Float.toString(total));
-                    if(!productlist.isEmpty()){
-                        payment.setVisibility(View.VISIBLE);
-                    }
             }
         });
 

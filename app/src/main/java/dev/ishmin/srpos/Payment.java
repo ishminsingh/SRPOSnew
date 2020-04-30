@@ -12,8 +12,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.muddzdev.styleabletoastlibrary.StyleableToast;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -58,8 +56,7 @@ public class Payment extends AppCompatActivity {
                     try
                     {
                         MainActivity.SRPOS.execSQL("INSERT INTO Sales(customerno,date,billamount,discount,status)VALUES(" + Long.parseLong(cno.getText().toString()) + ",'" + date + "'," + BillingFragment.total + "," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "')");
-                        //Toast.makeText(Payment.this, "Payment Made", Toast.LENGTH_SHORT).show();
-                        StyleableToast.makeText(Payment.this,"Payment Made", R.style.toastDesign).show();
+                        Toast.makeText(Payment.this, "Payment Made", Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     } catch (Exception e)
                     {
@@ -68,8 +65,7 @@ public class Payment extends AppCompatActivity {
                 }
                 else
                     {
-                    //Toast.makeText(Payment.this, "invalid entry", Toast.LENGTH_SHORT).show();
-                    StyleableToast.makeText(Payment.this,"Invalid entry", R.style.toastDesign).show();
+                    Toast.makeText(Payment.this, "invalid entry", Toast.LENGTH_SHORT).show();
                     }
             }
             catch(Exception e)
