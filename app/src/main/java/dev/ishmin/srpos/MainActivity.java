@@ -22,6 +22,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import dev.ishmin.srpos.Fragments.Products.ProductsFragment;
+import dev.ishmin.srpos.Fragments.billing.BillingFragment;
 import dev.ishmin.srpos.Fragments.dashboard.DashboardFragment;
 import dev.ishmin.srpos.Fragments.expenses.ExpensesFragment;
 import dev.ishmin.srpos.Fragments.purchase.PurchaseFragment;
@@ -62,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new DashboardFragment()).commit();
-            navigationView.setCheckedItem(R.id.dashboardFragment);
-        }
+//        if(savedInstanceState == null){
+//            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new DashboardFragment()).commit();
+//            navigationView.setCheckedItem(R.id.dashboardFragment);
+//        }
     }
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, AppBarConfiguration);
 //        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        return NavigationUI.navigateUp(navController, AppBarConfiguration)
-//                || super.onSupportNavigateUp();
+//                 super.onSupportNavigateUp();
     }
     @Override
     public void onBackPressed() {
@@ -102,15 +104,18 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-//    @Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //        switch(item.getItemId()){
+//            case R.id.dashboardFragment:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new DashboardFragment()).commit();
 //            case R.id.billingFragment:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SalesFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new BillingFragment()).commit();
 //            case R.id.productsFragment:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PurchaseFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProductsFragment()).commit();
 //            case R.id.salesFragment:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ExpensesFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SalesFragment()).commit();
+//            case R.id.purchaseFragment:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PurchaseFragment()).commit();
 //        }
 //        drawer.closeDrawer(GravityCompat.START);
 //        return true;
