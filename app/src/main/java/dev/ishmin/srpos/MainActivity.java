@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.widget.TextView;
 
 
 import com.google.android.material.navigation.NavigationView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
 
     public static SQLiteDatabase SRPOS;
+    TextView txtview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, AppBarConfiguration);
+        txtview = navigationView.getHeaderView(0).findViewById(R.id.phNum);
+        txtview.setText(LoginActivity.mobile);
 
 //        navigationView.setNavigationItemSelectedListener(this);
 
@@ -59,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new DashboardFragment()).commit();
-            navigationView.setCheckedItem(R.id.dashboardFragment);
-        }
+//        if(savedInstanceState == null){
+//            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new DashboardFragment()).commit();
+//            navigationView.setCheckedItem(R.id.dashboardFragment);
+//        }
     }
     @Override
     public boolean onSupportNavigateUp() {
