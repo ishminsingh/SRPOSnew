@@ -33,6 +33,7 @@ public class SalesFragment extends Fragment {
     public void Sales(String from,String to)
     {
        try{
+
            stk.removeAllViews();
         TableRow tbrow = new TableRow(getActivity());
         TextView tv0 = new TextView(getActivity());
@@ -80,7 +81,7 @@ public class SalesFragment extends Fragment {
         try
 
         {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Sales WHERE date BETWEEN '"+to+"'AND '"+from+"'", null);
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Sales WHERE date BETWEEN '"+from+"'AND '"+to+"'", null);
             int no = c.getColumnIndex("customerno");
             int amount = c.getColumnIndex("billamount");
             int discount = c.getColumnIndex("discount");
@@ -105,6 +106,7 @@ public class SalesFragment extends Fragment {
                 tv01.setTextColor(Color.BLACK);
                 tv01.setPadding(2, 5, 5, 0);
                 tbrow0.addView(tv01);
+
                 TextView tv11 = new TextView(getActivity());
                 tv11.setText(Float.toString(c.getFloat(amount)));
                 tv11.setGravity(Gravity.CENTER);
@@ -148,7 +150,10 @@ Button change;
     final Calendar myCalendar = Calendar.getInstance();
     EditText editText1;
     EditText editText2;
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+     String datefrom;
+     String dateto;
+
+     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sales, container, false);
         //return inflater.inflate(R.layout.fragment_sales, container, false);
       // v.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -194,8 +199,8 @@ Button change;
 
         stk  = (TableLayout) v.findViewById(R.id.table_main);
 
-        final String datefrom="";
-        final String dateto="";
+         datefrom="";
+         dateto="";
         Sales(datefrom,dateto);
         change=v.findViewById(R.id.change);
         flag=0;
@@ -215,18 +220,22 @@ Button change;
 
             }
         });
+
         return v;
     }
 
     private void updateLabel() {
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
         editText1.setText(sdf.format(myCalendar.getTime()));
+        datefrom=editText1.getText().toString();
     }
     private void updateLabel2() {
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
         editText2.setText(sdf.format(myCalendar.getTime()));
+        dateto=editText2.getText().toString();
+        Sales(datefrom,dateto);
     }
 
     public void Solditems(String from,String to)
@@ -278,7 +287,7 @@ Button change;
 
 
         {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Solditems WHERE date BETWEEN '"+to+"'AND '"+from+"'", null);
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Solditems WHERE date BETWEEN '"+from+"'AND '"+to+"'", null);
             int name = c.getColumnIndex("name");
             int mrp = c.getColumnIndex("mrp");
             int quantity = c.getColumnIndex("quantity");
@@ -330,6 +339,7 @@ Button change;
                 tv41.setPadding(2, 6, 5, 0);
                 tv41.setTextColor(Color.BLACK);
                 tbrow0.addView(tv41);
+
                 stk.addView(tbrow0);
                 c.moveToNext();
             }
