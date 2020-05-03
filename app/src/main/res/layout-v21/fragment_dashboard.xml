@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="25dp">
+    android:padding="20dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewAlert"
@@ -105,48 +105,19 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewPayments"
         android:layout_width="match_parent"
-        android:layout_marginBottom="12dp"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         app:cardCornerRadius="8dp">
         <RelativeLayout
-            android:id="@+id/LayPaymentsGraph"
-            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/cardview_grad3"
+            android:padding="5dp">
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/PieChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/txt14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:text="Payments"
-                android:textSize="24sp"
-                android:layout_marginTop="5dp"
-                android:textColor="@android:color/white"
-                tools:ignore="HardcodedText" />
-            <ImageView
-                android:id="@+id/icPayments"
-                android:layout_above="@id/txt14"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_white"
-                android:padding="5dp"
-                android:src="@drawable/ic_receipt"
-                tools:ignore="ContentDescription" />
-            <TextView
-                android:id="@+id/txt15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_white"
-                android:layout_alignParentBottom="true"
-                android:text="Click here to open payments graph!"
-                android:gravity="center"
-                android:textColor="#5B86E5"
-                android:textStyle="italic"
-                tools:ignore="HardcodedText" />
+        </com.github.mikephil.charting.charts.PieChart>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

@@ -4,9 +4,21 @@
     <item>
         <shape>
             <gradient
-                android:startColor="#5B86E5"
-                android:endColor="#36D1DC"
+                android:startColor="#eef2f3"
+                android:centerColor="#ffffff"
+                android:endColor="#eef2f3"
                 android:angle="90"/>
         </shape>
     </item>
 </selector>
+<!--<selector-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item>-->
+<!--        <shape>-->
+<!--            <gradient-->
+<!--                android:startColor="#5B86E5"-->
+<!--                android:endColor="#36D1DC"-->
+<!--                android:angle="90"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--</selector>-->

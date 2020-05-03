@@ -5,13 +5,10 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="15dp">
-
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/PieChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </com.github.mikephil.charting.charts.PieChart>
-
-
 </RelativeLayout>

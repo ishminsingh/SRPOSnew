@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -47,13 +48,13 @@ public class CustomAdapter extends BaseAdapter
 
 
         // get the reference of textView and button
-        final TextView textView = (TextView) view.findViewById(R.id.txtSchoolTitle);
-        Button plus = (Button) view.findViewById(R.id.btnplus);
-        Button minus = (Button) view.findViewById(R.id.btnminus);
+        final TextView textView = view.findViewById(R.id.txtSchoolTitle);
+        ImageButton plus = view.findViewById(R.id.btnplus);
+        ImageButton minus = view.findViewById(R.id.btnminus);
 
         // Set the title and button name
        textView.setText(mArrSchoolData.get(position));
-        plus.setText("Action " + position);
+//        plus.setText("Action " + position);
 
         // Click listener of button
         plus.setOnClickListener(new View.OnClickListener()

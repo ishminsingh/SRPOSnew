@@ -1,17 +1,10 @@
-package dev.ishmin.srpos.Fragments.dashboard;
+package dev.ishmin.srpos;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -19,44 +12,33 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-import dev.ishmin.srpos.Payment;
-import dev.ishmin.srpos.PaymentsPieChart;
 import dev.ishmin.srpos.R;
 
-public class DashboardFragment extends Fragment {
-
-    private CardView cardAlert;
-    private CardView cardSales;
-    private CardView cardPayments;
-    private CardView cardChart;
-
+public class PaymentsPieChart extends AppCompatActivity {
 
     private int[] yData = {10, 2};
     private String[] xData = {"Paid", "UnPaid"};
     int[] legendColors = new int[] {Color.MAGENTA, Color.YELLOW};
     PieChart pieChart;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.tryout);
+        pieChart = findViewById(R.id.PieChart);
 
-        cardPayments = v.findViewById(R.id.cardViewPayments);
-        pieChart = v.findViewById(R.id.PieChart);
         pieChart.getDescription().setText("Payments");
         pieChart.setRotationEnabled(true);
         pieChart.setHoleRadius(20f);
         pieChart.setTransparentCircleAlpha(0);
-        //pieChart.setCenterText("Payments");
-        //pieChart.setCenterTextSize(10);
+        pieChart.setCenterText("Payments");
+        pieChart.setCenterTextSize(10);
         pieChart.animateY(1000);
         addDataSet();
-
-        cardAlert = v.findViewById(R.id.cardViewAlert);
-        cardSales = v.findViewById(R.id.cardViewSales);
-
-        return v;
     }
 
     private void addDataSet() {
@@ -73,7 +55,7 @@ public class DashboardFragment extends Fragment {
         //create pie dataSet
         PieDataSet pieDataSet = new PieDataSet(yEntry, "");
         pieDataSet.setSliceSpace(2);
-        pieDataSet.setValueTextSize(10);
+        pieDataSet.setValueTextSize(12);
 
         //add colors to dataSet
         ArrayList<Integer> colors = new ArrayList<>();
@@ -86,7 +68,7 @@ public class DashboardFragment extends Fragment {
         legend.setEnabled(true);
         legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setFormSize(10f);
-        legend.setTextSize(10f);
+        legend.setTextSize(12f);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
