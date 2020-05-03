@@ -1,5 +1,6 @@
 package dev.ishmin.srpos.Fragments.billing;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -57,6 +59,7 @@ public class BillingFragment extends Fragment {
     static List<String> productquantity;
     static List<String> productsupplier ;
     static List<String> productunit;
+    static CustomAdapter myCustomAdapter;
 
     public static float total;
     ImageButton totalbutton;
@@ -78,7 +81,8 @@ public class BillingFragment extends Fragment {
         productunit.clear();
         total = 0;
         totalview.setText("");
-        arrayAdapter.notifyDataSetChanged();
+      //  arrayAdapter.notifyDataSetChanged();
+        myCustomAdapter.notifyDataSetChanged();
     }
 
     public static void entry()
@@ -109,7 +113,8 @@ public class BillingFragment extends Fragment {
                     String update=split[0]+(Float.toString(tempMRP));*/
 
             productlist.set(index, update);
-            arrayAdapter.notifyDataSetChanged();
+            //arrayAdapter.notifyDataSetChanged();
+            myCustomAdapter.notifyDataSetChanged();
         }
         else
             {
@@ -149,7 +154,8 @@ public class BillingFragment extends Fragment {
                     total += c.getFloat(mrp);
                     String newitem = c.getString(name) + "  1   " + Float.toString(c.getFloat(mrp));
                     productlist.add(newitem);
-                    arrayAdapter.notifyDataSetChanged();
+                   // arrayAdapter.notifyDataSetChanged();
+                    myCustomAdapter.notifyDataSetChanged();
                     c.moveToNext();
                 }
 
@@ -182,8 +188,12 @@ public class BillingFragment extends Fragment {
        productsupplier = new ArrayList<String>();
          productunit = new ArrayList<String>();
         billing = v.findViewById(R.id.billinglist);
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
-        billing.setAdapter(arrayAdapter);
+      //  arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
+        //billing.setAdapter(arrayAdapter);
+     myCustomAdapter=new CustomAdapter(getContext(),productlist);
+       // arrayAdapter= new CustomAdapter(getContext(),productlist);
+        billing.setAdapter(myCustomAdapter);
+       // billing.setAdapter(new CustomAdapter(getActivity(),productlist));
         totalbutton = v.findViewById(R.id.totalbutton);
         totalview = v.findViewById(R.id.totaldisplay);
         qscanner = v.findViewById(R.id.scanner);
@@ -242,7 +252,8 @@ public class BillingFragment extends Fragment {
                     String update=split[0]+(Float.toString(tempMRP));*/
 
                     productlist.set(index, update);
-                    arrayAdapter.notifyDataSetChanged();
+                   // arrayAdapter.notifyDataSetChanged();
+                    myCustomAdapter.notifyDataSetChanged();
 
                 }
                 else
@@ -274,7 +285,9 @@ public class BillingFragment extends Fragment {
                     String update=split[0]+(Float.toString(tempMRP));*/
 
                     productlist.set(index, update);
-                    arrayAdapter.notifyDataSetChanged(); }
+                   // arrayAdapter.notifyDataSetChanged();
+                        myCustomAdapter.notifyDataSetChanged();
+                    }
                     else
                     {
                         productname.remove(index);
@@ -291,7 +304,8 @@ public class BillingFragment extends Fragment {
 
 
                         productlist.remove(index);
-                        arrayAdapter.notifyDataSetChanged();
+                      //  arrayAdapter.notifyDataSetChanged();
+                        myCustomAdapter.notifyDataSetChanged();
                         //remove from all lists and listview;
                     }
 
@@ -378,3 +392,6 @@ public class BillingFragment extends Fragment {
         return v;
     }
 }
+
+
+

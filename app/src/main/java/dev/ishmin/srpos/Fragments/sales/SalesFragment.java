@@ -154,6 +154,7 @@ Button change;
      String dateto;
 
      public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_sales, container, false);
         //return inflater.inflate(R.layout.fragment_sales, container, false);
       // v.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -199,7 +200,7 @@ Button change;
 
         stk  = (TableLayout) v.findViewById(R.id.table_main);
 
-         datefrom="";
+        datefrom="";
          dateto="";
         Sales(datefrom,dateto);
         change=v.findViewById(R.id.change);
@@ -228,14 +229,41 @@ Button change;
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
         editText1.setText(sdf.format(myCalendar.getTime()));
+
         datefrom=editText1.getText().toString();
+        if(flag==0)
+        {
+            if (!editText2.getText().toString().equals(""))
+            {
+                Sales(datefrom, dateto);
+            }
+        }
+        else
+        {
+            if (!editText2.getText().toString().equals(""))
+            {
+                Solditems(datefrom, dateto);
+            }
+        }
+
     }
     private void updateLabel2() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
         editText2.setText(sdf.format(myCalendar.getTime()));
+
         dateto=editText2.getText().toString();
-        Sales(datefrom,dateto);
+
+      if  (flag==0){
+
+          if (!editText1.getText().toString().equals(""))
+             Sales(datefrom,dateto);
+      }
+      else
+      {
+          if (!editText1.getText().toString().equals(""))
+             Solditems(datefrom,dateto);
+      }
     }
 
     public void Solditems(String from,String to)
