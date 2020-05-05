@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private NavController navController;
+
     public static SQLiteDatabase SRPOS;
     TextView txtview;
 

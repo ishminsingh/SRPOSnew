@@ -17,6 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="m">
+        <activity android:name=".TryOutFile"/>
         <activity android:name=".Stock" />
         <activity android:name=".ScannerActivity" />
         <activity android:name=".Payment" />
