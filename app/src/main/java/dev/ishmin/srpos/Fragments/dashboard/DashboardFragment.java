@@ -23,10 +23,12 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
 
+
 import dev.ishmin.srpos.MainActivity;
-import dev.ishmin.srpos.Payment;
-import dev.ishmin.srpos.PaymentsPieChart;
+//import dev.ishmin.srpos.Payment;
+//import dev.ishmin.srpos.PieChart;
 import dev.ishmin.srpos.R;
+//import dev.ishmin.srpos.TryOutFile;
 
 public class DashboardFragment extends Fragment {
 
@@ -35,7 +37,6 @@ public class DashboardFragment extends Fragment {
     private CardView cardPayments;
     private CardView cardChart;
 
-
     private int[] yData;
     private String[] xData=  {"Paid Percentage", "Unpaid Percentage"};
     int[] legendColors = new int[] {Color.MAGENTA, Color.YELLOW};
@@ -43,6 +44,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        cardAlert = v.findViewById(R.id.cardViewAlert);
 
         cardPayments = v.findViewById(R.id.cardViewPayments);
         pieChart = v.findViewById(R.id.PieChart);
@@ -86,7 +88,7 @@ public class DashboardFragment extends Fragment {
 
        addDataSet();
 
-        cardAlert = v.findViewById(R.id.cardViewAlert);
+
         cardSales = v.findViewById(R.id.cardViewSales);
 
 
@@ -94,6 +96,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void addDataSet() {
+
         ArrayList<PieEntry> yEntry = new ArrayList<>();
         ArrayList<String> xEntry = new ArrayList<>();
 
@@ -143,4 +146,5 @@ public class DashboardFragment extends Fragment {
         pieChart.setData(pieData);
         pieChart.invalidate();
     }
+
 }
