@@ -1,11 +1,15 @@
 package dev.ishmin.srpos.Fragments.dashboard;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -15,13 +19,20 @@ import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
-
 import java.util.ArrayList;
 
+
+import dev.ishmin.srpos.MainActivity;
+//import dev.ishmin.srpos.Payment;
+//import dev.ishmin.srpos.PieChart;
 import dev.ishmin.srpos.R;
 import dev.ishmin.srpos.TryOutFile;
 
@@ -32,9 +43,8 @@ public class DashboardFragment extends Fragment {
     private CardView cardSales;
     private CardView cardPayments;
 
-
-    private int[] yData = {10, 2};
-    private String[] xData = {"Paid", "UnPaid"};
+    private float[] yData=new float[2];
+    private String[] xData=  {"Paid Percentage", "Unpaid Percentage"};
     int[] legendColors = new int[] {Color.MAGENTA, Color.YELLOW};
     PieChart pieChart;
 
@@ -51,8 +61,45 @@ public class DashboardFragment extends Fragment {
         //pieChart.setCenterText("Payments");
         //pieChart.setCenterTextSize(10);
         pieChart.animateY(1000);
-        addDataSet();
 
+        int paid =0;
+        int unpaid=0;
+
+       try {
+MainActivity x1=new MainActivity();
+           Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT status FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
+
+           int stock = c1.getColumnIndex("status");
+
+           c1.moveToFirst();
+
+           while (!c1.isAfterLast()) {
+               String x;
+               x = c1.getString(stock);
+
+               if (x.equals("Paid"))
+                   paid++;
+
+               else
+                   unpaid++;
+
+               c1.moveToNext();
+
+           }
+           Log.i("paid",Integer.toString(paid));
+           Log.i("Unpaid",Integer.toString(unpaid));
+           int total=(paid+unpaid);
+           Log.i("Total",Integer.toString(total));
+           float paidpercent=(paid*100)/total   ;
+           Log.i("perc",Float.toString(paidpercent));
+           yData[0]=(paidpercent);
+           yData[1]=(100-paidpercent);
+
+       }
+       catch (Exception e)
+       {
+           e.printStackTrace();
+       }
         cardSales = v.findViewById(R.id.cardViewSales);
         cardSales.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,17 +109,26 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+
+       addDataSet();
+
+
+
         return v;
     }
 
     private void addDataSet() {
+
         ArrayList<PieEntry> yEntry = new ArrayList<>();
         ArrayList<String> xEntry = new ArrayList<>();
 
         for(int i = 0; i < yData.length; i++){
-            yEntry.add(new PieEntry(yData[i], i));
+
+           yEntry.add(new PieEntry(yData[i], i));
+
         }
         for(int i = 1; i < xData.length; i++){
+
             xEntry.add(xData[i]);
         }
 
@@ -99,7 +155,8 @@ public class DashboardFragment extends Fragment {
         legend.setDrawInside(false);
 
         LegendEntry[] entries = new LegendEntry[2];
-        for(int i = 0; i<entries.length; i++){
+        for(int i = 0; i<entries.length; i++)
+        {
             LegendEntry entry = new LegendEntry();
             entry.formColor = legendColors[i];
             entry.label = String.valueOf(xData[i]);
@@ -112,4 +169,5 @@ public class DashboardFragment extends Fragment {
         pieChart.setData(pieData);
         pieChart.invalidate();
     }
+
 }

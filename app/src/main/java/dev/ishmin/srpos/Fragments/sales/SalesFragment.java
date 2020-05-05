@@ -81,7 +81,8 @@ public class SalesFragment extends Fragment {
         try
 
         {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Sales WHERE date BETWEEN '"+from+"'AND '"+to+"'", null);
+            MainActivity x =new MainActivity();
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Salesnew WHERE date BETWEEN '"+from+"'AND '"+to+"'AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
             int no = c.getColumnIndex("customerno");
             int amount = c.getColumnIndex("billamount");
             int discount = c.getColumnIndex("discount");
@@ -292,12 +293,12 @@ Button change;
             tv2.setGravity(Gravity.CENTER);
             tbrow.addView(tv2);
 
-            TextView tv3 = new TextView(getActivity());
+           /* TextView tv3 = new TextView(getActivity());
             tv3.setText(" Unit ");
             tv3.setTextColor(Color.BLACK);
             tv3.setPadding(2, 6, 5, 0);
             tv3.setGravity(Gravity.CENTER);
-            tbrow.addView(tv3);
+            tbrow.addView(tv3);*/
 
             TextView tv4 = new TextView(getActivity());
             tv4.setText(" Date ");
@@ -315,11 +316,12 @@ Button change;
 
 
         {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Solditems WHERE date BETWEEN '"+from+"'AND '"+to+"'", null);
+            MainActivity x =new MainActivity();
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Solditemsnew WHERE date BETWEEN '"+from+"'AND '"+to+"' AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
             int name = c.getColumnIndex("name");
             int mrp = c.getColumnIndex("mrp");
             int quantity = c.getColumnIndex("quantity");
-            int unit = c.getColumnIndex("unit");
+           // int unit = c.getColumnIndex("unit");
             int date = c.getColumnIndex("date");
 
             c.moveToFirst();
@@ -331,7 +333,7 @@ Button change;
                 Log.i("name",c.getString(name));
                 Log.i("mrp", (Float.toString(c.getFloat(mrp))));
                 Log.i("quantity",Integer.toString(c.getInt(quantity)));
-                Log.i("unit",c.getString(unit));
+             //   Log.i("unit",c.getString(unit));
 
                 TableRow tbrow0 = new TableRow(getActivity());
                 TextView tv01 = new TextView(getActivity());
@@ -355,11 +357,11 @@ Button change;
                 tv21.setTextColor(Color.BLACK);
                 tbrow0.addView(tv21);
 
-                TextView tv31 = new TextView(getActivity());
+            /*    TextView tv31 = new TextView(getActivity());
                 tv31.setGravity(Gravity.CENTER);
                 tv31.setPadding(2, 6, 5, 0);
                 tv31.setText(c.getString(unit));
-                tv31.setTextColor(Color.BLACK);
+                tv31.setTextColor(Color.BLACK);*/
 
                 TextView tv41 = new TextView(getActivity());
                 tv41.setText(c.getString(date));

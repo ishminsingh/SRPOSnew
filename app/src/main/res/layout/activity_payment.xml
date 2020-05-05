@@ -20,6 +20,21 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="50dp"
         tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/cname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_shape4"
+        android:gravity="center_horizontal"
+        android:hint="Customer name"
+        android:inputType="number|phone"
+        android:maxLength="10"
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        tools:ignore="Autofill,HardcodedText" />
+
     <EditText
         android:id="@+id/cno"
         android:layout_width="match_parent"
@@ -55,7 +70,6 @@
         android:layout_height="wrap_content"
         android:inputType="number|text"
         android:hint="Discount"
-        android:maxLength="2"
         android:textColor="@android:color/black"
         android:layout_below="@id/total"
         android:background="@drawable/btn_shape4"

@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -29,11 +31,14 @@ public class VerifyOtpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText otp;
     String mobile;
+   // public  SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verifyotp);
+
 
         mAuth = FirebaseAuth.getInstance();
         otp = findViewById(R.id.otp);
@@ -41,6 +46,10 @@ public class VerifyOtpActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mobile = intent.getStringExtra("mobile");
         sendVerificationCode(mobile);
+      //  sharedPreferences=this.getSharedPreferences("dev.ishmin.srpos",Context.MODE_PRIVATE);
+
+
+
 
         findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +81,11 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 //verification successful we will start the profile activity
                 Intent intent = new Intent(VerifyOtpActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                MainActivity.flag=1;
+                MainActivity x =new MainActivity();
+                MainActivity.sharedPreferences.edit().putString("usernumber",mobile).apply();
                 startActivity(intent);
+
                 } else {
                 //verification unsuccessful.. display an error message
                 Toast.makeText(VerifyOtpActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();

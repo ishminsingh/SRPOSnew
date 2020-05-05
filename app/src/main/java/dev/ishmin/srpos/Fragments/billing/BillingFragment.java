@@ -66,7 +66,7 @@ public class BillingFragment extends Fragment {
     TextView totalview;
     ImageButton qscanner;
     ImageButton refreshBtn;
-    Button reverse;
+
 
     private void refresh(){
         productlist.clear();
@@ -123,7 +123,8 @@ public class BillingFragment extends Fragment {
                         Connection connection = new Connection();
                         returned = connection.execute(myUrl).get();*/
             try {
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 WHERE sku=" + Long.parseLong(sku), null);
+                MainActivity x =new MainActivity();
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE sku=" + Long.parseLong(sku)+" AND adminno="+Long.parseLong(x.sharedPreferences.getString("usernumber","")), null);
                 int name = c.getColumnIndex("name");
                 int category = c.getColumnIndex("category");
                 int subcategory = c.getColumnIndex("subcategory");
@@ -175,7 +176,7 @@ public class BillingFragment extends Fragment {
         total=0;
         change=0;
         //textView = v.findViewById(R.id.txtView);
-       reverse=v.findViewById(R.id.change);
+
         productlist = new ArrayList<String>();
          productname = new ArrayList<String>();
          productcategory = new ArrayList<String>();
@@ -208,111 +209,6 @@ public class BillingFragment extends Fragment {
 
         final Button payment = v.findViewById(R.id.payment);
 
-        reverse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (change==0)
-                {
-                    change=1;
-                    reverse.setText("add item by click");
-                }
-                else
-                {
-                    change=0;
-                reverse.setText("remove item by click");
-                }
-            }
-        });
-      //add button to choose remove or add
-        billing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (change==0)
-                {
-                    index =position;
-
-                    String tempmrp = productmrp.get(index);
-                    float tempMRP = Float.parseFloat(tempmrp.trim());
-                    total += tempMRP;
-                    String tempname = productname.get(index);
-
-                    String tempquantity = productquantity.get(index);
-                    int quantity = Integer.parseInt(tempquantity.trim());
-                    quantity++;
-                    productquantity.set(index, Integer.toString(quantity));
-
-                    tempMRP *= quantity;
-
-                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
-
-                   /* String tempproduct=productlist.get(index);
-                    String[] split= tempproduct.split("\\s");
-                    Log.i("splitting",split[1]);
-                    tempMRP+=Integer.parseInt(split[1]);
-                    String update=split[0]+(Float.toString(tempMRP));*/
-
-                    productlist.set(index, update);
-                   // arrayAdapter.notifyDataSetChanged();
-                    myCustomAdapter.notifyDataSetChanged();
-
-                }
-                else
-                {
-                    index =position;
-
-                    String tempmrp = productmrp.get(index);
-                    float tempMRP = Float.parseFloat(tempmrp.trim());
-                    total -= tempMRP;
-
-
-                    String tempquantity = productquantity.get(index);
-                    int quantity = Integer.parseInt(tempquantity.trim());
-                    quantity--;
-
-                    if(quantity!=0)
-
-                    { String tempname = productname.get(index);
-                        productquantity.set(index, Integer.toString(quantity));
-
-                    tempMRP *= quantity;
-
-                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
-
-                   /* String tempproduct=productlist.get(index);
-                    String[] split= tempproduct.split("\\s");
-                    Log.i("splitting",split[1]);
-                    tempMRP+=Integer.parseInt(split[1]);
-                    String update=split[0]+(Float.toString(tempMRP));*/
-
-                    productlist.set(index, update);
-                   // arrayAdapter.notifyDataSetChanged();
-                        myCustomAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
-                        productname.remove(index);
-                        productcategory.remove(index);
-                        productsubcategory.remove(index);
-                        productbrand.remove(index);
-                        productmrp.remove(index);
-                        productsku.remove(index);
-                        productsupplier.remove(index);
-                        productunit.remove(index);
-                        productbuyrate.remove(index);
-
-                        productquantity.remove(index);
-
-
-                        productlist.remove(index);
-                      //  arrayAdapter.notifyDataSetChanged();
-                        myCustomAdapter.notifyDataSetChanged();
-                        //remove from all lists and listview;
-                    }
-
-                }
-            }
-        });
-
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -320,20 +216,20 @@ public class BillingFragment extends Fragment {
                if(!productlist.isEmpty())
                {
                    try {
-                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Sales(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR)");
-                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditems(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE)");
+                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Salesnew(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR,adminno LONG)");
+                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditemsnew(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE,adminno LONG)");
                        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                        for (int i = 0; i < productlist.size(); i++)
                        {
-
-                           MainActivity.SRPOS.execSQL("INSERT INTO Solditems(name,mrp,quantity,unit,date) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "')");
+MainActivity x= new MainActivity();
+                           MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew(name,mrp,quantity,unit,date,adminno) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "',"+Long.parseLong(x.sharedPreferences.getString("usernumber",""))+")");
                            Log.i("name", productname.get(i));
                            Log.i("mrp", (productmrp.get(i)));
                            Log.i("quantity", productquantity.get(i));
                            Log.i("unit", productunit.get(i));
 
-                           Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Products1 WHERE sku=" + Long.parseLong(productsku.get(i)), null);
+                           Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE sku=" + Long.parseLong(productsku.get(i))+" AND adminno="+Long.parseLong(x.sharedPreferences.getString("usernumber","")), null);
                            c.moveToFirst();
 
                            int quantity2 = c.getColumnIndex("stock");
@@ -342,7 +238,7 @@ public class BillingFragment extends Fragment {
                            Log.i("newstock", Integer.toString(newstock));
                            Log.i("sku", productsku.get(i));
 
-                           MainActivity.SRPOS.execSQL("UPDATE Products1 SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)));
+                           MainActivity.SRPOS.execSQL("UPDATE Productsnew SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i))+" AND adminno="+Long.parseLong(x.sharedPreferences.getString("usernumber","")));
 
 
 
