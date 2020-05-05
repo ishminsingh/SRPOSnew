@@ -292,12 +292,12 @@ Button change;
             tv2.setGravity(Gravity.CENTER);
             tbrow.addView(tv2);
 
-            TextView tv3 = new TextView(getActivity());
+           /* TextView tv3 = new TextView(getActivity());
             tv3.setText(" Unit ");
             tv3.setTextColor(Color.BLACK);
             tv3.setPadding(2, 6, 5, 0);
             tv3.setGravity(Gravity.CENTER);
-            tbrow.addView(tv3);
+            tbrow.addView(tv3);*/
 
             TextView tv4 = new TextView(getActivity());
             tv4.setText(" Date ");
@@ -331,7 +331,7 @@ Button change;
                 Log.i("name",c.getString(name));
                 Log.i("mrp", (Float.toString(c.getFloat(mrp))));
                 Log.i("quantity",Integer.toString(c.getInt(quantity)));
-                Log.i("unit",c.getString(unit));
+             //   Log.i("unit",c.getString(unit));
 
                 TableRow tbrow0 = new TableRow(getActivity());
                 TextView tv01 = new TextView(getActivity());
@@ -355,11 +355,11 @@ Button change;
                 tv21.setTextColor(Color.BLACK);
                 tbrow0.addView(tv21);
 
-                TextView tv31 = new TextView(getActivity());
+            /*    TextView tv31 = new TextView(getActivity());
                 tv31.setGravity(Gravity.CENTER);
                 tv31.setPadding(2, 6, 5, 0);
                 tv31.setText(c.getString(unit));
-                tv31.setTextColor(Color.BLACK);
+                tv31.setTextColor(Color.BLACK);*/
 
                 TextView tv41 = new TextView(getActivity());
                 tv41.setText(c.getString(date));

@@ -1,6 +1,7 @@
 package dev.ishmin.srpos.Fragments.dashboard;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
 
+import dev.ishmin.srpos.MainActivity;
 import dev.ishmin.srpos.Payment;
 import dev.ishmin.srpos.PaymentsPieChart;
 import dev.ishmin.srpos.R;
@@ -34,8 +36,8 @@ public class DashboardFragment extends Fragment {
     private CardView cardChart;
 
 
-    private int[] yData = {10, 2};
-    private String[] xData = {"Paid", "UnPaid"};
+    private int[] yData;
+    private String[] xData=  {"Paid Percentage", "Unpaid Percentage"};
     int[] legendColors = new int[] {Color.MAGENTA, Color.YELLOW};
     PieChart pieChart;
 
@@ -51,10 +53,42 @@ public class DashboardFragment extends Fragment {
         //pieChart.setCenterText("Payments");
         //pieChart.setCenterTextSize(10);
         pieChart.animateY(1000);
-        addDataSet();
+
+        int paid =0;
+        int unpaid=0;
+
+       try {
+           Cursor c = MainActivity.SRPOS.rawQuery("SELECT status FROM Sales", null);
+           int stock = c.getColumnIndex("stock");
+           c.moveToFirst();
+
+           while (!c.isAfterLast()) {
+               String x;
+               x = c.getString(stock);
+
+               if (x.equals("paid"))
+                   paid++;
+
+               else
+                   unpaid++;
+
+
+           }
+       }
+       catch (Exception e)
+       {
+           e.printStackTrace();
+       }
+       int total=paid+unpaid;
+       int paidpercent=(paid/total)*100;
+       yData[0]=paidpercent;
+       yData[1]=100-paidpercent;
+
+       addDataSet();
 
         cardAlert = v.findViewById(R.id.cardViewAlert);
         cardSales = v.findViewById(R.id.cardViewSales);
+
 
         return v;
     }
@@ -64,9 +98,11 @@ public class DashboardFragment extends Fragment {
         ArrayList<String> xEntry = new ArrayList<>();
 
         for(int i = 0; i < yData.length; i++){
+
             yEntry.add(new PieEntry(yData[i], i));
         }
         for(int i = 1; i < xData.length; i++){
+
             xEntry.add(xData[i]);
         }
 
@@ -93,7 +129,8 @@ public class DashboardFragment extends Fragment {
         legend.setDrawInside(false);
 
         LegendEntry[] entries = new LegendEntry[2];
-        for(int i = 0; i<entries.length; i++){
+        for(int i = 0; i<entries.length; i++)
+        {
             LegendEntry entry = new LegendEntry();
             entry.formColor = legendColors[i];
             entry.label = String.valueOf(xData[i]);

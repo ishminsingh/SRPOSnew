@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, AppBarConfiguration);
         txtview = navigationView.getHeaderView(0).findViewById(R.id.phNum);
-        txtview.setText(LoginActivity.mobile);
+        txtview.setText(VerifyOtpActivity.sharedPreferences.getString("usernumber",""));
 
 //        navigationView.setNavigationItemSelectedListener(this);
 

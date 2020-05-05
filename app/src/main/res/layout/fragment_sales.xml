@@ -12,18 +12,19 @@
         android:layout_alignParentTop="true"
         android:padding="5dp"
         android:layout_marginBottom="10dp">
+
         <Button
             android:id="@+id/change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_btn_shape"
-            android:text="Show sold items"
-            android:textSize="12sp"
-            android:textAllCaps="false"
-            android:textStyle="normal"
-            android:textColor="@android:color/darker_gray"
-            android:padding="4dp"
             android:layout_centerInParent="true"
+            android:background="@drawable/custom_btn_shape"
+            android:padding="4dp"
+            android:text="Show sold items"
+            android:textAllCaps="false"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            android:textStyle="normal"
             tools:ignore="HardcodedText" />
         <EditText
             android:id="@+id/from"

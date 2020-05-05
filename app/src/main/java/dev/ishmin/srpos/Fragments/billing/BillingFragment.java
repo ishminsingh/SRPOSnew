@@ -66,7 +66,7 @@ public class BillingFragment extends Fragment {
     TextView totalview;
     ImageButton qscanner;
     ImageButton refreshBtn;
-    Button reverse;
+
 
     private void refresh(){
         productlist.clear();
@@ -175,7 +175,7 @@ public class BillingFragment extends Fragment {
         total=0;
         change=0;
         //textView = v.findViewById(R.id.txtView);
-       reverse=v.findViewById(R.id.change);
+
         productlist = new ArrayList<String>();
          productname = new ArrayList<String>();
          productcategory = new ArrayList<String>();
@@ -207,111 +207,6 @@ public class BillingFragment extends Fragment {
         });
 
         final Button payment = v.findViewById(R.id.payment);
-
-        reverse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (change==0)
-                {
-                    change=1;
-                    reverse.setText("add item by click");
-                }
-                else
-                {
-                    change=0;
-                reverse.setText("remove item by click");
-                }
-            }
-        });
-      //add button to choose remove or add
-        billing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (change==0)
-                {
-                    index =position;
-
-                    String tempmrp = productmrp.get(index);
-                    float tempMRP = Float.parseFloat(tempmrp.trim());
-                    total += tempMRP;
-                    String tempname = productname.get(index);
-
-                    String tempquantity = productquantity.get(index);
-                    int quantity = Integer.parseInt(tempquantity.trim());
-                    quantity++;
-                    productquantity.set(index, Integer.toString(quantity));
-
-                    tempMRP *= quantity;
-
-                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
-
-                   /* String tempproduct=productlist.get(index);
-                    String[] split= tempproduct.split("\\s");
-                    Log.i("splitting",split[1]);
-                    tempMRP+=Integer.parseInt(split[1]);
-                    String update=split[0]+(Float.toString(tempMRP));*/
-
-                    productlist.set(index, update);
-                   // arrayAdapter.notifyDataSetChanged();
-                    myCustomAdapter.notifyDataSetChanged();
-
-                }
-                else
-                {
-                    index =position;
-
-                    String tempmrp = productmrp.get(index);
-                    float tempMRP = Float.parseFloat(tempmrp.trim());
-                    total -= tempMRP;
-
-
-                    String tempquantity = productquantity.get(index);
-                    int quantity = Integer.parseInt(tempquantity.trim());
-                    quantity--;
-
-                    if(quantity!=0)
-
-                    { String tempname = productname.get(index);
-                        productquantity.set(index, Integer.toString(quantity));
-
-                    tempMRP *= quantity;
-
-                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
-
-                   /* String tempproduct=productlist.get(index);
-                    String[] split= tempproduct.split("\\s");
-                    Log.i("splitting",split[1]);
-                    tempMRP+=Integer.parseInt(split[1]);
-                    String update=split[0]+(Float.toString(tempMRP));*/
-
-                    productlist.set(index, update);
-                   // arrayAdapter.notifyDataSetChanged();
-                        myCustomAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
-                        productname.remove(index);
-                        productcategory.remove(index);
-                        productsubcategory.remove(index);
-                        productbrand.remove(index);
-                        productmrp.remove(index);
-                        productsku.remove(index);
-                        productsupplier.remove(index);
-                        productunit.remove(index);
-                        productbuyrate.remove(index);
-
-                        productquantity.remove(index);
-
-
-                        productlist.remove(index);
-                      //  arrayAdapter.notifyDataSetChanged();
-                        myCustomAdapter.notifyDataSetChanged();
-                        //remove from all lists and listview;
-                    }
-
-                }
-            }
-        });
 
         payment.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -52,7 +52,7 @@ public class Payment extends AppCompatActivity {
                 radioButton = (RadioButton) findViewById(idselected);
                 String status = (String) radioButton.getText();
                 String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                if (cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0)
+                if (cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0&&Integer.parseInt(discount.getText().toString())<=BillingFragment.total)
                 {
                     try
                     {
