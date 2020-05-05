@@ -81,7 +81,8 @@ public class SalesFragment extends Fragment {
         try
 
         {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Sales WHERE date BETWEEN '"+from+"'AND '"+to+"'", null);
+            MainActivity x =new MainActivity();
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Salesnew WHERE date BETWEEN '"+from+"'AND '"+to+"'AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
             int no = c.getColumnIndex("customerno");
             int amount = c.getColumnIndex("billamount");
             int discount = c.getColumnIndex("discount");
@@ -315,11 +316,12 @@ Button change;
 
 
         {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Solditems WHERE date BETWEEN '"+from+"'AND '"+to+"'", null);
+            MainActivity x =new MainActivity();
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Solditemsnew WHERE date BETWEEN '"+from+"'AND '"+to+"' AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
             int name = c.getColumnIndex("name");
             int mrp = c.getColumnIndex("mrp");
             int quantity = c.getColumnIndex("quantity");
-            int unit = c.getColumnIndex("unit");
+           // int unit = c.getColumnIndex("unit");
             int date = c.getColumnIndex("date");
 
             c.moveToFirst();

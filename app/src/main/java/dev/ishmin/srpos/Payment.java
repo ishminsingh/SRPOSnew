@@ -29,6 +29,7 @@ public class Payment extends AppCompatActivity {
      RadioGroup radio ;
      RadioButton radioButton;
      TextView textView;
+     EditText cname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class Payment extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         cno =findViewById(R.id.cno);
+        cname=findViewById(R.id.cname);
         discount =findViewById(R.id.discout);
         done=findViewById(R.id.Done);
         radio = (RadioGroup) findViewById(R.id.radiostaus);
@@ -52,11 +54,12 @@ public class Payment extends AppCompatActivity {
                 radioButton = (RadioButton) findViewById(idselected);
                 String status = (String) radioButton.getText();
                 String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                if (cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0&&Integer.parseInt(discount.getText().toString())<=BillingFragment.total)
+                if (cname.getText().toString().length()>0&&cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0&&Integer.parseInt(discount.getText().toString())<=BillingFragment.total)
                 {
                     try
                     {
-                        MainActivity.SRPOS.execSQL("INSERT INTO Sales(customerno,date,billamount,discount,status)VALUES(" + Long.parseLong(cno.getText().toString()) + ",'" + date + "'," + BillingFragment.total + "," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "')");
+                        MainActivity x= new MainActivity();
+                        MainActivity.SRPOS.execSQL("INSERT INTO Salesnew(customerno,date,billamount,discount,status,adminno)VALUES(" + Long.parseLong(cno.getText().toString()) + ",'" + date + "'," + BillingFragment.total + "," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "',"+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+")");
                         //Toast.makeText(Payment.this, "Payment Made", Toast.LENGTH_SHORT).show();
                         StyleableToast.makeText(Payment.this,"Payment Made", R.style.toastDesign).show();
                         onBackPressed();

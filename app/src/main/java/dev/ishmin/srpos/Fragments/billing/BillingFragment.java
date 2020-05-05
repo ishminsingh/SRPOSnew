@@ -123,7 +123,8 @@ public class BillingFragment extends Fragment {
                         Connection connection = new Connection();
                         returned = connection.execute(myUrl).get();*/
             try {
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 WHERE sku=" + Long.parseLong(sku), null);
+                MainActivity x =new MainActivity();
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE sku=" + Long.parseLong(sku)+" AND adminno="+Long.parseLong(x.sharedPreferences.getString("usernumber","")), null);
                 int name = c.getColumnIndex("name");
                 int category = c.getColumnIndex("category");
                 int subcategory = c.getColumnIndex("subcategory");
@@ -215,20 +216,20 @@ public class BillingFragment extends Fragment {
                if(!productlist.isEmpty())
                {
                    try {
-                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Sales(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR)");
-                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditems(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE)");
+                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Salesnew(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR,adminno LONG)");
+                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditemsnew(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE,adminno LONG)");
                        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                        for (int i = 0; i < productlist.size(); i++)
                        {
-
-                           MainActivity.SRPOS.execSQL("INSERT INTO Solditems(name,mrp,quantity,unit,date) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "')");
+MainActivity x= new MainActivity();
+                           MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew(name,mrp,quantity,unit,date,adminno) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "',"+Long.parseLong(x.sharedPreferences.getString("usernumber",""))+")");
                            Log.i("name", productname.get(i));
                            Log.i("mrp", (productmrp.get(i)));
                            Log.i("quantity", productquantity.get(i));
                            Log.i("unit", productunit.get(i));
 
-                           Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Products1 WHERE sku=" + Long.parseLong(productsku.get(i)), null);
+                           Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE sku=" + Long.parseLong(productsku.get(i))+" AND adminno="+Long.parseLong(x.sharedPreferences.getString("usernumber","")), null);
                            c.moveToFirst();
 
                            int quantity2 = c.getColumnIndex("stock");
@@ -237,7 +238,7 @@ public class BillingFragment extends Fragment {
                            Log.i("newstock", Integer.toString(newstock));
                            Log.i("sku", productsku.get(i));
 
-                           MainActivity.SRPOS.execSQL("UPDATE Products1 SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)));
+                           MainActivity.SRPOS.execSQL("UPDATE Productsnew SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i))+" AND adminno="+Long.parseLong(x.sharedPreferences.getString("usernumber","")));
 
 
 

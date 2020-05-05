@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class DashboardFragment extends Fragment {
     private CardView cardPayments;
     private CardView cardChart;
 
-    private int[] yData;
+    private float[] yData=new float[2];
     private String[] xData=  {"Paid Percentage", "Unpaid Percentage"};
     int[] legendColors = new int[] {Color.MAGENTA, Color.YELLOW};
     PieChart pieChart;
@@ -60,36 +61,44 @@ public class DashboardFragment extends Fragment {
         int unpaid=0;
 
        try {
-           Cursor c = MainActivity.SRPOS.rawQuery("SELECT status FROM Sales", null);
-           int stock = c.getColumnIndex("stock");
-           c.moveToFirst();
+MainActivity x1=new MainActivity();
+           Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT status FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
 
-           while (!c.isAfterLast()) {
+           int stock = c1.getColumnIndex("status");
+
+           c1.moveToFirst();
+
+           while (!c1.isAfterLast()) {
                String x;
-               x = c.getString(stock);
+               x = c1.getString(stock);
 
-               if (x.equals("paid"))
+               if (x.equals("Paid"))
                    paid++;
 
                else
                    unpaid++;
 
+               c1.moveToNext();
 
            }
+           Log.i("paid",Integer.toString(paid));
+           Log.i("Unpaid",Integer.toString(unpaid));
+           int total=(paid+unpaid);
+           Log.i("Total",Integer.toString(total));
+           float paidpercent=(paid*100)/total   ;
+           Log.i("perc",Float.toString(paidpercent));
+           yData[0]=(paidpercent);
+           yData[1]=(100-paidpercent);
+
        }
        catch (Exception e)
        {
            e.printStackTrace();
        }
-       int total=paid+unpaid;
-       int paidpercent=(paid/total)*100;
-       yData[0]=paidpercent;
-       yData[1]=100-paidpercent;
+        cardSales = v.findViewById(R.id.cardViewSales);
 
        addDataSet();
 
-
-        cardSales = v.findViewById(R.id.cardViewSales);
 
 
         return v;
@@ -102,7 +111,8 @@ public class DashboardFragment extends Fragment {
 
         for(int i = 0; i < yData.length; i++){
 
-            yEntry.add(new PieEntry(yData[i], i));
+           yEntry.add(new PieEntry(yData[i], i));
+
         }
         for(int i = 1; i < xData.length; i++){
 

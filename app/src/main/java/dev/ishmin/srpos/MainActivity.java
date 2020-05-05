@@ -1,6 +1,8 @@
 package dev.ishmin.srpos;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static SQLiteDatabase SRPOS;
     TextView txtview;
+    static public int  flag;
+    public static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         SRPOS=this.openOrCreateDatabase("SRPOS",MODE_PRIVATE,null);
+        sharedPreferences=this.getSharedPreferences("dev.ishmin.srpos", Context.MODE_PRIVATE);
+
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -55,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, AppBarConfiguration);
         txtview = navigationView.getHeaderView(0).findViewById(R.id.phNum);
-        txtview.setText(VerifyOtpActivity.sharedPreferences.getString("usernumber",""));
+       // VerifyOtpActivity x =new VerifyOtpActivity();
+
+        txtview.setText(sharedPreferences.getString("usernumber",""));
 
 //        navigationView.setNavigationItemSelectedListener(this);
 

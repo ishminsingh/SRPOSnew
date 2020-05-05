@@ -36,6 +36,7 @@ public class ProductsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_products, container, false);
 
 //hello
+        final MainActivity x= new MainActivity();
         productlist = new ArrayList<String>();
         products = v.findViewById(R.id.productlist);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
@@ -44,7 +45,7 @@ public class ProductsFragment extends Fragment {
 
 
         try {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Products1 ", null);
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
             int name = c.getColumnIndex("name");
 
             int brand = c.getColumnIndex("brand");
@@ -84,7 +85,7 @@ public class ProductsFragment extends Fragment {
                     String see=search.getText().toString();
                     if(!see.equals(""))
                     {
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 WHERE name LIKE'"+search.getText().toString()+"%'", null);
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE name LIKE'"+search.getText().toString()+"%' AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");
@@ -102,8 +103,9 @@ public class ProductsFragment extends Fragment {
                     }
                     else
                     {
+
                         productlist.clear();
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 ", null);
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE adminno= "+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");
