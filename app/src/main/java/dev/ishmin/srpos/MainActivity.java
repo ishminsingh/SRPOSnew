@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, AppBarConfiguration);
         txtview = navigationView.getHeaderView(0).findViewById(R.id.phNum);
        // VerifyOtpActivity x =new VerifyOtpActivity();
+if (flag==1)
+        sharedPreferences.getString("usernumber",VerifyOtpActivity.sharedPreferences.getString("usernumber",""));
 
         txtview.setText(sharedPreferences.getString("usernumber",""));
 

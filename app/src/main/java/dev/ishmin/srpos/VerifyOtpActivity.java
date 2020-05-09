@@ -31,7 +31,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText otp;
     String mobile;
-   // public  SharedPreferences sharedPreferences;
+   public static   SharedPreferences sharedPreferences;
 
 
     @Override
@@ -39,7 +39,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verifyotp);
 
-
+        sharedPreferences=this.getSharedPreferences("dev.ishmin.srpos", Context.MODE_PRIVATE);
         mAuth = FirebaseAuth.getInstance();
         otp = findViewById(R.id.otp);
 
@@ -81,9 +81,10 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 //verification successful we will start the profile activity
                 Intent intent = new Intent(VerifyOtpActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                 MainActivity.flag=1;
-                MainActivity x =new MainActivity();
-                MainActivity.sharedPreferences.edit().putString("usernumber",mobile).apply();
+
+                sharedPreferences.edit().putString("usernumber",mobile).apply();
                 startActivity(intent);
 
                 } else {

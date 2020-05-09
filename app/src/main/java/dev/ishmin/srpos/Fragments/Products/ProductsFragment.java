@@ -45,18 +45,24 @@ public class ProductsFragment extends Fragment {
 
 
         try {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock,sku,adminno FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
             int name = c.getColumnIndex("name");
 
             int brand = c.getColumnIndex("brand");
             int stock = c.getColumnIndex("stock");
+            int sku=c.getColumnIndex("sku");
+            int adminno=c.getColumnIndex("adminno");
+
 
             c.moveToFirst();
 
             while (!c.isAfterLast())
             {
+               Log.i("sku", Long.toString(c.getLong(sku)));
+                Log.i("adminno", Long.toString(c.getLong(adminno)));
                 Log.i("name", c.getString(name));
                 Log.i("brand", c.getString(brand));
+
                 String newitem=c.getString(name)+"     "+c.getString(brand)+"     "+Integer.toString(c.getInt(stock));
                 productlist.add(newitem);
                 arrayAdapter.notifyDataSetChanged();
