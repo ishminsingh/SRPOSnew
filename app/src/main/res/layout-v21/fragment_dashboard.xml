@@ -11,7 +11,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="20dp">
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewAlert"
         android:layout_width="match_parent"
@@ -49,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="//Display stock information here"
+                android:text="Display stock information here"
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textStyle="italic"
@@ -60,72 +59,32 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewSales"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_marginBottom="12dp"
         app:cardCornerRadius="8dp">
         <RelativeLayout
             android:id="@+id/laySalesGraph"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/cardview_grad3"
-            android:padding="5dp">
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lineChart"
+            android:background="@drawable/cardview_design"
+            android:padding="8dp">
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barGraph"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            </com.github.mikephil.charting.charts.LineChart>
+            </com.github.mikephil.charting.charts.BarChart>
         </RelativeLayout>
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/laySalesGraph"-->
-<!--            android:padding="10dp"-->
-<!--            android:background="@drawable/cardview_grad2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-<!--            <TextView-->
-<!--                android:id="@+id/txt12"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:text="Sales Report"-->
-<!--                android:textSize="24sp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:textColor="@android:color/white"-->
-<!--                tools:ignore="HardcodedText" />-->
-<!--            <ImageView-->
-<!--                android:id="@+id/icSales"-->
-<!--                android:layout_above="@id/txt12"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/background_white"-->
-<!--                android:padding="5dp"-->
-<!--                android:src="@drawable/ic_sales"-->
-<!--                tools:ignore="ContentDescription" />-->
-<!--            <TextView-->
-<!--                android:id="@+id/txt13"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/background_white"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:text="Click here to open sales graph!"-->
-<!--                android:gravity="center"-->
-<!--                android:textColor="#71B280"-->
-<!--                android:textStyle="italic"-->
-<!--                tools:ignore="HardcodedText" />-->
-<!--        </RelativeLayout>-->
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewPayments"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         app:cardCornerRadius="8dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/cardview_grad3"
+            android:background="@drawable/cardview_design"
             android:padding="5dp">
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/PieChart"

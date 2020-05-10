@@ -1,75 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select dates to view Sales or Sold items"
+        android:textSize="16sp"
+        android:layout_centerInParent="true"
+        tools:ignore="HardcodedText" />
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layTop"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:padding="10dp">
+    <Button
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/change"
+        android:layout_width="85dp"
+        android:layout_height="33dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/edittext_design2"
+        android:text="Sold items"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textStyle="normal"
+        tools:ignore="HardcodedText"/>
+    <EditText
+        android:id="@+id/from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/edittext_design2"
+        android:drawableLeft="@drawable/ic_calendar"
+        android:drawableStart="@drawable/ic_calendar"
+        android:drawablePadding="5dp"
+        android:padding="5dp"
+        android:hint="From"
+        android:textColorHint="@android:color/black"
+        android:textSize="12sp"
+        android:clickable="true"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:focusableInTouchMode="false"
+        android:inputType="date"
+        tools:ignore="Autofill,HardcodedText,KeyboardInaccessibleWidget" />
+    <EditText
+        android:id="@+id/to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/edittext_design2"
+        android:drawableRight="@drawable/ic_calendar"
+        android:drawableEnd="@drawable/ic_calendar"
+        android:drawablePadding="5dp"
+        android:padding="5dp"
+        android:hint="To"
+        android:textColorHint="@android:color/black"
+        android:inputType="date"
+        android:textSize="12sp"
+        android:clickable="true"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:focusableInTouchMode="false"
+        tools:ignore="Autofill,HardcodedText,KeyboardInaccessibleWidget" />
+</RelativeLayout>
+<RelativeLayout
+    android:visibility="visible"
+    android:layout_below="@id/layTop"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
-    <RelativeLayout
-        android:id="@+id/layTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:padding="5dp"
-        android:layout_marginBottom="10dp">
-
-        <Button
-            android:id="@+id/change"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/custom_btn_shape"
-            android:padding="4dp"
-            android:text="Show sold items"
-            android:textAllCaps="false"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp"
-            android:textStyle="normal"
-            tools:ignore="HardcodedText" />
-        <EditText
-            android:id="@+id/from"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/custom_btn_shape"
-            android:drawableLeft="@drawable/ic_calendar"
-            android:drawableStart="@drawable/ic_calendar"
-            android:drawablePadding="5dp"
-            android:padding="5dp"
-            android:hint="From"
-            android:textSize="12sp"
-            android:clickable="true"
-            android:focusable="false"
-            android:cursorVisible="false"
-            android:focusableInTouchMode="false"
-            android:inputType="date"
-            tools:ignore="Autofill,HardcodedText,KeyboardInaccessibleWidget" />
-        <EditText
-            android:id="@+id/to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/custom_btn_shape"
-            android:drawableRight="@drawable/ic_calendar"
-            android:drawableEnd="@drawable/ic_calendar"
-            android:drawablePadding="5dp"
-            android:padding="5dp"
-            android:hint="To"
-            android:inputType="date"
-            android:textSize="12sp"
-            android:clickable="true"
-            android:focusable="false"
-            android:cursorVisible="false"
-            android:focusableInTouchMode="false"
-            tools:ignore="Autofill,HardcodedText,KeyboardInaccessibleWidget" />
-    </RelativeLayout>
     <ScrollView
-        android:background="@drawable/btn_shape4"
-        android:layout_below="@id/layTop"
+        android:background="@drawable/listview_design"
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -91,4 +102,5 @@
             </RelativeLayout>
         </HorizontalScrollView>
     </ScrollView>
+</RelativeLayout>
 </RelativeLayout>

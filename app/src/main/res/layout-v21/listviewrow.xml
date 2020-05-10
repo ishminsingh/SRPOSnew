@@ -18,7 +18,7 @@
     <ImageButton
         android:id="@+id/btnplus"
         android:src="@drawable/ic_plus_circle"
-        android:background="@drawable/custom_btn_shape"
+        android:background="@drawable/circle_btn_design"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -26,7 +26,7 @@
     <ImageButton
         android:id="@+id/btnminus"
         android:src="@drawable/ic_minus_circle"
-        android:background="@drawable/custom_btn_shape"
+        android:background="@drawable/circle_btn_design"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/btnplus"
