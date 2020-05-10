@@ -1,8 +1,9 @@
 package dev.ishmin.srpos.Fragments.dashboard;
 
-import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
+import dev.ishmin.srpos.MainActivity;
 import dev.ishmin.srpos.R;
-import dev.ishmin.srpos.TryOutFile;
 
 public class DashboardFragment extends Fragment {
 
@@ -35,48 +33,82 @@ public class DashboardFragment extends Fragment {
     private CardView cardSales;
     private CardView cardPayments;
 
+    private float[] yData = new float[2];
+    private String[] xData = {"Paid %", "Unpaid %"};
+    int[] legendColors = new int[]{Color.MAGENTA, Color.YELLOW};
 
-    private int[] yData = {10, 2};
-    private String[] xData = {"Paid", "UnPaid"};
-    int[] legendColors = new int[] {Color.MAGENTA, Color.YELLOW};
     PieChart pieChart;
-    LineChart chart;
-    private int[] yValues = {50, 100, 150, 200, 250, 300, 350, 400, 450, 500};
-    private String[] xValues = {"2020-04-01", "2020-04-02", "2020-04-03", "2020-04-04", "2020-04-05",
-            "2020-04-06", "2020-04-07", "2020-04-08", "2020-04-09", "2020-04-10"};
+    BarChart barChart;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
         cardAlert = v.findViewById(R.id.cardViewAlert);
 
+        cardSales = v.findViewById(R.id.cardViewSales);
+        barChart = v.findViewById(R.id.barGraph);
+        barChart.setDescription("Sales Graph");
+
         cardPayments = v.findViewById(R.id.cardViewPayments);
         pieChart = v.findViewById(R.id.PieChart);
-        pieChart.getDescription().setText("Payments");
+        pieChart.setDescription("Payments");
         pieChart.setRotationEnabled(true);
         pieChart.setHoleRadius(20f);
         pieChart.setTransparentCircleAlpha(0);
         //pieChart.setCenterText("Payments");
         //pieChart.setCenterTextSize(10);
         pieChart.animateY(1000);
-        addDataSet();
 
-        cardSales = v.findViewById(R.id.cardViewSales);
-        chart = v.findViewById(R.id.lineChart);
-        chart.getDescription().setText("Sales");
+        int paid = 0;
+        int unpaid = 0;
+
+        try {
+            MainActivity x1 = new MainActivity();
+            Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT status FROM Salesnew WHERE adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
+
+            int stock = c1.getColumnIndex("status");
+
+            c1.moveToFirst();
+
+            while (!c1.isAfterLast()) {
+                String x;
+                x = c1.getString(stock);
+                if (x.equals("Paid"))
+                    paid++;
+                else
+                    unpaid++;
+                c1.moveToNext();
+
+            }
+            Log.i("paid", Integer.toString(paid));
+            Log.i("Unpaid", Integer.toString(unpaid));
+            int total = (paid + unpaid);
+            Log.i("Total", Integer.toString(total));
+            float paidpercent = (paid * 100) / total;
+            Log.i("perc", Float.toString(paidpercent));
+            yData[0] = (paidpercent);
+            yData[1] = (100 - paidpercent);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        addDataSet();
         addDataSet2();
+
         return v;
     }
 
     private void addDataSet() {
-        ArrayList<PieEntry> yEntry = new ArrayList<>();
+
+        ArrayList<Entry> yEntry = new ArrayList<>();
         ArrayList<String> xEntry = new ArrayList<>();
 
-        for(int i = 0; i < yData.length; i++){
-            yEntry.add(new PieEntry(yData[i], i));
+        for (int i = 0; i < yData.length; i++) {
+            yEntry.add(new Entry(yData[i], i));
         }
-        for(int i = 1; i < xData.length; i++){
+        for (int i = 1; i < xData.length; i++) {
             xEntry.add(xData[i]);
         }
+
 
         //create pie dataSet
         PieDataSet pieDataSet = new PieDataSet(yEntry, "");
@@ -95,56 +127,59 @@ public class DashboardFragment extends Fragment {
         legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setFormSize(10f);
         legend.setTextSize(10f);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setDrawInside(false);
+        legend.setPosition(Legend.LegendPosition.ABOVE_CHART_CENTER);
+        legend.setCustom(legendColors, xData);
 
-        LegendEntry[] entries = new LegendEntry[2];
-        for(int i = 0; i<entries.length; i++){
-            LegendEntry entry = new LegendEntry();
-            entry.formColor = legendColors[i];
-            entry.label = String.valueOf(xData[i]);
-            entries[i] = entry;
-        }
-        legend.setCustom(entries);
+//        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+//        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+//        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+//        legend.setDrawInside(false);
+
+//        LegendEntry[] entries = new LegendEntry[2];
+//        for(int i = 0; i<entries.length; i++)
+//        {
+//            LegendEntry entry = new LegendEntry();
+//            entry.formColor = legendColors[i];
+//            entry.label = String.valueOf(xData[i]);
+//            entries[i] = entry;
+//        }
+//        legend.setCustom(entries);
 
         //create pie data object
-        PieData pieData = new PieData(pieDataSet);
+        PieData pieData = new PieData(xData, pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
     }
-    private void addDataSet2(){
 
-        final ArrayList<Entry> yData = new ArrayList<>();
-        final ArrayList<String> xData = new ArrayList<>();
+    public void addDataSet2() {
 
-        for(int i = 0; i < yValues.length; i++){
-            yData.add(new Entry(yValues[i], i));
-        }
-        for(int i = 0; i < xValues.length; i++){
-            xData.add(xValues[i]);
-        }
-        //create line dataSet
-        LineDataSet lineDataSet = new LineDataSet(yData, "Sales");
-        lineDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        //entry of bar graph data
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        barEntries.add(new BarEntry(40f, 0));
+        barEntries.add(new BarEntry(55f, 1));
+        barEntries.add(new BarEntry(70f, 2));
+        barEntries.add(new BarEntry(35f, 3));
+        barEntries.add(new BarEntry(20f, 4));
+        barEntries.add(new BarEntry(85f, 5));
 
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setGranularity(1f);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setEnabled(true);
-        xAxis.setDrawGridLines(false);
-        xAxis.setPosition(XAxis.XAxisPosition.TOP);
+        //create barDataSet
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Sales");
 
-        //        chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
+        //entry of X-axis values (dates)
+        ArrayList<String> dates = new ArrayList<>();
+        dates.add("2020/04/01");
+        dates.add("2020/04/02");
+        dates.add("2020/04/03");
+        dates.add("2020/04/04");
+        dates.add("2020/04/05");
+        dates.add("2020/04/06");
+
+        BarData barData = new BarData(dates, barDataSet);
+        barChart.setData(barData);
+        barChart.setTouchEnabled(true);
+        barChart.setDragEnabled(true);
+        barChart.setScaleEnabled(true);
 
 
-        //create line data object
-        LineData lineData = new LineData(lineDataSet);
-        lineData.setValueTextSize(12f);
-        lineData.setValueTextColor(Color.BLACK);
-
-        chart.setData(lineData);
-        chart.invalidate();
     }
 }

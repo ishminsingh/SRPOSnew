@@ -3,6 +3,7 @@ package dev.ishmin.srpos;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,24 +21,29 @@ import java.util.Locale;
 
 import dev.ishmin.srpos.Fragments.billing.BillingFragment;
 
+import static dev.ishmin.srpos.Fragments.billing.BillingFragment.refresh;
+
 
 public class Payment extends AppCompatActivity {
 
     Button done;
-     EditText cno ;
-     EditText discount;
-     RadioGroup radio ;
-     RadioButton radioButton;
-     TextView textView;
+    EditText cno;
+    EditText discount;
+    RadioGroup radio;
+    RadioButton radioButton;
+    TextView textView;
+    EditText cname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         Bundle bundle = getIntent().getExtras();
 
-        cno =findViewById(R.id.cno);
-        discount =findViewById(R.id.discout);
-        done=findViewById(R.id.Done);
+        cno = findViewById(R.id.cno);
+        cname = findViewById(R.id.cname);
+        discount = findViewById(R.id.discout);
+        done = findViewById(R.id.Done);
         radio = (RadioGroup) findViewById(R.id.radiostaus);
         textView = findViewById(R.id.total); //set total amount from billing frag
         textView.setText(Float.toString(BillingFragment.total));
@@ -45,36 +51,25 @@ public class Payment extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-            try {
-                int idselected = radio.getCheckedRadioButtonId();
-                radioButton = (RadioButton) findViewById(idselected);
-                String status = (String) radioButton.getText();
-                String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                if (cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0)
-                {
-                    try
-                    {
-                        MainActivity.SRPOS.execSQL("INSERT INTO Sales(customerno,date,billamount,discount,status)VALUES(" + Long.parseLong(cno.getText().toString()) + ",'" + date + "'," + BillingFragment.total + "," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "')");
-                        //Toast.makeText(Payment.this, "Payment Made", Toast.LENGTH_SHORT).show();
-                        StyleableToast.makeText(Payment.this,"Payment Made", R.style.toastDesign).show();
-                        onBackPressed();
-                        onBackPressed();
-                    } catch (Exception e)
-                    {
-                        e.printStackTrace();
+                try {
+                    int idselected = radio.getCheckedRadioButtonId();
+                    radioButton = (RadioButton) findViewById(idselected);
+                    String status = (String) radioButton.getText();
+                    String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    if (cname.getText().toString().length() > 0 && cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0 && Integer.parseInt(discount.getText().toString()) <= BillingFragment.total) {
+                        try {
+                            MainActivity x = new MainActivity();
+                            MainActivity.SRPOS.execSQL("INSERT INTO Salesnew(customerno,date,billamount,discount,status,adminno)VALUES(" + Long.parseLong(cno.getText().toString()) + ",'" + date + "'," + BillingFragment.total + "," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "'," + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")) + ")");
+                            StyleableToast.makeText(Payment.this, "Payment Made", R.style.toastDesign).show();
+                            onBackPressed();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        StyleableToast.makeText(Payment.this, "Invalid entry", R.style.toastDesign).show();
                     }
-                }
-                else
-                    {
-                    //Toast.makeText(Payment.this, "invalid entry", Toast.LENGTH_SHORT).show();
-                    StyleableToast.makeText(Payment.this,"Invalid entry", R.style.toastDesign).show();
-                    }
-            }
-            catch(Exception e)
-                {
-                  e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }

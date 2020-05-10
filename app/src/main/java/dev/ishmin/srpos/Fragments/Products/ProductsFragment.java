@@ -23,6 +23,7 @@ import dev.ishmin.srpos.MainActivity;
 import dev.ishmin.srpos.R;
 
 public class ProductsFragment extends Fragment {
+
     static String res = null;
     static String name;
     static String mrp;
@@ -31,20 +32,18 @@ public class ProductsFragment extends Fragment {
     ListView products;
     ArrayAdapter<String> arrayAdapter;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_products, container, false);
 
-//hello
+        final MainActivity x = new MainActivity();
         productlist = new ArrayList<String>();
         products = v.findViewById(R.id.productlist);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
         products.setAdapter(arrayAdapter);
         final EditText search = v.findViewById(R.id.search);
 
-
         try {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Products1 ", null);
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Productsnew WHERE adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
             int name = c.getColumnIndex("name");
 
             int brand = c.getColumnIndex("brand");
@@ -52,28 +51,23 @@ public class ProductsFragment extends Fragment {
 
             c.moveToFirst();
 
-            while (!c.isAfterLast())
-            {
+            while (!c.isAfterLast()) {
                 Log.i("name", c.getString(name));
                 Log.i("brand", c.getString(brand));
-                String newitem=c.getString(name)+"     "+c.getString(brand)+"     "+Integer.toString(c.getInt(stock));
+                String newitem = c.getString(name) + "     " + c.getString(brand) + "     " + Integer.toString(c.getInt(stock));
                 productlist.add(newitem);
                 arrayAdapter.notifyDataSetChanged();
                 c.moveToNext();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
 
         }
 
-
-
         search.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -81,10 +75,9 @@ public class ProductsFragment extends Fragment {
                 try {
 
                     productlist.clear();
-                    String see=search.getText().toString();
-                    if(!see.equals(""))
-                    {
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 WHERE name LIKE'"+search.getText().toString()+"%'", null);
+                    String see = search.getText().toString();
+                    if (!see.equals("")) {
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE name LIKE'" + search.getText().toString() + "%' AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");
@@ -93,17 +86,16 @@ public class ProductsFragment extends Fragment {
 
                         while (!c.isAfterLast()) {
 
-                            String newitem=c.getString(name)+"     "+c.getString(brand)+"     "+c.getInt(stock);
+                            String newitem = c.getString(name) + "     " + c.getString(brand) + "     " + c.getInt(stock);
                             productlist.add(newitem);
                             arrayAdapter.notifyDataSetChanged();
                             c.moveToNext();
 
                         }
-                    }
-                    else
-                    {
+                    } else {
+
                         productlist.clear();
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 ", null);
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE adminno= " + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");
@@ -112,21 +104,16 @@ public class ProductsFragment extends Fragment {
 
                         while (!c.isAfterLast()) {
 
-                            String newitem=c.getString(name)+"     "+c.getString(brand)+"     "+c.getInt(stock);
+                            String newitem = c.getString(name) + "     " + c.getString(brand) + "     " + c.getInt(stock);
                             productlist.add(newitem);
                             arrayAdapter.notifyDataSetChanged();
                             c.moveToNext();
                         }
                     }
 
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
             }
 
             @Override

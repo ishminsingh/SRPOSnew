@@ -1,26 +1,21 @@
 package dev.ishmin.srpos.Fragments.billing;
 
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
@@ -35,9 +30,12 @@ import dev.ishmin.srpos.MainActivity;
 import dev.ishmin.srpos.Payment;
 import dev.ishmin.srpos.R;
 import dev.ishmin.srpos.ScannerActivity;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class BillingFragment extends Fragment {
-    public static TextView textView;
+public class BillingFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
+
     static String res = null;
     static String name;
     static String mrp;
@@ -48,27 +46,31 @@ public class BillingFragment extends Fragment {
     public static int flag1;
     int change;
 
+    int reqCode = 123;
+
     static int index;
-    static List<String> productname ;
+    static List<String> productname;
     static List<String> productcategory;
-    static List<String> productsubcategory ;
-    static List<String> productbrand ;
-    static List<String> productbuyrate ;
-    static List<String> productmrp ;
+    static List<String> productsubcategory;
+    static List<String> productbrand;
+    static List<String> productbuyrate;
+    static List<String> productmrp;
     static List<String> productsku;
     static List<String> productquantity;
-    static List<String> productsupplier ;
+    static List<String> productsupplier;
     static List<String> productunit;
     static CustomAdapter myCustomAdapter;
 
     public static float total;
     ImageButton totalbutton;
-    TextView totalview;
+    public static TextView totalview;
+    TextView textView;
+    TextView textView2;
     ImageButton qscanner;
     ImageButton refreshBtn;
-    Button reverse;
 
-    private void refresh(){
+    //Create new bill method
+    public static void refresh() {
         productlist.clear();
         productcategory.clear();
         productsubcategory.clear();
@@ -81,15 +83,12 @@ public class BillingFragment extends Fragment {
         productunit.clear();
         total = 0;
         totalview.setText("");
-      //  arrayAdapter.notifyDataSetChanged();
         myCustomAdapter.notifyDataSetChanged();
     }
 
-    public static void entry()
-    {
+    public static void entry() {
 
-        if (productsku.contains(sku))
-        {
+        if (productsku.contains(sku)) {
             index = productsku.indexOf(sku);
 
             String tempmrp = productmrp.get(index);
@@ -115,15 +114,14 @@ public class BillingFragment extends Fragment {
             productlist.set(index, update);
             //arrayAdapter.notifyDataSetChanged();
             myCustomAdapter.notifyDataSetChanged();
-        }
-        else
-            {
+        } else {
                        /* String myUrl = "http://smartretailpos.pe.hu/api/products.php?sku=" + sku;
                         String returned;
                         Connection connection = new Connection();
                         returned = connection.execute(myUrl).get();*/
             try {
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 WHERE sku=" + Long.parseLong(sku), null);
+                MainActivity x = new MainActivity();
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE sku=" + Long.parseLong(sku) + " AND adminno=" + Long.parseLong(x.sharedPreferences.getString("usernumber", "")), null);
                 int name = c.getColumnIndex("name");
                 int category = c.getColumnIndex("category");
                 int subcategory = c.getColumnIndex("subcategory");
@@ -154,13 +152,11 @@ public class BillingFragment extends Fragment {
                     total += c.getFloat(mrp);
                     String newitem = c.getString(name) + "  1   " + Float.toString(c.getFloat(mrp));
                     productlist.add(newitem);
-                   // arrayAdapter.notifyDataSetChanged();
                     myCustomAdapter.notifyDataSetChanged();
                     c.moveToNext();
                 }
 
             } catch (Exception e) {
-                //Toast.makeText(,"not scanned",Toast.LENGTH_SHORT).show();
                 Log.i("Exception", e.getMessage());
             }
         }
@@ -172,226 +168,156 @@ public class BillingFragment extends Fragment {
 
         final String sku = "";
         flag1 = 1;
-        total=0;
-        change=0;
-        //textView = v.findViewById(R.id.txtView);
-       reverse=v.findViewById(R.id.change);
-        productlist = new ArrayList<String>();
-         productname = new ArrayList<String>();
-         productcategory = new ArrayList<String>();
-         productsubcategory = new ArrayList<String>();
-        productbrand = new ArrayList<String>();
-       productbuyrate = new ArrayList<String>();
-         productmrp = new ArrayList<String>();
-         productsku = new ArrayList<String>();
-         productquantity = new ArrayList<String>();
-       productsupplier = new ArrayList<String>();
-         productunit = new ArrayList<String>();
+        total = 0;
+        change = 0;
+
+        productlist = new ArrayList<>();
+        productname = new ArrayList<>();
+        productcategory = new ArrayList<>();
+        productsubcategory = new ArrayList<>();
+        productbrand = new ArrayList<>();
+        productbuyrate = new ArrayList<>();
+        productmrp = new ArrayList<>();
+        productsku = new ArrayList<>();
+        productquantity = new ArrayList<>();
+        productsupplier = new ArrayList<>();
+        productunit = new ArrayList<>();
+
         billing = v.findViewById(R.id.billinglist);
-      //  arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
-        //billing.setAdapter(arrayAdapter);
-     myCustomAdapter=new CustomAdapter(getContext(),productlist);
-       // arrayAdapter= new CustomAdapter(getContext(),productlist);
+        myCustomAdapter = new CustomAdapter(getContext(), productlist);
         billing.setAdapter(myCustomAdapter);
-       // billing.setAdapter(new CustomAdapter(getActivity(),productlist));
+
         totalbutton = v.findViewById(R.id.totalbutton);
+        textView = v.findViewById(R.id.txtView);
+        textView2 = v.findViewById(R.id.txtView2);
         totalview = v.findViewById(R.id.totaldisplay);
         qscanner = v.findViewById(R.id.scanner);
-
+        final Button payment = v.findViewById(R.id.payment);
         refreshBtn = v.findViewById(R.id.refresh);
+        //  arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
+        //billing.setAdapter(arrayAdapter);
+        // arrayAdapter= new CustomAdapter(getContext(),productlist);
+        // billing.setAdapter(new CustomAdapter(getActivity(),productlist));
+
+
+        //Creates new bill
         refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refresh();
-            }
-        });
-
-        final Button payment = v.findViewById(R.id.payment);
-
-        reverse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (change==0)
-                {
-                    change=1;
-                    reverse.setText("add item by click");
-                }
-                else
-                {
-                    change=0;
-                reverse.setText("remove item by click");
-                }
-            }
-        });
-      //add button to choose remove or add
-        billing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (change==0)
-                {
-                    index =position;
-
-                    String tempmrp = productmrp.get(index);
-                    float tempMRP = Float.parseFloat(tempmrp.trim());
-                    total += tempMRP;
-                    String tempname = productname.get(index);
-
-                    String tempquantity = productquantity.get(index);
-                    int quantity = Integer.parseInt(tempquantity.trim());
-                    quantity++;
-                    productquantity.set(index, Integer.toString(quantity));
-
-                    tempMRP *= quantity;
-
-                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
-
-                   /* String tempproduct=productlist.get(index);
-                    String[] split= tempproduct.split("\\s");
-                    Log.i("splitting",split[1]);
-                    tempMRP+=Integer.parseInt(split[1]);
-                    String update=split[0]+(Float.toString(tempMRP));*/
-
-                    productlist.set(index, update);
-                   // arrayAdapter.notifyDataSetChanged();
-                    myCustomAdapter.notifyDataSetChanged();
-
-                }
-                else
-                {
-                    index =position;
-
-                    String tempmrp = productmrp.get(index);
-                    float tempMRP = Float.parseFloat(tempmrp.trim());
-                    total -= tempMRP;
-
-
-                    String tempquantity = productquantity.get(index);
-                    int quantity = Integer.parseInt(tempquantity.trim());
-                    quantity--;
-
-                    if(quantity!=0)
-
-                    { String tempname = productname.get(index);
-                        productquantity.set(index, Integer.toString(quantity));
-
-                    tempMRP *= quantity;
-
-                    String update = tempname + "  " + quantity + "  " + Float.toString(tempMRP);
-
-                   /* String tempproduct=productlist.get(index);
-                    String[] split= tempproduct.split("\\s");
-                    Log.i("splitting",split[1]);
-                    tempMRP+=Integer.parseInt(split[1]);
-                    String update=split[0]+(Float.toString(tempMRP));*/
-
-                    productlist.set(index, update);
-                   // arrayAdapter.notifyDataSetChanged();
-                        myCustomAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
-                        productname.remove(index);
-                        productcategory.remove(index);
-                        productsubcategory.remove(index);
-                        productbrand.remove(index);
-                        productmrp.remove(index);
-                        productsku.remove(index);
-                        productsupplier.remove(index);
-                        productunit.remove(index);
-                        productbuyrate.remove(index);
-
-                        productquantity.remove(index);
-
-
-                        productlist.remove(index);
-                      //  arrayAdapter.notifyDataSetChanged();
-                        myCustomAdapter.notifyDataSetChanged();
-                        //remove from all lists and listview;
-                    }
-
+                if (productlist.isEmpty()) {
+                    StyleableToast.makeText(getActivity(), "Billing list is already empty!", R.style.toastDesign).show();
+                } else {
+                    refresh();
+                    textView.setVisibility(View.GONE);
+                    totalview.setVisibility(View.GONE);
+                    textView2.setVisibility(View.VISIBLE);
+                    payment.setVisibility(View.GONE);
                 }
             }
         });
 
+        //Open Payment activity
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //payment activity.
-               if(!productlist.isEmpty())
-               {
-                   try {
-                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Sales(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR)");
-                       MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditems(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE)");
-                       String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-                       for (int i = 0; i < productlist.size(); i++)
-                       {
+                if (!productlist.isEmpty()) {
+                    try {
+                        MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Salesnew(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR,adminno LONG)");
+                        MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditemsnew(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE,adminno LONG)");
+                        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-                           MainActivity.SRPOS.execSQL("INSERT INTO Solditems(name,mrp,quantity,unit,date) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "')");
-                           Log.i("name", productname.get(i));
-                           Log.i("mrp", (productmrp.get(i)));
-                           Log.i("quantity", productquantity.get(i));
-                           Log.i("unit", productunit.get(i));
+                        for (int i = 0; i < productlist.size(); i++) {
+                            MainActivity x = new MainActivity();
+                            MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew(name,mrp,quantity,unit,date,adminno) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "'," + Long.parseLong(x.sharedPreferences.getString("usernumber", "")) + ")");
+                            Log.i("name", productname.get(i));
+                            Log.i("mrp", (productmrp.get(i)));
+                            Log.i("quantity", productquantity.get(i));
+                            Log.i("unit", productunit.get(i));
 
-                           Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Products1 WHERE sku=" + Long.parseLong(productsku.get(i)), null);
-                           c.moveToFirst();
+                            Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE sku=" + Long.parseLong(productsku.get(i)) + " AND adminno=" + Long.parseLong(x.sharedPreferences.getString("usernumber", "")), null);
+                            c.moveToFirst();
 
-                           int quantity2 = c.getColumnIndex("stock");
-                           int stock = c.getInt(quantity2);
-                           int newstock = stock - Integer.parseInt(productquantity.get(i));
-                           Log.i("newstock", Integer.toString(newstock));
-                           Log.i("sku", productsku.get(i));
+                            int quantity2 = c.getColumnIndex("stock");
+                            int stock = c.getInt(quantity2);
+                            int newstock = stock - Integer.parseInt(productquantity.get(i));
+                            Log.i("newstock", Integer.toString(newstock));
+                            Log.i("sku", productsku.get(i));
 
-                           MainActivity.SRPOS.execSQL("UPDATE Products1 SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)));
+                            MainActivity.SRPOS.execSQL("UPDATE Productsnew SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)) + " AND adminno=" + Long.parseLong(x.sharedPreferences.getString("usernumber", "")));
+                        }
 
+                        Intent i = new Intent(getActivity(), Payment.class);
+                        startActivity(i);
+                    } catch (Exception e) {
+                        e.printStackTrace();
 
-
-                       }
-                       Intent i = new Intent(getActivity(), Payment.class); //open scanner
-                       startActivity(i);
-                   }
-                   catch (Exception e)
-                   {
-                       e.printStackTrace();
-
-                   }
-               }
-               else
-                   {
-                       //Toast.makeText(getActivity(), "List Empty", Toast.LENGTH_SHORT).show();
-                       StyleableToast.makeText(getActivity(),"List Empty", R.style.toastDesign).show();
-                   }
+                    }
+                }
             }
         });
 
+        //Get total amount
         totalbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (productlist.isEmpty()) {
-                    //Toast.makeText(getActivity(), "Please scan", Toast.LENGTH_SHORT).show();
-                    StyleableToast.makeText(getActivity(),"Please scan", R.style.toastDesign).show();
-                } else
+                    StyleableToast.makeText(getActivity(), "Please scan", R.style.toastDesign).show();
+                } else if (!productlist.isEmpty()) {
+                    textView2.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
                     totalview.setVisibility(View.VISIBLE);
-                totalview.setText(Float.toString(total));
-                if(!productlist.isEmpty()){
+                    totalview.setText(Float.toString(total));
                     payment.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-// put qr action listener here ..and return the code scanned in String sku.
-
+        //Open Scanner
         qscanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ScannerActivity.class); //open scanner
-                startActivity(i);
+                openScanner();
             }
         });
-
         return v;
     }
+
+    //Request CAMERA Permissions
+    @AfterPermissionGranted(123)
+    private void openScanner() {
+        String[] perms = {Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(getActivity(), perms)) {
+            Intent i = new Intent(getActivity(), ScannerActivity.class); //open scanner
+            startActivity(i);
+        } else {
+            EasyPermissions.requestPermissions(this, "Camera permissions are required to use QR/BarCode scanner", 123, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        openScanner();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            openScanner();
+        }
+    }
 }
-
-
-

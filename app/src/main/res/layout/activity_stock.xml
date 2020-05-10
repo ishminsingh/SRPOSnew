@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:hint="Search your products here"
             android:inputType="text|textAutoComplete"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/edittext_design"
             android:gravity="center_horizontal"
             android:padding="8dp"
             android:textColor="@android:color/black"
@@ -33,9 +33,9 @@
         android:layout_below="@id/layTop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:padding="5dp">
         <ListView
-            android:background="@drawable/btn_shape4"
+            android:background="@drawable/listview_design"
             android:id="@+id/productlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

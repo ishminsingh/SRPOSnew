@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/gd2</item>
-        <item name="colorPrimaryDark">@color/gd2</item>
-        <item name="colorAccent">@color/gd1</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -31,7 +31,7 @@
 
     <!-- Splash Screen theme. -->
     <style name="splashScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/gradient</item>
+        <item name="android:windowBackground">@drawable/backgd_gradient</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
@@ -39,7 +39,7 @@
     </style>
 
     <style name="toastDesign">
-        <item name="colorBackground">@color/gd2</item>
+        <item name="colorBackground">@color/colorAccent</item>
         <item name="textColor">@android:color/white</item>
         <item name="length">SHORT</item>
     </style>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:id="@+id/lay1"
-    android:background="@drawable/gradient"
+    android:background="@drawable/backgd_gradient"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         android:gravity="center" />
         <RelativeLayout
             android:id="@+id/lay2"
-            android:background="@drawable/background_white"
+            android:background="@drawable/backgd_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt02"
-                android:textColor="@color/gd2"
+                android:textColor="@android:color/darker_gray"
                 android:textAllCaps="false"
                 android:textStyle="normal"
                 android:textSize="15sp"
@@ -58,12 +58,14 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:hint="@string/otp"
+                android:textColorHint="@android:color/darker_gray"
                 android:maxLength="6"
                 android:textColor="@android:color/black"
-                android:background="@drawable/btn_shape4"
+                android:background="@drawable/listview_design"
                 android:layout_below="@id/txt02"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical|center_horizontal"
+                android:padding="5dp"
                 tools:ignore="Autofill,LabelFor"/>
             <Button
                 android:clickable="true"

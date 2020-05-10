@@ -27,26 +27,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private RelativeLayout relativeLayout;
     private EditText mobileNum;
-    protected static String sessionCode="";
+    protected static String sessionCode = "";
     public static String mobile;
 
-    public static class session extends AsyncTask<String,Void,String>
-    {
+    public static class session extends AsyncTask<String, Void, String> {
         static final String REQUEST_METHOD = "GET";
         static final int READ_TIMEOUT = 15000;
         static final int CONNECTION_TIMEOUT = 15000;
+
         @Override
-        protected String doInBackground(String... strings)
-        {
-            URL url ;
-            HttpURLConnection httpURLConnection=null;
-            String result ="";
+        protected String doInBackground(String... strings) {
+            URL url;
+            HttpURLConnection httpURLConnection = null;
+            String result = "";
             String inputLine;
 
-            try{
+            try {
 
                 url = new URL(strings[0]);
-                httpURLConnection=(HttpURLConnection) url.openConnection();
+                httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod(REQUEST_METHOD);
                 httpURLConnection.setReadTimeout(READ_TIMEOUT);
                 httpURLConnection.setConnectTimeout(CONNECTION_TIMEOUT);
@@ -57,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 BufferedReader reader = new BufferedReader(streamReader);
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while ((inputLine = reader.readLine()) != null)
-                {
+                while ((inputLine = reader.readLine()) != null) {
                     stringBuilder.append(inputLine);
                 }
                 reader.close();
@@ -66,11 +64,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 result = stringBuilder.toString();
                 return result;
-            }
-
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("async","Error in Async");
+                Log.i("async", "Error in Async");
                 return "";
 
             }
@@ -79,9 +75,10 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.i("on post",s);
+            Log.i("on post", s);
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,27 +93,22 @@ public class LoginActivity extends AppCompatActivity {
                 if (mobile.length() != 10) {
                     mobileNum.setError("Enter a valid Phone number");
                     mobileNum.requestFocus();
-                }
-               else {
+                } else {
                     try {
-                        String myurl="http://smartretailpos.pe.hu/api/auth.php?action=getdata&cno="+ mobile;
+                        String myurl = "http://smartretailpos.pe.hu/api/auth.php?action=getdata&cno=" + mobile;
                         session newsession = new session();
                         sessionCode = newsession.execute(myurl).get();
-                        Log.i("basic",sessionCode);
-                    }
-                    catch (Exception e)
-                    {
+                        Log.i("basic", sessionCode);
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        Log.i("basic","failed");
+                        Log.i("basic", "failed");
 
                     }
-                    if (sessionCode.length()>1)
-                    {
+                    if (sessionCode.length() > 1) {
                         Intent intent = new Intent(LoginActivity.this, VerifyOtpActivity.class);
                         intent.putExtra("mobile", mobile);
                         startActivity(intent);
-                    }
-                    else {
+                    } else {
                         //Toast.makeText(LoginActivity.this, "USER NOT REGISTERED", Toast.LENGTH_SHORT).show();
                         showSnackbar();
                     }
@@ -124,12 +116,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void showSnackbar(){
-        Snackbar snackbar = Snackbar.make(relativeLayout,"Phone number not registered", Snackbar.LENGTH_LONG);
+
+    public void showSnackbar() {
+        Snackbar snackbar = Snackbar.make(relativeLayout, "Phone number not registered", Snackbar.LENGTH_LONG);
         snackbar.show();
         View snackView = snackbar.getView();
         TextView textView = snackView.findViewById(com.google.android.material.R.id.snackbar_text);
-        snackView.setBackgroundColor(ContextCompat.getColor(LoginActivity.this,R.color.white));
+        snackView.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
         textView.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.red));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -137,10 +130,11 @@ public class LoginActivity extends AppCompatActivity {
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
         snackbar.show();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
