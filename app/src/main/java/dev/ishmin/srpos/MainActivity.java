@@ -24,11 +24,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import dev.ishmin.srpos.Fragments.dashboard.DashboardFragment;
-import dev.ishmin.srpos.Fragments.expenses.ExpensesFragment;
-import dev.ishmin.srpos.Fragments.purchase.PurchaseFragment;
-import dev.ishmin.srpos.Fragments.sales.SalesFragment;
-
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration AppBarConfiguration;
