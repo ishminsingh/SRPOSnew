@@ -224,7 +224,7 @@ public class DashboardFragment extends Fragment {
             date = cal.getTime();
             days[i] = sdf.format(date);
 
-            Log.i("Entry made", days[i]);
+           // Log.i("Entry made", days[i]);
         }
         int run=1;
         for(int i = 0; i <= 5; i++)
@@ -247,8 +247,8 @@ public class DashboardFragment extends Fragment {
             float sales=0;
 
             try{
-               Log.i("Date search",days[i]);
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date='"+days[i]+"'", null) ;
+               Log.i("Date search",days[i].trim());
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date='"+days[i].trim()+"'", null) ;
                 int billamount = c.getColumnIndex("billamount");
                 int discount = c.getColumnIndex("discount");
 
@@ -269,7 +269,7 @@ public class DashboardFragment extends Fragment {
                 }
                Log.i("Sales done", Float.toString(sales));
                 Log.i("date", dates.get(i));
-                barEntries.add(new BarEntry(sales,i ));
+                barEntries.add(new BarEntry(sales, i ));
 
             }
             catch (Exception e)
