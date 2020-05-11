@@ -92,6 +92,7 @@ public class DashboardFragment extends Fragment {
         int unpaid = 0;
 
         try {
+
             MainActivity x1 = new MainActivity();
             Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT status FROM Salesnew WHERE adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
 
@@ -99,7 +100,9 @@ public class DashboardFragment extends Fragment {
 
             c1.moveToFirst();
 
-            while (!c1.isAfterLast()) {
+            while (!c1.isAfterLast())
+
+            {
                 String x;
                 x = c1.getString(stock);
                 if (x.equals("Paid"))
@@ -109,6 +112,7 @@ public class DashboardFragment extends Fragment {
                 c1.moveToNext();
 
             }
+
             Log.i("paid", Integer.toString(paid));
             Log.i("Unpaid", Integer.toString(unpaid));
             int total = (paid + unpaid);
@@ -118,9 +122,12 @@ public class DashboardFragment extends Fragment {
             yData[0] = (paidpercent);
             yData[1] = (100 - paidpercent);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
+
         addDataSet();
 
         addDataSet2();
@@ -182,7 +189,10 @@ public class DashboardFragment extends Fragment {
         pieChart.invalidate();
     }
 
-    public void addDataSet2() {
+    public void addDataSet2()
+
+    {
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
         ArrayList<String> dates = new ArrayList<>();
         //entry of bar graph data
       /*  ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -192,38 +202,52 @@ public class DashboardFragment extends Fragment {
         barEntries.add(new BarEntry(35f, 3));
         barEntries.add(new BarEntry(20f, 4));
         barEntries.add(new BarEntry(85f, 5));*/
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
+
 
         //create barDataSet
 
 
         //entry of X-axis values (dates)
 
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         String[] days = new String[10];
         days[0] = sdf.format(date);
+        Log.i("Entry made", days[0]);
 
-        for(int i = 1; i <= 5; i++){
+        for(int i = 1; i <= 5; i++)
+        {
             cal.add(Calendar.DAY_OF_MONTH, -1);
             date = cal.getTime();
             days[i] = sdf.format(date);
-        }
 
-        for(String x: days)
+            Log.i("Entry made", days[i]);
+        }
+        int run=1;
+        for(int i = 0; i <= 5; i++)
         {
-            dates.add(x);
-        }
-        int i=0;
 
-        for(String x: days)
+         Log.i("ME RUN",Integer.toString(run));
+         String str=days[i];
+         String[] arrOfStr = str.split("-");
+         String  newdate= arrOfStr[2]+"/"+arrOfStr[1];
+            dates.add(newdate);
+            Log.i("date added",newdate);
+            run++;
+        }
+
+
+
+        for(int i = 0; i <= 5; i++)
         {
 
             float sales=0;
 
             try{
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")+" AND date= '"+dates.get(i)+"'"), null) ;
+               //  Log.i("Date",dates.get(i));
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date= '"+dates.get(i)+"'", null) ;
                 float billamount = c.getColumnIndex("billmount");
                 float discount = c.getColumnIndex("discount");
                 c.moveToFirst();
@@ -235,8 +259,10 @@ public class DashboardFragment extends Fragment {
 
                     c.moveToNext();
                 }
+               Log.i("Sales done", Float.toString(sales));
+                Log.i("date", dates.get(i));
                 barEntries.add(new BarEntry(sales,i ));
-                i++;
+
             }
             catch (Exception e)
             {
@@ -244,7 +270,9 @@ public class DashboardFragment extends Fragment {
             }
 
 
+
         }
+
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Sales");
         /* dates.add("2020/04/01");
@@ -255,11 +283,17 @@ public class DashboardFragment extends Fragment {
         dates.add("2020/04/06");*/
 
 
-        BarData barData = new BarData(dates, barDataSet);
-        barChart.setData(barData);
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+     try {
+         BarData barData = new BarData(dates, barDataSet);
+         barChart.setData(barData);
+         barChart.setTouchEnabled(true);
+         barChart.setDragEnabled(true);
+         barChart.setScaleEnabled(true);
+     }
+     catch (Exception e)
+     {
+         e.printStackTrace();
+     }
 
 
     }
