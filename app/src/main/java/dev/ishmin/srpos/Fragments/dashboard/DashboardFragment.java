@@ -22,7 +22,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import dev.ishmin.srpos.MainActivity;
 import dev.ishmin.srpos.R;
@@ -42,13 +45,40 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
         cardAlert = v.findViewById(R.id.cardViewAlert);
+        try{
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null) ;
+            int stock = c.getColumnIndex("stock");
+            c.moveToFirst();
+
+            while (!c.isAfterLast())
+            {
+                int check=c.getInt(stock);
+
+                if(check<MainActivity.sharedPreferences.getInt("stockalert",20))
+                {
+                    break;
+                }
+
+                else if(c.isLast())
+                    cardAlert.setVisibility(View.GONE);
+
+
+                c.moveToNext();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         cardSales = v.findViewById(R.id.cardViewSales);
         barChart = v.findViewById(R.id.barGraph);
         barChart.setDescription("Sales Graph");
 
         cardPayments = v.findViewById(R.id.cardViewPayments);
+
         pieChart = v.findViewById(R.id.PieChart);
         pieChart.setDescription("Payments");
         pieChart.setRotationEnabled(true);
@@ -92,6 +122,7 @@ public class DashboardFragment extends Fragment {
             e.printStackTrace();
         }
         addDataSet();
+
         addDataSet2();
 
         return v;
@@ -152,27 +183,77 @@ public class DashboardFragment extends Fragment {
     }
 
     public void addDataSet2() {
-
+        ArrayList<String> dates = new ArrayList<>();
         //entry of bar graph data
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
+      /*  ArrayList<BarEntry> barEntries = new ArrayList<>();
         barEntries.add(new BarEntry(40f, 0));
         barEntries.add(new BarEntry(55f, 1));
         barEntries.add(new BarEntry(70f, 2));
         barEntries.add(new BarEntry(35f, 3));
         barEntries.add(new BarEntry(20f, 4));
-        barEntries.add(new BarEntry(85f, 5));
+        barEntries.add(new BarEntry(85f, 5));*/
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
 
         //create barDataSet
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Sales");
+
 
         //entry of X-axis values (dates)
-        ArrayList<String> dates = new ArrayList<>();
-        dates.add("2020/04/01");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        String[] days = new String[10];
+        days[0] = sdf.format(date);
+
+        for(int i = 1; i <= 5; i++){
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+            date = cal.getTime();
+            days[i] = sdf.format(date);
+        }
+
+        for(String x: days)
+        {
+            dates.add(x);
+        }
+        int i=0;
+
+        for(String x: days)
+        {
+
+            float sales=0;
+
+            try{
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")+" AND date= '"+dates.get(i)+"'"), null) ;
+                float billamount = c.getColumnIndex("billmount");
+                float discount = c.getColumnIndex("discount");
+                c.moveToFirst();
+
+                while (!c.isAfterLast())
+                {
+                    billamount=billamount-discount;
+                    sales+=billamount;
+
+                    c.moveToNext();
+                }
+                barEntries.add(new BarEntry(sales,i ));
+                i++;
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Sales");
+        /* dates.add("2020/04/01");
         dates.add("2020/04/02");
         dates.add("2020/04/03");
         dates.add("2020/04/04");
         dates.add("2020/04/05");
-        dates.add("2020/04/06");
+        dates.add("2020/04/06");*/
+
 
         BarData barData = new BarData(dates, barDataSet);
         barChart.setData(barData);

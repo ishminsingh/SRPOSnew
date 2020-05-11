@@ -51,5 +51,6 @@ dependencies {
     //PieChart & graphs libraries
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     //AskPermissions Libraries
+
     implementation 'pub.devrel:easypermissions:3.0.0'
 }
