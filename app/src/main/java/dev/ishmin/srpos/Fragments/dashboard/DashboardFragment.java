@@ -248,7 +248,7 @@ public class DashboardFragment extends Fragment {
 
             try{
                Log.i("Date search",days[i]);
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date= '"+days[i]+"'", null) ;
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date='"+days[i]+"'", null) ;
                 int billamount = c.getColumnIndex("billamount");
                 int discount = c.getColumnIndex("discount");
 

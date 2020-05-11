@@ -34,9 +34,9 @@ public class PurchaseFragment extends Fragment {
     static EditText sku;
     static EditText buyrate;
     static EditText mrp;
-   static EditText units;
+    static EditText units;
     static EditText quantity;
-   static EditText supplier;
+    static EditText supplier;
 
     ImageButton purchase;
     ImageButton qscanner;
@@ -79,11 +79,9 @@ Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE sku="+Lo
 
             c.moveToNext();
         }
-if (sku.getText().toString().equals(""))
-{
-    //StyleableToast.makeText(,"Product added", R.style.toastDesign).show();
-}
+
         flag=1;
+
         }
         catch (Exception e)
         {
@@ -93,9 +91,10 @@ if (sku.getText().toString().equals(""))
 
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View v =  inflater.inflate(R.layout.fragment_purchase, container, false);
-final MainActivity x= new MainActivity();
+
 BillingFragment.flag1=0;
         name = v.findViewById(R.id.name);
         brand = v.findViewById(R.id.brand);
@@ -193,7 +192,6 @@ BillingFragment.flag1=0;
                     }
 
                 }
-
             }
         });
         qscanner.setOnClickListener(new View.OnClickListener() {

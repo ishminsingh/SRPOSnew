@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -27,14 +28,19 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     @Override
     public void handleResult(Result rawResult) {
         try {
-            if (BillingFragment.flag1 == 1) {
+            if (BillingFragment.flag1 == 1)
+            {
                 BillingFragment.sku = rawResult.getText().toString();
                 BillingFragment.entry();
-            } else {
+                Log.i("result",rawResult.getText());
+            } else
+                {
                 PurchaseFragment.scannerresult = rawResult.getText().toString();
                 PurchaseFragment.scanner();
+                    Log.i("result",rawResult.getText());
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
         onBackPressed();
