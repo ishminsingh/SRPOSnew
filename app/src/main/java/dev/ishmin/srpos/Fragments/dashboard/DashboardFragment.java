@@ -48,6 +48,7 @@ public class DashboardFragment extends Fragment {
 
         cardAlert = v.findViewById(R.id.cardViewAlert);
         try{
+
             Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null) ;
             int stock = c.getColumnIndex("stock");
             c.moveToFirst();
@@ -248,14 +249,16 @@ public class DashboardFragment extends Fragment {
             try{
                //  Log.i("Date",dates.get(i));
                 Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date= '"+dates.get(i)+"'", null) ;
-                float billamount = c.getColumnIndex("billmount");
-                float discount = c.getColumnIndex("discount");
+                int billamount = c.getColumnIndex("billmount");
+                int discount = c.getColumnIndex("discount");
                 c.moveToFirst();
 
                 while (!c.isAfterLast())
                 {
-                    billamount=billamount-discount;
-                    sales+=billamount;
+                    float bill=c.getFloat(billamount);
+                            float disc=c.getFloat(discount);
+                            bill=bill-disc;
+                    sales+=bill;
 
                     c.moveToNext();
                 }
