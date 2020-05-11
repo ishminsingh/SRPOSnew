@@ -36,7 +36,7 @@ public class Stock extends AppCompatActivity {
 
 
         try {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Products1 ", null);
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null) ;
             int name = c.getColumnIndex("name");
 
             int brand = c.getColumnIndex("brand");
@@ -76,7 +76,7 @@ public class Stock extends AppCompatActivity {
                     String see=search.getText().toString();
                     if(!see.equals(""))
                     {
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 WHERE name LIKE'"+search.getText().toString()+"%'", null);
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE name LIKE'"+search.getText().toString()+"%' AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");
@@ -95,7 +95,7 @@ public class Stock extends AppCompatActivity {
                     else
                     {
                         productlist.clear();
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Products1 ", null);
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE adminno= "+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");

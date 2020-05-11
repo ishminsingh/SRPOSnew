@@ -63,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
         txtview = navigationView.getHeaderView(0).findViewById(R.id.phNum);
        // VerifyOtpActivity x =new VerifyOtpActivity();
 if (flag==1)
-        sharedPreferences.getString("usernumber",VerifyOtpActivity.sharedPreferences.getString("usernumber",""));
+{
+    sharedPreferences.edit().putString("usernumber",VerifyOtpActivity.sharedPreferences.getString("usernumber",""));
+   sharedPreferences.edit().putInt("stockalert",20);
+}
 
         txtview.setText(sharedPreferences.getString("usernumber",""));
 
