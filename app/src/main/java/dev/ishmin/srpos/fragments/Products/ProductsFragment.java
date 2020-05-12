@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.Products;
+package dev.ishmin.srpos.fragments.Products;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.ishmin.srpos.MainActivity;
+import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 
 public class ProductsFragment extends Fragment {

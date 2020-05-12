@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.billing;
+package dev.ishmin.srpos.fragments.billing;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,10 +26,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import dev.ishmin.srpos.MainActivity;
-import dev.ishmin.srpos.Payment;
+import dev.ishmin.srpos.activities.MainActivity;
+import dev.ishmin.srpos.activities.Payment;
 import dev.ishmin.srpos.R;
-import dev.ishmin.srpos.ScannerActivity;
+import dev.ishmin.srpos.activities.ScannerActivity;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -300,7 +300,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
         }
         else
             {
-            EasyPermissions.requestPermissions(this, "Camera permissions are required to use QR/BarCode scanner", 123, perms);
+            EasyPermissions.requestPermissions(this, "Camera permissions are required to use BarCode scanner", 123, perms);
         }
     }
 

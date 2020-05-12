@@ -39,7 +39,7 @@
     </style>
 
     <style name="toastDesign">
-        <item name="colorBackground">@color/colorAccent</item>
+        <item name="colorBackground">@color/colorPrimary</item>
         <item name="textColor">@android:color/white</item>
         <item name="length">SHORT</item>
     </style>

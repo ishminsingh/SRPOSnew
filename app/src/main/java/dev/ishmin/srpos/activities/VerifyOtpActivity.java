@@ -1,4 +1,4 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -24,6 +24,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import dev.ishmin.srpos.R;
 
 public class VerifyOtpActivity extends AppCompatActivity {
 

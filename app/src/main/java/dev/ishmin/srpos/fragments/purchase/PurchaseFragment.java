@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.purchase;
+package dev.ishmin.srpos.fragments.purchase;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,10 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,10 +19,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import dev.ishmin.srpos.Fragments.billing.BillingFragment;
-import dev.ishmin.srpos.MainActivity;
+import dev.ishmin.srpos.fragments.billing.BillingFragment;
+import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
-import dev.ishmin.srpos.ScannerActivity;
+import dev.ishmin.srpos.activities.ScannerActivity;
 
 public class PurchaseFragment extends Fragment {
     static EditText name;

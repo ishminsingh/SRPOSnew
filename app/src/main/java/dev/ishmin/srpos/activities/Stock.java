@@ -1,4 +1,4 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import dev.ishmin.srpos.R;
 
 public class Stock extends AppCompatActivity {
     static String res = null;

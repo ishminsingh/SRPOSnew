@@ -1,16 +1,15 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.zxing.Result;
 
-import dev.ishmin.srpos.Fragments.billing.BillingFragment;
-import dev.ishmin.srpos.Fragments.purchase.PurchaseFragment;
+import dev.ishmin.srpos.fragments.billing.BillingFragment;
+import dev.ishmin.srpos.fragments.purchase.PurchaseFragment;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {

@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.dashboard;
+package dev.ishmin.srpos.fragments.dashboard;
 
 import android.database.Cursor;
 import android.graphics.Color;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import dev.ishmin.srpos.MainActivity;
+import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 
 public class DashboardFragment extends Fragment {

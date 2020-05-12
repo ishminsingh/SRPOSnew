@@ -1,4 +1,4 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import dev.ishmin.srpos.R;
 
 @SuppressLint("Registered")
 public class SplashActivity extends AppCompatActivity {

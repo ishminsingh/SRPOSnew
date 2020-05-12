@@ -1,4 +1,4 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 
 import java.util.Random;
+
+import dev.ishmin.srpos.R;
 
 public class TryOutFile extends AppCompatActivity {
 

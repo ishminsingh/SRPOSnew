@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.sales;
+package dev.ishmin.srpos.fragments.sales;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,13 +19,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.muddzdev.styleabletoastlibrary.StyleableToast;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import dev.ishmin.srpos.MainActivity;
+import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 
 public class SalesFragment extends Fragment {

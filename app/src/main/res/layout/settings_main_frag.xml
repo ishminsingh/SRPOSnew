@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsMainFrag"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+    <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/set1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:layout_marginBottom="5dp"
+        tools:ignore="UseCompoundDrawables">
+        <ImageView
+            android:id="@+id/icAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_alert"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:padding="2dp"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stock Alert"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:padding="4dp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_below="@id/set1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginBottom="5dp"/>
+    <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/set2"
+        android:layout_below="@id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        tools:ignore="UseCompoundDrawables">
+        <ImageView
+            android:id="@+id/accountImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_account_circle_settings"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:padding="2dp"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Info"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:padding="4dp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+    <View
+        android:id="@+id/view2"
+        android:layout_below="@id/set2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginBottom="5dp"/>
+    <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/set3"
+        android:layout_below="@id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        tools:ignore="UseCompoundDrawables">
+        <ImageView
+            android:id="@+id/appInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_app_info"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:padding="2dp"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About App"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:padding="4dp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+    <View
+        android:id="@+id/view3"
+        android:layout_below="@id/set3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:id="@+id/ownerTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/signOutBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
+        android:text="Account No"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:textStyle="normal"
+        android:textAllCaps="false"
+        tools:ignore="HardcodedText" />
+    <Button
+        android:id="@+id/signOutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/action_signOut"
+        android:textStyle="normal|bold"
+        android:textAllCaps="true"
+        android:textColor="@color/grayDarker"
+        android:background="@drawable/edittext_design"/>
+</RelativeLayout>
