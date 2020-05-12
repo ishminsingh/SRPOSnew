@@ -1,9 +1,7 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +9,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
@@ -19,9 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import dev.ishmin.srpos.Fragments.billing.BillingFragment;
-
-import static dev.ishmin.srpos.Fragments.billing.BillingFragment.refresh;
+import dev.ishmin.srpos.fragments.billing.BillingFragment;
+import dev.ishmin.srpos.R;
 
 
 public class Payment extends AppCompatActivity {

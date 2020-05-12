@@ -1,4 +1,4 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
@@ -23,6 +22,9 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import dev.ishmin.srpos.R;
+import dev.ishmin.srpos.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, AppBarConfiguration);
         txtview = navigationView.getHeaderView(0).findViewById(R.id.phNum);
        // VerifyOtpActivity x =new VerifyOtpActivity();
+if (flag==1)
+{
+    sharedPreferences.edit().putString("usernumber",VerifyOtpActivity.sharedPreferences.getString("usernumber",""));
+   sharedPreferences.edit().putInt("stockalert",20);
+}
 
         txtview.setText(sharedPreferences.getString("usernumber",""));
 
@@ -101,22 +108,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-        if ((item.getItemId()) == R.id.action_signOut) {
-        user_signout();
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                openSettings();
+                break;
+            case R.id.action_signOut:
+                user_signout();
+                break;
         }
         return true;
     }
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        switch(item.getItemId()){
-//            case R.id.billingFragment:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SalesFragment()).commit();
-//            case R.id.productsFragment:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new PurchaseFragment()).commit();
-//            case R.id.salesFragment:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ExpensesFragment()).commit();
-//        }
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
+    public void openSettings(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
 }

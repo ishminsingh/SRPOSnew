@@ -1,15 +1,15 @@
-package dev.ishmin.srpos;
+package dev.ishmin.srpos.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.google.zxing.Result;
 
-import dev.ishmin.srpos.Fragments.billing.BillingFragment;
-import dev.ishmin.srpos.Fragments.purchase.PurchaseFragment;
+import dev.ishmin.srpos.fragments.billing.BillingFragment;
+import dev.ishmin.srpos.fragments.purchase.PurchaseFragment;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
@@ -27,14 +27,19 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     @Override
     public void handleResult(Result rawResult) {
         try {
-            if (BillingFragment.flag1 == 1) {
+            if (BillingFragment.flag1 == 1)
+            {
                 BillingFragment.sku = rawResult.getText().toString();
                 BillingFragment.entry();
-            } else {
+                Log.i("result",rawResult.getText());
+            } else
+                {
                 PurchaseFragment.scannerresult = rawResult.getText().toString();
                 PurchaseFragment.scanner();
+                    Log.i("result",rawResult.getText());
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
         onBackPressed();

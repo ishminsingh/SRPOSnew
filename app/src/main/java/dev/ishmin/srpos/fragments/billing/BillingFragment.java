@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.billing;
+package dev.ishmin.srpos.fragments.billing;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,10 +26,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import dev.ishmin.srpos.MainActivity;
-import dev.ishmin.srpos.Payment;
+import dev.ishmin.srpos.activities.MainActivity;
+import dev.ishmin.srpos.activities.Payment;
 import dev.ishmin.srpos.R;
-import dev.ishmin.srpos.ScannerActivity;
+import dev.ishmin.srpos.activities.ScannerActivity;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -70,7 +70,8 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
     ImageButton refreshBtn;
 
     //Create new bill method
-    public static void refresh() {
+    public static void refresh()
+    {
         productlist.clear();
         productcategory.clear();
         productsubcategory.clear();
@@ -80,7 +81,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
         productsku.clear();
         productquantity.clear();
         productsupplier.clear();
-        productunit.clear();
+//        productunit.clear();
         total = 0;
         totalview.setText("");
         myCustomAdapter.notifyDataSetChanged();
@@ -88,7 +89,8 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
 
     public static void entry() {
 
-        if (productsku.contains(sku)) {
+        if (productsku.contains(sku))
+        {
             index = productsku.indexOf(sku);
 
             String tempmrp = productmrp.get(index);
@@ -114,14 +116,15 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
             productlist.set(index, update);
             //arrayAdapter.notifyDataSetChanged();
             myCustomAdapter.notifyDataSetChanged();
-        } else {
+        }
+        else {
                        /* String myUrl = "http://smartretailpos.pe.hu/api/products.php?sku=" + sku;
                         String returned;
                         Connection connection = new Connection();
                         returned = connection.execute(myUrl).get();*/
             try {
-                MainActivity x = new MainActivity();
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE sku=" + Long.parseLong(sku) + " AND adminno=" + Long.parseLong(x.sharedPreferences.getString("usernumber", "")), null);
+
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE sku=" + Long.parseLong(sku) + " AND adminno= " + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
                 int name = c.getColumnIndex("name");
                 int category = c.getColumnIndex("category");
                 int subcategory = c.getColumnIndex("subcategory");
@@ -130,7 +133,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
                 int sku = c.getColumnIndex("sku");
                 int quantity = c.getColumnIndex("quantity");
                 int supplier = c.getColumnIndex("supplier");
-                int unit = c.getColumnIndex("unit");
+              //  int unit = c.getColumnIndex("unit");
                 int buyrate = c.getColumnIndex("buyrate");
 
                 c.moveToFirst();
@@ -145,7 +148,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
                     productmrp.add(Float.toString(c.getFloat(mrp)));
                     productsku.add(Long.toString(c.getLong(sku)));
                     productsupplier.add(c.getString(supplier));
-                    productunit.add(c.getString(unit));
+                 //   productunit.add(c.getString(unit));
                     productbuyrate.add(Float.toString(c.getFloat(buyrate)));
 
                     productquantity.add("1");
@@ -181,7 +184,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
         productsku = new ArrayList<>();
         productquantity = new ArrayList<>();
         productsupplier = new ArrayList<>();
-        productunit = new ArrayList<>();
+       // productunit = new ArrayList<>();
 
         billing = v.findViewById(R.id.billinglist);
         myCustomAdapter = new CustomAdapter(getContext(), productlist);
@@ -227,15 +230,16 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
                         MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditemsnew(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE,adminno LONG)");
                         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-                        for (int i = 0; i < productlist.size(); i++) {
+                        for (int i = 0; i < productlist.size(); i++)
+                        {
                             MainActivity x = new MainActivity();
-                            MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew(name,mrp,quantity,unit,date,adminno) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + productunit.get(i) + "','" + date + "'," + Long.parseLong(x.sharedPreferences.getString("usernumber", "")) + ")");
+                            MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew(name,mrp,quantity,date,adminno) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + date + "'," + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")) + ")");
                             Log.i("name", productname.get(i));
                             Log.i("mrp", (productmrp.get(i)));
                             Log.i("quantity", productquantity.get(i));
-                            Log.i("unit", productunit.get(i));
+                           // Log.i("unit", productunit.get(i));
 
-                            Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE sku=" + Long.parseLong(productsku.get(i)) + " AND adminno=" + Long.parseLong(x.sharedPreferences.getString("usernumber", "")), null);
+                            Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE sku=" + Long.parseLong(productsku.get(i)) + " AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
                             c.moveToFirst();
 
                             int quantity2 = c.getColumnIndex("stock");
@@ -244,7 +248,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
                             Log.i("newstock", Integer.toString(newstock));
                             Log.i("sku", productsku.get(i));
 
-                            MainActivity.SRPOS.execSQL("UPDATE Productsnew SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)) + " AND adminno=" + Long.parseLong(x.sharedPreferences.getString("usernumber", "")));
+                            MainActivity.SRPOS.execSQL("UPDATE Productsnew SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)) + " AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")));
                         }
 
                         Intent i = new Intent(getActivity(), Payment.class);
@@ -277,6 +281,8 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
         qscanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.i("usernumber",(MainActivity.sharedPreferences.getString("usernumber", "")));
                 openScanner();
             }
         });
@@ -287,11 +293,14 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
     @AfterPermissionGranted(123)
     private void openScanner() {
         String[] perms = {Manifest.permission.CAMERA};
-        if (EasyPermissions.hasPermissions(getActivity(), perms)) {
+        if (EasyPermissions.hasPermissions(getActivity(), perms))
+        {
             Intent i = new Intent(getActivity(), ScannerActivity.class); //open scanner
             startActivity(i);
-        } else {
-            EasyPermissions.requestPermissions(this, "Camera permissions are required to use QR/BarCode scanner", 123, perms);
+        }
+        else
+            {
+            EasyPermissions.requestPermissions(this, "Camera permissions are required to use BarCode scanner", 123, perms);
         }
     }
 

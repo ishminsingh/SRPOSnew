@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.dashboard;
+package dev.ishmin.srpos.fragments.dashboard;
 
 import android.database.Cursor;
 import android.graphics.Color;
@@ -22,9 +22,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-import dev.ishmin.srpos.MainActivity;
+import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 
 public class DashboardFragment extends Fragment {
@@ -42,13 +45,41 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
         cardAlert = v.findViewById(R.id.cardViewAlert);
+        try{
+
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null) ;
+            int stock = c.getColumnIndex("stock");
+            c.moveToFirst();
+
+            while (!c.isAfterLast())
+            {
+                int check=c.getInt(stock);
+
+                if(check<MainActivity.sharedPreferences.getInt("stockalert",20))
+                {
+                    break;
+                }
+
+                else if(c.isLast())
+                    cardAlert.setVisibility(View.GONE);
+
+
+                c.moveToNext();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         cardSales = v.findViewById(R.id.cardViewSales);
         barChart = v.findViewById(R.id.barGraph);
         barChart.setDescription("Sales Graph");
 
         cardPayments = v.findViewById(R.id.cardViewPayments);
+
         pieChart = v.findViewById(R.id.PieChart);
         pieChart.setDescription("Payments");
         pieChart.setRotationEnabled(true);
@@ -62,6 +93,7 @@ public class DashboardFragment extends Fragment {
         int unpaid = 0;
 
         try {
+
             MainActivity x1 = new MainActivity();
             Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT status FROM Salesnew WHERE adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
 
@@ -69,7 +101,9 @@ public class DashboardFragment extends Fragment {
 
             c1.moveToFirst();
 
-            while (!c1.isAfterLast()) {
+            while (!c1.isAfterLast())
+
+            {
                 String x;
                 x = c1.getString(stock);
                 if (x.equals("Paid"))
@@ -79,6 +113,7 @@ public class DashboardFragment extends Fragment {
                 c1.moveToNext();
 
             }
+
             Log.i("paid", Integer.toString(paid));
             Log.i("Unpaid", Integer.toString(unpaid));
             int total = (paid + unpaid);
@@ -88,10 +123,14 @@ public class DashboardFragment extends Fragment {
             yData[0] = (paidpercent);
             yData[1] = (100 - paidpercent);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
+
         addDataSet();
+
         addDataSet2();
 
         return v;
@@ -151,34 +190,118 @@ public class DashboardFragment extends Fragment {
         pieChart.invalidate();
     }
 
-    public void addDataSet2() {
+    public void addDataSet2()
 
-        //entry of bar graph data
+    {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
+        ArrayList<String> dates = new ArrayList<>();
+        //entry of bar graph data
+      /*  ArrayList<BarEntry> barEntries = new ArrayList<>();
         barEntries.add(new BarEntry(40f, 0));
         barEntries.add(new BarEntry(55f, 1));
         barEntries.add(new BarEntry(70f, 2));
         barEntries.add(new BarEntry(35f, 3));
         barEntries.add(new BarEntry(20f, 4));
-        barEntries.add(new BarEntry(85f, 5));
+        barEntries.add(new BarEntry(85f, 5));*/
+
 
         //create barDataSet
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Sales");
+
 
         //entry of X-axis values (dates)
-        ArrayList<String> dates = new ArrayList<>();
-        dates.add("2020/04/01");
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        String[] days = new String[10];
+        days[0] = sdf.format(date);
+        Log.i("Entry made", days[0]);
+
+        for(int i = 1; i <= 5; i++)
+        {
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+            date = cal.getTime();
+            days[i] = sdf.format(date);
+
+           // Log.i("Entry made", days[i]);
+        }
+        int run=1;
+        for(int i = 0; i <= 5; i++)
+        {
+
+         Log.i("ME RUN",Integer.toString(run));
+         String str=days[i];
+         String[] arrOfStr = str.split("-");
+         String  newdate= arrOfStr[2]+"/"+arrOfStr[1];
+            dates.add(newdate);
+            Log.i("date added",newdate);
+            run++;
+        }
+
+
+
+        for(int i = 0; i <= 5; i++)
+        {
+
+            float sales=0;
+
+            try{
+               Log.i("Date search",days[i].trim());
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date='"+days[i].trim()+"'", null) ;
+                int billamount = c.getColumnIndex("billamount");
+                int discount = c.getColumnIndex("discount");
+
+                c.moveToFirst();
+
+                while (!c.isAfterLast())
+                {
+                    Log.i("billamount",Float.toString(c.getFloat(billamount)));
+                    Log.i("discount",Float.toString(c.getFloat(discount)));
+
+                    float bill=c.getFloat(billamount);
+                            float disc=c.getFloat(discount);
+
+                            bill=bill-disc;
+                    sales=sales+bill;
+
+                    c.moveToNext();
+                }
+               Log.i("Sales done", Float.toString(sales));
+                Log.i("date", dates.get(i));
+                barEntries.add(new BarEntry(sales, i ));
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+
+
+        }
+
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Sales");
+        /* dates.add("2020/04/01");
         dates.add("2020/04/02");
         dates.add("2020/04/03");
         dates.add("2020/04/04");
         dates.add("2020/04/05");
-        dates.add("2020/04/06");
+        dates.add("2020/04/06");*/
 
-        BarData barData = new BarData(dates, barDataSet);
-        barChart.setData(barData);
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+
+     try {
+         BarData barData = new BarData(dates, barDataSet);
+         barChart.setData(barData);
+         barChart.setTouchEnabled(true);
+         barChart.setDragEnabled(true);
+         barChart.setScaleEnabled(true);
+     }
+     catch (Exception e)
+     {
+         e.printStackTrace();
+     }
 
 
     }

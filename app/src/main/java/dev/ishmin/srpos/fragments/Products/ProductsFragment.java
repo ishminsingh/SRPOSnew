@@ -1,4 +1,4 @@
-package dev.ishmin.srpos.Fragments.Products;
+package dev.ishmin.srpos.fragments.Products;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.ishmin.srpos.MainActivity;
+import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 
 public class ProductsFragment extends Fragment {
@@ -43,11 +43,15 @@ public class ProductsFragment extends Fragment {
         final EditText search = v.findViewById(R.id.search);
 
         try {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Productsnew WHERE adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
+
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock,sku,adminno FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null);
             int name = c.getColumnIndex("name");
 
             int brand = c.getColumnIndex("brand");
             int stock = c.getColumnIndex("stock");
+            int sku=c.getColumnIndex("sku");
+            int adminno=c.getColumnIndex("adminno");
+
 
             c.moveToFirst();
 
