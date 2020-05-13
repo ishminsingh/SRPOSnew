@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtview;
     static public int  flag;
     public static SharedPreferences sharedPreferences;
+  //  public static SharedPreferences sharedPreferences1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         SRPOS=this.openOrCreateDatabase("SRPOS",MODE_PRIVATE,null);
         sharedPreferences=this.getSharedPreferences("dev.ishmin.srpos", Context.MODE_PRIVATE);
+      //  sharedPreferences1=this.getSharedPreferences("dev.ishmin.srpos", Context.MODE_PRIVATE);
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -59,14 +62,18 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, AppBarConfiguration);
         txtview = navigationView.getHeaderView(0).findViewById(R.id.phNum);
        // VerifyOtpActivity x =new VerifyOtpActivity();
-if (flag==1)
+     //  flag=VerifyOtpActivity.flag;
+        if (flag==1)
 {
-    sharedPreferences.edit().putString("usernumber",VerifyOtpActivity.sharedPreferences.getString("usernumber",""));
-   sharedPreferences.edit().putInt("stockalert",20);
-}
 
+    sharedPreferences.edit().putString("usernumber",VerifyOtpActivity.sharedPreferences.getString("usernumber","")).apply();
+   sharedPreferences.edit().putInt("stockalert",20).apply();
+   Log.i("WHERE","INSIDE IF");
+}
         txtview.setText(sharedPreferences.getString("usernumber",""));
 
+        Log.i("present no. ",sharedPreferences.getString("usernumber",""));
+        Log.i("present value.",Integer.toString(sharedPreferences.getInt("stockalert",0)));
 //        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,

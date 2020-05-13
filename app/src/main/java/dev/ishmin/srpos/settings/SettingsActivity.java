@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,12 +33,14 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     TextView accountNo;
     Button button;
     Spinner spinner;
-    String[] strings = {"20 (default)","0", "10", "30", "40", "50",};
+   // String[] strings = {"20 (default)","0", "10", "30", "40", "50",};
+   String[] strings= new String[6];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
         getSupportActionBar().setTitle("Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -49,10 +52,21 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         accountNo = findViewById(R.id.ownerTxt);
         accountNo.setText(MainActivity.sharedPreferences.getString("usernumber", ""));
         spinner = findViewById(R.id.stockSpinner);
+       String present= Integer.toString(MainActivity.sharedPreferences.getInt("stockalert",0 ));
         //ArrayList for Stock Alert Spinner
+        Log.i("present no.",present);
         ArrayList<String> list =new ArrayList<>();
+        list.add(present);
+        int add=0;
         for(int i = 0; i < strings.length; i++){
-            list.add(strings[i]);
+
+
+            if(Integer.parseInt(present)!=add)
+            {
+                list.add(Integer.toString(add));
+
+            }
+            add = add + 10;
         }
         //ArrayAdapter to show list in Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, list);
@@ -112,6 +126,9 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     String txt = parent.getItemAtPosition(position).toString();
         StyleableToast.makeText(parent.getContext(), "Stock Alert set to" + " " + txt, R.style.toastDesign).show();
+
+        int x=Integer.parseInt(txt);
+        MainActivity.sharedPreferences.edit().putInt("stockalert",x).apply();
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

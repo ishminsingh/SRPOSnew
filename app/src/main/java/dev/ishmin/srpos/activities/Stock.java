@@ -29,7 +29,7 @@ public class Stock extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
-        final int check=MainActivity.sharedPreferences.getInt("alertnumber",20);
+        final int check=MainActivity.sharedPreferences.getInt("stockalert",20);
 
         productlist = new ArrayList<String>();
         products = findViewById(R.id.productlist);

@@ -133,7 +133,7 @@ public class CustomAdapter extends BaseAdapter
             BillingFragment.productmrp.remove(index);
             BillingFragment.productsku.remove(index);
             BillingFragment.productsupplier.remove(index);
-            BillingFragment.productunit.remove(index);
+          //  BillingFragment.productunit.remove(index);
             BillingFragment.productbuyrate.remove(index);
 
             BillingFragment.productquantity.remove(index);

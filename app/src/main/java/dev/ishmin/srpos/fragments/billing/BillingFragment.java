@@ -58,7 +58,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
     static List<String> productsku;
     static List<String> productquantity;
     static List<String> productsupplier;
-    static List<String> productunit;
+   // static List<String> productunit;
     static CustomAdapter myCustomAdapter;
 
     public static float total;
