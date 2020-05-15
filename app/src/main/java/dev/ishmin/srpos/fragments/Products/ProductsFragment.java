@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,15 +32,19 @@ public class ProductsFragment extends Fragment {
     List<String> productlist;
     ListView products;
     ArrayAdapter<String> arrayAdapter;
+    List<String> skulist;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_products, container, false);
 
-        final MainActivity x = new MainActivity();
+
         productlist = new ArrayList<String>();
+        skulist = new ArrayList<String>();
+
         products = v.findViewById(R.id.productlist);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
         products.setAdapter(arrayAdapter);
+
         final EditText search = v.findViewById(R.id.search);
 
         try {
@@ -60,6 +65,7 @@ public class ProductsFragment extends Fragment {
                 Log.i("brand", c.getString(brand));
                 String newitem = c.getString(name) + "     " + c.getString(brand) + "     " + Integer.toString(c.getInt(stock));
                 productlist.add(newitem);
+                skulist.add(Long.toString(c.getLong(sku)));
                 arrayAdapter.notifyDataSetChanged();
                 c.moveToNext();
             }
@@ -67,6 +73,23 @@ public class ProductsFragment extends Fragment {
             e.printStackTrace();
 
         }
+
+   products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       @Override
+       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+           //put alert here
+
+           /*
+           if yes clicked
+ MainActivity.SRPOS.execSQL("DELETE FROM Productsnew WHERE sku="+skulist.get(position)+" AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")));
+      productlist.remove(position);
+           skulist.remove(position);
+           arrayAdapter.notifyDataSetChanged();
+            */
+
+
+       }
+   });
 
         search.addTextChangedListener(new TextWatcher() {
 
