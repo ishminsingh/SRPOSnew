@@ -34,12 +34,14 @@ public class VerifyOtpActivity extends AppCompatActivity {
     private EditText otp;
     String mobile;
    public static   SharedPreferences sharedPreferences;
+   static int flag;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verifyotp);
+       flag=0;
 
         sharedPreferences=this.getSharedPreferences("dev.ishmin.srpos", Context.MODE_PRIVATE);
         mAuth = FirebaseAuth.getInstance();
@@ -85,11 +87,11 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                 MainActivity.flag=1;
-
                 sharedPreferences.edit().putString("usernumber",mobile).apply();
                 startActivity(intent);
 
-                } else {
+                }
+                else {
                 //verification unsuccessful.. display an error message
                 Toast.makeText(VerifyOtpActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                 //Toast.makeText(VerifyOtpActivity.this, "USER NOT REGISTETRED", Toast.LENGTH_LONG).show();

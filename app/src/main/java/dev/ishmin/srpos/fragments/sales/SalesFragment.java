@@ -34,6 +34,8 @@ public class SalesFragment extends Fragment {
 
             stk.removeAllViews();
             TableRow tbrow = new TableRow(getActivity());
+
+
             TextView tv0 = new TextView(getActivity());
             tv0.setText(" Customer No.");
             tv0.setTextColor(Color.BLACK);
@@ -95,6 +97,8 @@ public class SalesFragment extends Fragment {
                 Log.i("status", c.getString(status));
 
                 TableRow tbrow0 = new TableRow(getActivity());
+
+
                 TextView tv01 = new TextView(getActivity());
                 tv01.setText(Long.toString(c.getLong(no)));
                 tv01.setGravity(Gravity.CENTER);

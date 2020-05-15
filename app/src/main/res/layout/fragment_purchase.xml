@@ -124,23 +124,23 @@
             android:textStyle="normal"
             android:layout_below="@id/brand"
             tools:ignore="Autofill,HardcodedText,RtlCompat" />
-        <EditText
-            android:background="@drawable/new_custom"
-            android:id="@+id/units"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_horizontal"
-            android:hint="Units"
-            android:inputType="text"
-            android:padding="5dp"
-            android:textAllCaps="false"
-            android:textColor="@android:color/black"
-            android:textStyle="normal"
-            android:layout_below="@id/brand"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            tools:ignore="Autofill,HardcodedText,RtlCompat" />
+<!--        <EditText-->
+<!--            android:background="@drawable/new_custom"-->
+<!--            android:id="@+id/units"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:hint="Units"-->
+<!--            android:inputType="text"-->
+<!--            android:padding="5dp"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:textStyle="normal"-->
+<!--            android:layout_below="@id/brand"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            tools:ignore="Autofill,HardcodedText,RtlCompat" />-->
         <EditText
             android:background="@drawable/new_custom"
             android:id="@+id/buyrate"
@@ -148,13 +148,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
             android:hint="Buy rate"
             android:inputType="number"
             android:padding="5dp"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textStyle="normal"
-            android:layout_below="@id/quantity"
+            android:layout_below="@id/brand"
             tools:ignore="Autofill,HardcodedText,RtlCompat"/>
         <EditText
             android:background="@drawable/new_custom"
@@ -169,7 +170,7 @@
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textStyle="normal"
-            android:layout_below="@id/units"
+            android:layout_below="@id/brand"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             tools:ignore="Autofill,HardcodedText,RtlCompat"/>
