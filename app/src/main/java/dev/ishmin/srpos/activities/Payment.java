@@ -28,7 +28,7 @@ public class Payment extends AppCompatActivity {
     RadioGroup radio;
     RadioButton radioButton;
     TextView textView;
-    EditText cname;
+   // EditText cname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +51,14 @@ public class Payment extends AppCompatActivity {
                     radioButton = (RadioButton) findViewById(idselected);
                     String status = (String) radioButton.getText();
                     String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                    if (cname.getText().toString().length() > 0 && cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0 && Integer.parseInt(discount.getText().toString()) <= BillingFragment.total) {
+                    if ( cno.getText().toString().length() == 10 && discount.getText().toString().length() > 0 && Integer.parseInt(discount.getText().toString()) <= BillingFragment.total) {
                         try {
                             MainActivity x = new MainActivity();
                             MainActivity.SRPOS.execSQL("INSERT INTO Salesnew(customerno,date,billamount,discount,status,adminno)VALUES(" + Long.parseLong(cno.getText().toString()) + ",'" + date + "'," + BillingFragment.total + "," + Float.parseFloat(discount.getText().toString()) + ",'" + status + "'," + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")) + ")");
                             StyleableToast.makeText(Payment.this, "Payment Made", R.style.toastDesign).show();
                             onBackPressed();
-                        } catch (Exception e) {
+                        } catch (Exception e)
+                        {
                             e.printStackTrace();
                         }
                     } else {
