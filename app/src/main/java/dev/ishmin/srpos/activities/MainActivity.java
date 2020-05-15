@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
@@ -25,7 +27,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import dev.ishmin.srpos.R;
-import dev.ishmin.srpos.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -88,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, AppBarConfiguration);
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        return NavigationUI.navigateUp(navController, AppBarConfiguration)
-//                || super.onSupportNavigateUp();
     }
     @Override
     public void onBackPressed() {
@@ -129,4 +127,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        if((item.getItemId() == R.id.reportsFragment)){
+//            StyleableToast.makeText(this,"Coming soon!", R.style.toastDesign).show();
+//        }
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 }

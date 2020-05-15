@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,13 +35,13 @@ import dev.ishmin.srpos.activities.StockActivity;
 
 public class DashboardFragment extends Fragment {
 
-    private CardView cardAlert;
+    public static CardView cardAlert;
     private CardView cardSales;
     private CardView cardPayments;
 
     private float[] yData = new float[2];
     private String[] xData = {"Paid %", "Unpaid %"};
-    int[] legendColors = new int[]{Color.MAGENTA, Color.YELLOW};
+    int[] legendColors = new int[]{Color.rgb(192, 255, 140), Color.rgb(255, 247, 140)};
 
     PieChart pieChart;
     BarChart barChart;
@@ -161,10 +162,7 @@ public class DashboardFragment extends Fragment {
         pieDataSet.setValueTextSize(10);
 
         //add colors to dataSet
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.MAGENTA);
-        colors.add(Color.YELLOW);
-        pieDataSet.setColors(colors);
+        pieDataSet.setColors(legendColors);
 
         //add Legend to chart
         Legend legend = pieChart.getLegend();
@@ -274,6 +272,7 @@ public class DashboardFragment extends Fragment {
 
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Sales");
+        barDataSet.setColors(legendColors);
         /* dates.add("2020/04/01");
         dates.add("2020/04/02");
         dates.add("2020/04/03");

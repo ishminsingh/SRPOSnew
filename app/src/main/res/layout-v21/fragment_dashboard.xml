@@ -46,17 +46,6 @@
                 android:textSize="24sp"
                 android:textColor="@android:color/white"
                 tools:ignore="HardcodedText" />
-            <TextView
-                android:id="@+id/txt11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="Click here to manage your stock"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textStyle="italic"
-                tools:ignore="HardcodedText" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

@@ -35,35 +35,37 @@
     <group
         android:id="@+id/grp2"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/ExpensesFragment"
-            android:icon="@drawable/ic_receipt_black_24dp"
-            android:title="@string/menu_expenses"
-            android:menuCategory="secondary"/>
-        <item
-            android:id="@+id/stockFragment"
-            android:icon="@drawable/ic_stock_black_24dp"
-            android:title="@string/menu_stock"
-            android:menuCategory="secondary"/>
-        <item
-            android:id="@+id/storesFragment"
-            android:icon="@drawable/ic_store_black_24dp"
-            android:title="@string/menu_stores"
-            android:menuCategory="secondary"/>
-        <item
-            android:id="@+id/hsnFragment"
-            android:icon="@drawable/ic_search_hsn_black_24dp"
-            android:title="@string/menu_hsn"
-            android:menuCategory="secondary"/>
+
+<!--        <item-->
+<!--            android:id="@+id/ExpensesFragment"-->
+<!--            android:icon="@drawable/ic_receipt_black_24dp"-->
+<!--            android:title="@string/menu_expenses"-->
+<!--            android:menuCategory="secondary"/>-->
+<!--        <item-->
+<!--            android:id="@+id/stockFragment"-->
+<!--            android:icon="@drawable/ic_stock_black_24dp"-->
+<!--            android:title="@string/menu_stock"-->
+<!--            android:menuCategory="secondary"/>-->
+<!--        <item-->
+<!--            android:id="@+id/storesFragment"-->
+<!--            android:icon="@drawable/ic_store_black_24dp"-->
+<!--            android:title="@string/menu_stores"-->
+<!--            android:menuCategory="secondary"/>-->
+<!--        <item-->
+<!--            android:id="@+id/hsnFragment"-->
+<!--            android:icon="@drawable/ic_search_hsn_black_24dp"-->
+<!--            android:title="@string/menu_hsn"-->
+<!--            android:menuCategory="secondary"/>-->
         <item
             android:id="@+id/reportsFragment"
             android:icon="@drawable/ic_pie_chart_black_24dp"
             android:title="@string/menu_reports"
             android:menuCategory="secondary"/>
-        <item
-            android:id="@+id/staffsFragment"
-            android:icon="@drawable/ic_staff_black_24dp"
-            android:title="@string/menu_staff"
-            android:menuCategory="secondary"/>
+
+<!--        <item-->
+<!--            android:id="@+id/staffsFragment"-->
+<!--            android:icon="@drawable/ic_staff_black_24dp"-->
+<!--            android:title="@string/menu_staff"-->
+<!--            android:menuCategory="secondary"/>-->
     </group>
 </menu>

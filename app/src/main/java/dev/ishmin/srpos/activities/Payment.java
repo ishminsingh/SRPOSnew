@@ -3,6 +3,7 @@ package dev.ishmin.srpos.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +36,9 @@ public class Payment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         Bundle bundle = getIntent().getExtras();
+
+        getSupportActionBar().setTitle("Payment");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cno = findViewById(R.id.cno);
         discount = findViewById(R.id.discout);
@@ -71,6 +75,13 @@ public class Payment extends AppCompatActivity {
             }
         });
 
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
