@@ -1,5 +1,6 @@
 package dev.ishmin.srpos.fragments.dashboard;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import java.util.Date;
 
 import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
+import dev.ishmin.srpos.activities.StockActivity;
 
 public class DashboardFragment extends Fragment {
 
@@ -47,6 +49,13 @@ public class DashboardFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         cardAlert = v.findViewById(R.id.cardViewAlert);
+        cardAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), StockActivity.class);
+                startActivity(intent);
+            }
+        });
         try{
 
             Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null) ;
@@ -64,7 +73,6 @@ public class DashboardFragment extends Fragment {
 
                 else if(c.isLast())
                     cardAlert.setVisibility(View.GONE);
-
 
                 c.moveToNext();
             }
@@ -85,8 +93,6 @@ public class DashboardFragment extends Fragment {
         pieChart.setRotationEnabled(true);
         pieChart.setHoleRadius(20f);
         pieChart.setTransparentCircleAlpha(0);
-        //pieChart.setCenterText("Payments");
-        //pieChart.setCenterTextSize(10);
         pieChart.animateY(1000);
 
         int paid = 0;
@@ -168,21 +174,6 @@ public class DashboardFragment extends Fragment {
         legend.setTextSize(10f);
         legend.setPosition(Legend.LegendPosition.ABOVE_CHART_CENTER);
         legend.setCustom(legendColors, xData);
-
-//        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-//        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-//        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-//        legend.setDrawInside(false);
-
-//        LegendEntry[] entries = new LegendEntry[2];
-//        for(int i = 0; i<entries.length; i++)
-//        {
-//            LegendEntry entry = new LegendEntry();
-//            entry.formColor = legendColors[i];
-//            entry.label = String.valueOf(xData[i]);
-//            entries[i] = entry;
-//        }
-//        legend.setCustom(entries);
 
         //create pie data object
         PieData pieData = new PieData(xData, pieDataSet);

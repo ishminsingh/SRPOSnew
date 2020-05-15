@@ -12,6 +12,9 @@
     android:orientation="vertical"
     android:padding="20dp">
     <androidx.cardview.widget.CardView
+        android:visibility="visible"
+        android:clickable="true"
+        android:focusable="true"
         android:id="@+id/cardViewAlert"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -48,7 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="Display stock information here"
+                android:text="Click here to manage your stock"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textStyle="italic"

@@ -37,7 +37,6 @@ public class Payment extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         cno = findViewById(R.id.cno);
-        cname = findViewById(R.id.cname);
         discount = findViewById(R.id.discout);
         done = findViewById(R.id.Done);
         radio = (RadioGroup) findViewById(R.id.radiostaus);

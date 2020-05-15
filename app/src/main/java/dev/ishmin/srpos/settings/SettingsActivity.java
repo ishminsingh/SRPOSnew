@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         accountNo.setText(MainActivity.sharedPreferences.getString("usernumber", ""));
         spinner = findViewById(R.id.stockSpinner);
        String present= Integer.toString(MainActivity.sharedPreferences.getInt("stockalert",0 ));
-        //ArrayList for Stock Alert Spinner
+        //ArrayList for StockActivity Alert Spinner
         Log.i("present no.",present);
         ArrayList<String> list =new ArrayList<>();
         list.add(present);
@@ -125,7 +125,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     String txt = parent.getItemAtPosition(position).toString();
-        StyleableToast.makeText(parent.getContext(), "Stock Alert set to" + " " + txt, R.style.toastDesign).show();
+        StyleableToast.makeText(parent.getContext(), "StockActivity Alert set to" + " " + txt, R.style.toastDesign).show();
 
         int x=Integer.parseInt(txt);
         MainActivity.sharedPreferences.edit().putInt("stockalert",x).apply();

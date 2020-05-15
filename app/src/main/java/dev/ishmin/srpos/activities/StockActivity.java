@@ -17,7 +17,7 @@ import java.util.List;
 
 import dev.ishmin.srpos.R;
 
-public class Stock extends AppCompatActivity {
+public class StockActivity extends AppCompatActivity {
     static String res = null;
     static String name;
     static String mrp;
