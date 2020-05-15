@@ -1,8 +1,11 @@
-package dev.ishmin.srpos.settings;
+package dev.ishmin.srpos.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,9 +23,9 @@ import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.util.ArrayList;
 
-import dev.ishmin.srpos.activities.LoginActivity;
-import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
+
+import static dev.ishmin.srpos.fragments.dashboard.DashboardFragment.cardAlert;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -35,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     Spinner spinner;
    // String[] strings = {"20 (default)","0", "10", "30", "40", "50",};
    String[] strings= new String[6];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +64,9 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         int add=0;
         for(int i = 0; i < strings.length; i++){
 
-
             if(Integer.parseInt(present)!=add)
             {
                 list.add(Integer.toString(add));
-
             }
             add = add + 10;
         }
@@ -97,13 +99,29 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void openDialog1() {
-        AccountInfoDialog dialog1 = new AccountInfoDialog();
-        dialog1.show(getSupportFragmentManager(), "");
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setTitle("Account Information").setMessage("Phone number: " + MainActivity.sharedPreferences.getString("usernumber", ""))
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //closes the dialog box
+                    }
+                });
+        AlertDialog alert = builder1.create();
+        alert.show();
     }
 
     public void openDialog2() {
-        AboutAppDialog dialog2 = new AboutAppDialog();
-        dialog2.show(getSupportFragmentManager(), "");
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+        builder2.setTitle("App Info").setMessage("Smart Retail POS" + " " + "v1.0")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //closes the dialog box
+                    }
+                });
+        AlertDialog alert = builder2.create();
+        alert.show();
     }
 
     public void user_signout() {
@@ -133,5 +151,36 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     //Do nothing
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        try{
+
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")), null) ;
+            int stock = c.getColumnIndex("stock");
+            c.moveToFirst();
+
+            while (!c.isAfterLast())
+            {
+                int check=c.getInt(stock);
+
+                if(check<MainActivity.sharedPreferences.getInt("stockalert",20))
+                {
+                    cardAlert.setVisibility(View.VISIBLE);
+                    break;
+                }
+
+                else if(c.isLast())
+                    cardAlert.setVisibility(View.GONE);
+
+                c.moveToNext();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

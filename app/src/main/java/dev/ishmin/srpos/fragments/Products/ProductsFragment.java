@@ -1,5 +1,7 @@
 package dev.ishmin.srpos.fragments.Products;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,16 +33,22 @@ public class ProductsFragment extends Fragment {
     Button read;
     List<String> productlist;
     ListView products;
-    ArrayAdapter<String> arrayAdapter;
+     ArrayAdapter<String> arrayAdapter;
+    List<String> skulist;
+    AlertDialog.Builder builder;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_products, container, false);
+        builder = new AlertDialog.Builder(getActivity());
 
-        final MainActivity x = new MainActivity();
+
         productlist = new ArrayList<String>();
+        skulist = new ArrayList<String>();
+
         products = v.findViewById(R.id.productlist);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, productlist);
         products.setAdapter(arrayAdapter);
+
         final EditText search = v.findViewById(R.id.search);
 
         try {
@@ -58,8 +67,10 @@ public class ProductsFragment extends Fragment {
             while (!c.isAfterLast()) {
                 Log.i("name", c.getString(name));
                 Log.i("brand", c.getString(brand));
+                Log.i("barcode", Long.toString(c.getLong(sku)));
                 String newitem = c.getString(name) + "     " + c.getString(brand) + "     " + Integer.toString(c.getInt(stock));
                 productlist.add(newitem);
+                skulist.add(Long.toString(c.getLong(sku)));
                 arrayAdapter.notifyDataSetChanged();
                 c.moveToNext();
             }
@@ -67,6 +78,34 @@ public class ProductsFragment extends Fragment {
             e.printStackTrace();
 
         }
+
+   products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       @Override
+       public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+           //Alert dialogBox to delete item from list
+            builder.setTitle("Warning").setMessage("Are you sure you want to delete this item?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        MainActivity.SRPOS.execSQL("DELETE FROM Productsnew WHERE sku=" + skulist.get(position) + " AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")));
+                        productlist.remove(position);
+                        skulist.remove(position);
+                        arrayAdapter.notifyDataSetChanged();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Do nothing
+                }
+            });
+           AlertDialog alert = builder.create();
+           alert.show();
+       }
+   });
 
         search.addTextChangedListener(new TextWatcher() {
 

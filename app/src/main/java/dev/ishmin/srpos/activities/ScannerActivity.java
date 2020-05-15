@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.google.zxing.Result;
 
@@ -22,8 +23,16 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
         Bundle bundle = getIntent().getExtras();
+        getSupportActionBar().setTitle("POS Scanner");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void handleResult(Result rawResult) {
         try {

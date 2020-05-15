@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,10 @@ public class StockActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
-        final int check=MainActivity.sharedPreferences.getInt("stockalert",20);
+        final int check= MainActivity.sharedPreferences.getInt("stockalert",20);
+
+        getSupportActionBar().setTitle("Stock");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         productlist = new ArrayList<String>();
         products = findViewById(R.id.productlist);
@@ -39,7 +45,7 @@ public class StockActivity extends AppCompatActivity {
 
 
         try {
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")+" AND stock<"+check), null) ;
+            Cursor c = MainActivity.SRPOS.rawQuery("SELECT name,brand,stock FROM Productsnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND stock<"+check, null) ;
             int name = c.getColumnIndex("name");
 
             int brand = c.getColumnIndex("brand");
@@ -60,10 +66,10 @@ public class StockActivity extends AppCompatActivity {
         catch (Exception e)
         {
             e.printStackTrace();
-
         }
-
-
+        if(productlist.isEmpty()){
+            StyleableToast.makeText(this,"Inventory is empty",R.style.toastDesign).show();
+        }
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -79,7 +85,7 @@ public class StockActivity extends AppCompatActivity {
                     String see=search.getText().toString();
                     if(!see.equals(""))
                     {
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE name LIKE'"+search.getText().toString()+"%' AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")+" AND stock<"+check), null);
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE name LIKE'"+search.getText().toString()+"%' AND adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND stock<"+check, null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");
@@ -98,7 +104,7 @@ public class StockActivity extends AppCompatActivity {
                     else
                     {
                         productlist.clear();
-                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE adminno= "+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber","")+" AND stock<"+check), null);
+                        Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Productsnew WHERE adminno= "+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND stock<"+check, null);
                         int name = c.getColumnIndex("name");
 
                         int brand = c.getColumnIndex("brand");
@@ -129,6 +135,12 @@ public class StockActivity extends AppCompatActivity {
 
             }
         });
-
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
