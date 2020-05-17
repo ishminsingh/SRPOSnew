@@ -1,6 +1,7 @@
 package dev.ishmin.srpos.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -24,12 +26,15 @@ import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import java.util.ArrayList;
 
 import dev.ishmin.srpos.R;
+import dev.ishmin.srpos.fragments.settings_frag2;
 
 import static dev.ishmin.srpos.fragments.dashboard.DashboardFragment.cardAlert;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    RelativeLayout MainLayout;
+    public static FrameLayout frameLayout;
+    public static RelativeLayout layoutMid;
+    public static RelativeLayout MainLayout;
     RelativeLayout stockAlert;
     LinearLayout accountInfo;
     LinearLayout aboutApp;
@@ -48,6 +53,8 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         getSupportActionBar().setTitle("Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        frameLayout = findViewById(R.id.frag_container);
+        layoutMid = findViewById(R.id.layMid);
         MainLayout = findViewById(R.id.settingsMainFrag);
         stockAlert = findViewById(R.id.set1);
         accountInfo = findViewById(R.id.set2);
@@ -79,7 +86,13 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         accountInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog1();
+                layoutMid.setVisibility(View.GONE);
+                //MainLayout.setPadding(0,0,0,0);
+                frameLayout.setVisibility(View.VISIBLE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.frag_container, new settings_frag2());
+                transaction.commit();
+                //openDialog1();
             }
         });
 
@@ -143,7 +156,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     String txt = parent.getItemAtPosition(position).toString();
-        StyleableToast.makeText(parent.getContext(), "StockActivity Alert set to" + " " + txt, R.style.toastDesign).show();
+        StyleableToast.makeText(parent.getContext(), "Stock Alert set to" + " " + txt, R.style.toastDesign).show();
 
         int x=Integer.parseInt(txt);
         MainActivity.sharedPreferences.edit().putInt("stockalert",x).apply();

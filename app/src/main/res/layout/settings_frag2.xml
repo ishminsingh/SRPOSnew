@@ -1,8 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/settingsFrag2"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp">
-
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/layTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:padding="25dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Information"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textStyle="bold|normal"
+            android:gravity="bottom|center_horizontal"
+            />
+    </RelativeLayout>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/layTop"
+       android:padding="15dp">
+       <EditText
+           android:id="@+id/ownerName"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:hint="Name"
+           android:inputType="textPersonName"
+           android:textColor="@android:color/black"
+           android:textAllCaps="false"
+           android:textStyle="normal"
+           android:layout_marginBottom="10dp"/>
+       <EditText
+           android:id="@+id/ownerPhone"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/ownerName"
+           android:hint="Phone Number"
+           android:inputType="number|phone"
+           android:textColor="@android:color/black"
+           android:textAllCaps="false"
+           android:textStyle="normal"
+           android:layout_marginBottom="10dp"/>
+       <EditText
+           android:id="@+id/ownerEmail"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/ownerPhone"
+           android:hint="E-Mail address"
+           android:inputType="textEmailAddress"
+           android:textColor="@android:color/black"
+           android:textAllCaps="false"
+           android:textStyle="normal"
+           android:layout_marginBottom="10dp"/>
+       <Button
+           android:id="@+id/saveDetailsBtn"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Save"
+           android:textColor="@android:color/black"
+           android:textStyle="normal"
+           android:textAllCaps="false"
+           android:background="@color/colorPrimaryDark"
+           android:layout_alignParentBottom="true"
+           android:layout_alignParentRight="true"
+           android:layout_alignParentEnd="true"
+           android:layout_marginBottom="5dp"
+           android:layout_marginRight="5dp"
+           android:layout_marginEnd="5dp" />
+       <TextView
+           android:visibility="gone"
+           android:id="@+id/saveName"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="..."/>
+       <TextView
+           android:visibility="gone"
+           android:id="@+id/savePhone"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="..."/>
+       <TextView
+           android:visibility="gone"
+           android:id="@+id/saveEmail"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="..."/>
+   </RelativeLayout>
 </RelativeLayout>

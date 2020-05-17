@@ -19,40 +19,45 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="m">
-        <activity android:name=".activities.SettingsActivity"
+        <activity android:name=".activities.Trial"></activity>
+        <activity
+            android:name=".activities.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".activities.StockActivity"
+        <activity
+            android:name=".activities.StockActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".activities.ScannerActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.ScannerActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".activities.Payment"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.Payment"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.VerifyOtpActivity"
-            android:theme="@style/splashScreen"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            android:theme="@style/splashScreen"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/splashScreen"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            android:theme="@style/splashScreen"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/splashScreen"
             android:screenOrientation="portrait"
+            android:theme="@style/splashScreen"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
