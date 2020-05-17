@@ -9,9 +9,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,14 +22,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 
-public class SalesFragment extends Fragment {
+public class SalesFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     TableLayout stk;
 
     public void Sales(String from, String to) {
@@ -37,14 +43,14 @@ public class SalesFragment extends Fragment {
 
 
             TextView tv0 = new TextView(getActivity());
-            tv0.setText(" Customer No.");
+            tv0.setText("Customer No");
             tv0.setTextColor(Color.BLACK);
             tv0.setPadding(2, 8, 5, 0);
             tv0.setGravity(Gravity.CENTER);
             tbrow.addView(tv0);
 
             TextView tv1 = new TextView(getActivity());
-            tv1.setText(" Bill Amount ");
+            tv1.setText("Bill");
             tv1.setTextColor(Color.BLACK);
             tv1.setPadding(2, 8, 5, 0);
             tv1.setGravity(Gravity.CENTER);
@@ -58,14 +64,14 @@ public class SalesFragment extends Fragment {
             tbrow.addView(tv2);
 
             TextView tv3 = new TextView(getActivity());
-            tv3.setText(" Date ");
+            tv3.setText("Date");
             tv3.setTextColor(Color.BLACK);
             tv3.setPadding(2, 6, 5, 0);
             tv3.setGravity(Gravity.CENTER);
             tbrow.addView(tv3);
 
             TextView tv4 = new TextView(getActivity());
-            tv4.setText(" Status ");
+            tv4.setText("Status");
             tv4.setTextColor(Color.BLACK);
             tv4.setPadding(2, 6, 5, 0);
             tv4.setGravity(Gravity.CENTER);
@@ -150,13 +156,27 @@ public class SalesFragment extends Fragment {
     EditText editText2;
     String datefrom;
     String dateto;
+    Spinner spinner;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_sales, container, false);
-        //return inflater.inflate(R.layout.fragment_sales, container, false);
-        // v.requestWindowFeature(Window.FEATURE_NO_TITLE);
         stk = (TableLayout) v.findViewById(R.id.table_main);
+
+        //create a list for spinner to show items
+        ArrayList<String> filterList = new ArrayList<>();
+        filterList.add("Show all");
+        filterList.add("Paid");
+        filterList.add("Unpaid");
+
+        //cast spinner by ID
+        spinner = v.findViewById(R.id.filterSpinner);
+        //arrayadapter for spinner to inflate list in spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, filterList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         editText1 = v.findViewById(R.id.from);
         editText2 = v.findViewById(R.id.to);
@@ -207,17 +227,28 @@ public class SalesFragment extends Fragment {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (flag == 0) {
-                        Solditems(datefrom, dateto);
-                        change.setText("Sales");
-                    } else {
-                        Sales(datefrom, dateto);
-                        change.setText("Sold items");
-                    }
+                if (flag == 0) {
+                    Solditems(datefrom, dateto);
+                    change.setText("Sales");
+                } else {
+                    Sales(datefrom, dateto);
+                    change.setText("Sold items");
+                }
             }
         });
 
         return v;
+    }
+
+    //Spinner methods
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String txt = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //Do nothing
     }
 
     private void updateLabel() {

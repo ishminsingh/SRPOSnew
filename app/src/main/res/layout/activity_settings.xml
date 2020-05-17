@@ -5,7 +5,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:padding="0dp">
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/layMid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
     <RelativeLayout
         android:clickable="true"
         android:focusable="true"
@@ -156,4 +162,11 @@
         android:textAllCaps="true"
         android:textColor="@color/grayDarker"
         android:background="@drawable/edittext_design"/>
+    </RelativeLayout>
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/frag_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>
