@@ -20,24 +20,26 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="50dp"
         tools:ignore="HardcodedText" />
-<!--    <EditText-->
-<!--        android:id="@+id/cname"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:background="@drawable/edittext_design2"-->
-<!--        android:gravity="center_horizontal"-->
-<!--        android:hint="Customer name"-->
-<!--        android:inputType="textPersonName"-->
-<!--        android:padding="5dp"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        android:layout_below="@id/paymentTxt"-->
-<!--        tools:ignore="Autofill,HardcodedText" />-->
+
+   <EditText
+        android:id="@+id/cname"
+       android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edittext_design2"
+        android:gravity="center_horizontal"
+        android:hint="Customer name"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/paymentTxt"
+       tools:ignore="Autofill,HardcodedText" />
+
     <EditText
         android:id="@+id/cno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/paymentTxt"
+        android:layout_below="@+id/cname"
         android:layout_centerInParent="true"
         android:inputType="number|phone"
         android:maxLength="10"

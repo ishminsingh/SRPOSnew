@@ -39,7 +39,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
     static String res = null;
     static String name;
     static String mrp;
-    static List<String> productlist;
+    public static List<String> productlist;
     public static ListView billing;
     static ArrayAdapter<String> arrayAdapter;
     public static String sku;
@@ -48,16 +48,16 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
 
     int reqCode = 123;
 
-    static int index;
-    static List<String> productname;
-    static List<String> productcategory;
-    static List<String> productsubcategory;
-    static List<String> productbrand;
-    static List<String> productbuyrate;
-    static List<String> productmrp;
-    static List<String> productsku;
-    static List<String> productquantity;
-    static List<String> productsupplier;
+   public static int index;
+    public  static List<String> productname;
+    public  static List<String> productcategory;
+    public  static List<String> productsubcategory;
+    public  static List<String> productbrand;
+    static  public List<String> productbuyrate;
+    static  public List<String> productmrp;
+    static  public List<String> productsku;
+    static  public  List<String> productquantity;
+    static  public  List<String> productsupplier;
    // static List<String> productunit;
     static CustomAdapter myCustomAdapter;
 
@@ -226,14 +226,14 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
 
                 if (!productlist.isEmpty()) {
                     try {
-                        MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Salesnew(billid INTEGER PRIMARY KEY, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR,adminno LONG)");
-                        MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditemsnew(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE,adminno LONG)");
+                        MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Salesnew1(billid INTEGER PRIMARY KEY,cutomername VARCHAR, customerno LONG ,date DATE,billamount FLOAT,discount FLOAT, status VARCHAR,adminno LONG)");
+                        MainActivity.SRPOS.execSQL("CREATE TABLE IF NOT EXISTS Solditemsnew1(id INTEGER PRIMARY KEY, name VARCHAR ,mrp FLOAT,  quantity INTEGER,unit VARCHAR,date DATE,adminno LONG,sku LONG)");
                         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-                        for (int i = 0; i < productlist.size(); i++)
+                     /*   for (int i = 0; i < productlist.size(); i++)
                         {
                             MainActivity x = new MainActivity();
-                            MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew(name,mrp,quantity,date,adminno) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + date + "'," + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")) + ")");
+                            MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew1(name,mrp,quantity,date,adminno,sku) VALUES('" + productname.get(i) + "'," + Float.parseFloat(productmrp.get(i)) + "," + Integer.parseInt(productquantity.get(i)) + ",'" + date + "'," + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")) + ","+Long.parseLong(productsku.get(index))+")");
                             Log.i("name", productname.get(i));
                             Log.i("mrp", (productmrp.get(i)));
                             Log.i("quantity", productquantity.get(i));
@@ -250,7 +250,7 @@ public class BillingFragment extends Fragment implements EasyPermissions.Permiss
 
                             MainActivity.SRPOS.execSQL("UPDATE Productsnew SET stock= " + newstock + " WHERE sku=" + Long.parseLong(productsku.get(i)) + " AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")));
                         }
-
+*/
                         Intent i = new Intent(getActivity(), Payment.class);
                         startActivity(i);
                     } catch (Exception e) {

@@ -102,7 +102,7 @@ public class DashboardFragment extends Fragment {
         try {
 
             MainActivity x1 = new MainActivity();
-            Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT status FROM Salesnew WHERE adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
+            Cursor c1 = MainActivity.SRPOS.rawQuery("SELECT status FROM Salesnew1 WHERE adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
 
             int stock = c1.getColumnIndex("status");
 
@@ -237,7 +237,7 @@ public class DashboardFragment extends Fragment {
 
             try{
                Log.i("Date search",days[i].trim());
-                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date='"+days[i].trim()+"'", null) ;
+                Cursor c = MainActivity.SRPOS.rawQuery("SELECT billamount,discount FROM Salesnew1 WHERE adminno="+Long.parseLong(MainActivity.sharedPreferences.getString("usernumber",""))+" AND date='"+days[i].trim()+"'", null) ;
                 int billamount = c.getColumnIndex("billamount");
                 int discount = c.getColumnIndex("discount");
 
