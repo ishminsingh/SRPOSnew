@@ -92,8 +92,13 @@ public class SalesFragment extends Fragment implements AdapterView.OnItemSelecte
         }
 
         try {
-            MainActivity x = new MainActivity();
-            Cursor c = MainActivity.SRPOS.rawQuery("SELECT * FROM Salesnew1 WHERE date BETWEEN '" + from + "'AND '" + to + "'AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
+         Cursor c;
+          if (show==0)
+           c = MainActivity.SRPOS.rawQuery("SELECT * FROM Salesnew1 WHERE date BETWEEN '" + from + "'AND '" + to + "'AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")), null);
+          else if(show==1)
+              c = MainActivity.SRPOS.rawQuery("SELECT * FROM Salesnew1 WHERE date BETWEEN '" + from + "'AND '" + to + "'AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", ""))+" AND status='Paid'", null);
+          else
+              c = MainActivity.SRPOS.rawQuery("SELECT * FROM Salesnew1 WHERE date BETWEEN '" + from + "'AND '" + to + "'AND adminno=" + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", ""))+" AND status='Unpaid'", null);
             int no = c.getColumnIndex("customerno");
             int amount = c.getColumnIndex("billamount");
             int discount = c.getColumnIndex("discount");
@@ -179,6 +184,7 @@ public class SalesFragment extends Fragment implements AdapterView.OnItemSelecte
     List<String> quantitylist;
     List<String> skulist;
     Spinner spinner;
+    int show;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -253,9 +259,11 @@ public class SalesFragment extends Fragment implements AdapterView.OnItemSelecte
                 if (flag == 0) {
                     Solditems(datefrom, dateto);
                     change.setText("Sales");
+                    spinner.setVisibility(View.INVISIBLE);
                 } else {
                     Sales(datefrom, dateto);
                     change.setText("Sold items");
+                    spinner.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -265,8 +273,24 @@ public class SalesFragment extends Fragment implements AdapterView.OnItemSelecte
 
     //Spinner methods
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+    {
         String txt = parent.getItemAtPosition(position).toString();
+        if(txt.equals("Show all"))
+        {
+            show=0;
+            Sales(datefrom, dateto);
+        }
+        else if (txt.equals("Paid"))
+        {
+            show=1;
+            Sales(datefrom, dateto);
+        }
+        else
+        {   show=2;
+            Sales(datefrom, dateto);
+        }
+
     }
 
     @Override
@@ -425,10 +449,10 @@ public class SalesFragment extends Fragment implements AdapterView.OnItemSelecte
             e.printStackTrace();
 
         }
-
+        int j=1;
         for (int i = 0; i < productlist.size(); i++)
         {
-             int j=1;
+
 
             TableRow tbrow0 = new TableRow(getActivity());
             TextView tvx1 = new TextView(getActivity());

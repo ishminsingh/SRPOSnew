@@ -66,7 +66,7 @@ public class Payment extends AppCompatActivity {
                             for (int i = 0; i < BillingFragment.productlist.size(); i++)
                             {
 
-                                MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew1(name,mrp,quantity,date,adminno,sku) VALUES('" + BillingFragment.productname.get(i) + "'," + Float.parseFloat(BillingFragment.productmrp.get(i)) + "," + Integer.parseInt(BillingFragment.productquantity.get(i)) + ",'" + date + "'," + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")) + ","+Long.parseLong(BillingFragment.productsku.get(BillingFragment.index))+")");
+                                MainActivity.SRPOS.execSQL("INSERT INTO Solditemsnew1(name,mrp,quantity,date,adminno,sku) VALUES('" + BillingFragment.productname.get(i) + "'," + Float.parseFloat(BillingFragment.productmrp.get(i)) + "," + Integer.parseInt(BillingFragment.productquantity.get(i)) + ",'" + date + "'," + Long.parseLong(MainActivity.sharedPreferences.getString("usernumber", "")) + ","+Long.parseLong(BillingFragment.productsku.get(i))+")");
                                 Log.i("name", BillingFragment.productname.get(i));
                                 Log.i("mrp", (BillingFragment.productmrp.get(i)));
                                 Log.i("quantity", BillingFragment.productquantity.get(i));
