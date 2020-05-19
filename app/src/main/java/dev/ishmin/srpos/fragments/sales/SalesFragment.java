@@ -9,15 +9,20 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +33,7 @@ import java.util.Locale;
 import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 
-public class SalesFragment extends Fragment {
+public class SalesFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     TableLayout stk;
 
     public void Sales(String from, String to) {
@@ -173,13 +178,27 @@ public class SalesFragment extends Fragment {
     List<String> mrplist;
     List<String> quantitylist;
     List<String> skulist;
+    Spinner spinner;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_sales, container, false);
-        //return inflater.inflate(R.layout.fragment_sales, container, false);
-        // v.requestWindowFeature(Window.FEATURE_NO_TITLE);
         stk = (TableLayout) v.findViewById(R.id.table_main);
+
+        //create a list for spinner to show items
+        ArrayList<String> filterList = new ArrayList<>();
+        filterList.add("Show all");
+        filterList.add("Paid");
+        filterList.add("Unpaid");
+
+        //cast spinner by ID
+        spinner = v.findViewById(R.id.filterSpinner);
+        //arrayadapter for spinner to inflate list in spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, filterList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         editText1 = v.findViewById(R.id.from);
         editText2 = v.findViewById(R.id.to);
@@ -231,17 +250,28 @@ public class SalesFragment extends Fragment {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (flag == 0) {
-                        Solditems(datefrom, dateto);
-                        change.setText("Sales");
-                    } else {
-                        Sales(datefrom, dateto);
-                        change.setText("Sold items");
-                    }
+                if (flag == 0) {
+                    Solditems(datefrom, dateto);
+                    change.setText("Sales");
+                } else {
+                    Sales(datefrom, dateto);
+                    change.setText("Sold items");
+                }
             }
         });
 
         return v;
+    }
+
+    //Spinner methods
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String txt = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //Do nothing
     }
 
     private void updateLabel() {

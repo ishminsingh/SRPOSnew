@@ -32,6 +32,7 @@ import java.util.Date;
 import dev.ishmin.srpos.activities.MainActivity;
 import dev.ishmin.srpos.R;
 import dev.ishmin.srpos.activities.StockActivity;
+import dev.ishmin.srpos.activities.Trial;
 
 public class DashboardFragment extends Fragment {
 
